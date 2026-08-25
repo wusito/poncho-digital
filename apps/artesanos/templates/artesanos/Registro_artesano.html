@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registros de artesanos</title>
+</head>
+<body>
+    <h1>Registro de participacion  </h1>
+    <hr>
+    <form action="" method="post">
+        <fieldset>
+            <legend> Registro de Emprendimiento </legend>
+            <label for="nombre_emprendimiento">Nombre_Emprendimiento </label>
+            <input type="text" name="nombre_emprendimiento" id="nombre_emprendimiento">
+            <br>
+            <label for="rubro_principal"> Rubro Principal </label>
+            <select name="rubro_principal" id="rubro_principal" required>
+
+                <option value="" disabled selected>Seleccione el rubro...</option>
+                <optgroup label="Arte Textil">
+                    <option value="textil_telar">Tejido en Telar (Criollo / Pedal)</option>
+                    <option value="textil_hilanderia">Hilandería Tradicional (Vicuña, Llama, Oveja)</option>
+                    <option value="textil_randa">Randa y Bordado Tradicional</option>
+                </optgroup>
+                <optgroup label="Rubros Tradicionales">
+                    <option value="ceramica">Cerámica / Alfarería</option>
+                    <option value="cuero">Cuero y Talabartería</option>
+                    <option value="madera">Madera y Luthería (Instrumentos)</option>
+                    <option value="metal">Platería, Cincelado y Metales</option>
+                    <option value="piedra">Piedra y Rodocrosita</option>
+                    <option value="cesteria">Fibras Vegetales / Cestería (Simbol, Palma)</option>
+                </optgroup>
+                <optgroup label="Otros Rubros">
+                    <option value="vidrio">Vidrio Artesanal / Vitral</option>
+                    <option value="jugueteria">Juguetería Artesanal</option>
+                    <option value="papel">Papel Artesanal / Cartapesta</option>
+                    <option value="otro">Otro rubro no listado</option>
+                </optgroup>
+            </select>
+            <br>
+             <label for="descripcion_proceso">Descripción del Proceso Productivo y Materias Primas:</label><br>
+            <textarea id="descripcion_proceso" name="descripcion_proceso" rows="4" cols="60" placeholder="Describa brevemente cómo elabora sus piezas, qué herramientas utiliza y de dónde provienen sus materias primas..." required></textarea>
+            <br>
+            
+        </fieldset>
+    <hr>
+        <fieldset>
+            <legend>Datos personales</legend>
+            <label for="nombre"> Nombre </label>
+            <input id="nombre" type="text" name="nombre" placeholder="ingrese su nombre " maxlength="100" required>
+            <br>
+            <label for="apellido"> Apellido</label>
+            <input id="apellido" type="text" name="apellido" placeholder="ingrese  Apellido" maxlength="100" required>
+            <br>
+            <label for="dni"> DNI </label>
+            <input id="dni" type="text" name="dni" inputmode="numeric" pattern="[0-9]*" placeholder="24864587" maxlength="8" required>
+            <br>
+            <label for="cuit_o_cuil"> Cuit o Cuil </label>
+            <input id="cuit_o_cuil" type="text" name="cuit_o_cuil" inputmode="numeric"  placeholder="24-58645857-9" maxlength="13" required>
+            <br>
+            <label for ="fecha_nacimiento"> Fecha_Nacimiento </label>
+            <input id="fecha_nacimiento" type="date" name="fecha_nacimiento" >
+            <br>
+            <label for="email"> Correo Electronico </label>
+            <input id="email" type="email" name="email" placeholder="Ingrese su email" required >
+            <br>
+            <label for="telefono"> Telefono</label>
+            <input id="telefono" type="tel" name="telefono" placeholder="11 1234-5678" required >
+            <br>
+            <p>Sexo:</p>
+            <input  id="masculino" type="radio" value="masculino" name="sexo">
+            <label for="masculino">Masculino</label>
+            <br>
+            <input  id="femenino" type="radio" value="femenino" name="sexo">
+            <label for="femenino">Femenino</label>
+            <br>
+            <input  id="no-binario" type="radio" value="no-binario" name="sexo">
+            <label for="no-binario">No-binario</label>
+            <br>
+        </fieldset>
+        <hr>
+        <fieldset>
+            <legend>Procedencia y Domicilio</legend>
+            <label for="provincia">Provincia</label>
+            <input id="provincia" type="text" name="provincia" placeholder="Ej: Catamarca" value="Catamarca" required>
+            <br>
+            <label for="departamento">Departamento (Catamarca) (opcional si es de otra provincia)</label>
+            <select id="departamento" name="departamento">
+                <option value="">Seleccione departamento...</option>
+                <option value="Ambato">Ambato</option>
+                <option value="Ancasti">Ancasti</option>
+                <option value="Andalgala">Andalgalá</option>
+                <option value="Antofagasta de la Sierra">Antofagasta de la Sierra</option>
+                <option value="Belen">Belén</option>
+                <option value="Capayan">Capayán</option>
+                <option value="Capital">Capital</option>
+                <option value="El Alto">El Alto</option>
+                <option value="Fray Mamerto Esquiu">Fray Mamerto Esquiú</option>
+                <option value="La Paz">La Paz</option>
+                <option value="Paclin">Paclín</option>
+                <option value="Poman">Pomán</option>
+                <option value="Santa Maria">Santa María</option>
+                <option value="Santa Rosa">Santa Rosa</option>
+                <option value="Tinogasta">Tinogasta</option>
+                <option value="Valle Viejo">Valle Viejo</option>
+            </select>
+            <br>
+            <label for="localidad">Localidad / Ciudad</label>
+            <input id="localidad" type="text" name="localidad" placeholder="Ej: Belén" required>
+            <br>
+            <label for="direccion">Dirección</label>
+            <input id="direccion" type="text" name="direccion" placeholder="Calle y número">
+            <br>
+        </fieldset>
+        <hr>
+        <fieldset>
+            <legend> Terminos y Condiciones</legend>
+            <input type="checkbox" name="terminos_condiciones" id="TYC" value="aceptado" required>
+            <label for="TYC"><strong>Declaro bajo juramento</strong> que las piezas presentadas son de elaboración artesanal propia (no reventa industrial) 
+                y acepto las bases y condiciones de fiscalización del Ministerio de Cultura.</label>
+        </fieldset>
+        <br>
+        <button type="submit">Aceptar</button>
+        <button type="reset">Cancelar</button>
+    </form>
+    <footer>
+
+        <p>&copy; 2026 Ministerio de Cultura - Provincia de Catamarca</p>
+
+    </footer>
+    
+</body>
+</html>
