@@ -38,6 +38,8 @@
                         <th>Descripción</th>
                         <th>Stock</th>
                         <th>Precio Unitario</th>
+                        <th>Categoría</th>
+                        <th>Subcategoría</th>
                         <th>Estado</th>
                         <th>Acciones</th>
                     </tr>
@@ -52,6 +54,8 @@
                         <td>Abrigo tradicional confeccionado en tela gruesa.</td>
                         <td>6</td>
                         <td>$850.000</td>
+                        <td>Textiles Tradicionales</td>
+                        <td>Prendas de Vicuña</td>
                         <td>Activo</td>
                         <td>
                             <button type="button">Modificar</button>
@@ -66,6 +70,8 @@
                         <td>Recipiente tradicional utilizado para beber la infusión de yerba mate.</td>
                         <td>7</td>
                         <td>$50.000</td>
+                        <td>Artesanías y Artículos para el Hogar</td>
+                        <td>Accesorios</td>
                         <td>Activo</td>
                         <td>
                             <button type="button">Modificar</button>
@@ -75,11 +81,78 @@
                 </tbody>
             </table>
         </section>
+
+        <!--SECCIÓN 2: ALTA DE UN PRODUCTO -->
+        <section>
+            <h2>Cargar un Producto</h2>
+
+            <form action="guardar_producto" method="POST" enctype="multipart/form-data">
+
+                <fieldset>
+                    <legend>Datos del Producto</legend>
+
+                    <!-- Nombre del producto -->
+                    <div>
+                        <label for="nombre">Nombre del producto:</label>
+                        <input type="text" name="nombre" id="nombre" placeholder="Ej: Poncho" required>
+                    </div>
+
+                    <!-- Descripción del producto -->
+                    <div>
+                        <label for="descripcion">Descripción del producto:</label>
+                        <textarea name="descripcion" id="descripcion" rows="4" placeholder="Detalla las características del producto..." required></textarea>
+                    </div>
+
+                    <!-- Categoría del producto -->
+                    <div>
+                        <label for="categoria">Selecciona la categoría del producto:</label>
+                        <select name="categoria" id="categoria">
+                            <option value="textiles_tradicionales">Textiles Tradicionales</option>
+                            <option value="artesanias_articulos_hogar">Artesanías y Artículos para el Hogar</option>
+                            <option value="productos_regionales_delicatessen">Productos Regionales y Delicatessen</option>
+                            <option value="sector_comercial">Sector Comercial</option>
+                        </select>
+                    </div>
+
+                    <!-- Subcategoría del producto: deshabilitada -->
+                    <div>
+                        <label for="subcategoria">Selecciona la subcategoría del producto:</label>
+                        <select name="subcategoria" id="subcategoria" disabled>
+                            <option value="">Selecciona primero una categoría.</option>
+                        </select>
+                    </div>
+
+                    <!-- Stock del producto -->
+                    <div>
+                        <label for="stock">Stock (cantidad) del producto:</label>
+                        <input type="number" name="stock" id="stock" placeholder="Ej: 5" required>
+                    </div>
+
+                    <!-- Precio unitario del producto -->
+                    <div>
+                        <label for="precio_unitario">Precio del producto (por unidad):</label>
+                        <input type="number" name="precio_unitario" id="precio_unitario" placeholder="Ej: 850000" required>
+                    </div>
+
+                    <!-- Imagen del producto -->
+                    <div>
+                        <label for="imagen">Imagen del producto:</label>
+                        <input type="file" name="imagen" id="imagen" accept="image/*" required>
+                    </div>
+                </fieldset>
+
+                <!-- Botones -->
+                <div>
+                    <button type="submit">Publicar Producto</button>
+                    <button type="reset">Limpiar Formulario</button>
+                </div>
+            </form>
+        </section>
     </main>
 
     <!-- Footer: sección futuramente modularizable -->
     <footer>
-        <p>&copy; <em>Poncho Digital - 2026 </em></p>
+        <p>&copy; <em>Poncho Digital - 2026</em></p>
     </footer>
 </body>
 </html>
