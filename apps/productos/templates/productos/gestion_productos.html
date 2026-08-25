@@ -3,9 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Gestión de Producto - Poncho Digital</title>
 </head>
+
 <body>
-    
+    <!-- ENCABEZADO -->
+    <header>
+        <h1>Administración Productos</h1>
+
+        <!-- Menú de Navegación -->
+        <nav>
+            <ul>
+                <li><a href="#" onclick="alert('Funcionalidad en desarrollo'); return false;">Inicio</a></li>
+                <li><a href="#" onclick="alert('Funcionalidad en desarrollo'); return false;">Agregar un Producto</a></li>
+                <li><a href="#" onclick="alert('Funcionalidad en desarrollo'); return false;">Mis Productos</a></li>
+
+            </ul>
+        </nav>
+    </header>
+
+    <!-- CONTENIDO -->
+    <main>
+        <!--SECCIÓN 1: VISUALIZAR LOS PRODUCTOS PUBLICADOS -->
+        <section>
+            <h2>Mis Productos Publicados</h2>
+
+            <table style="border-collapse: collapse; width: 100%; text-align: left;">
+                <!--- Encabezado -->
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Imagen</th>
+                        <th>Nombre del Producto</th>
+                        <th>Descripción</th>
+                        <th>Stock</th>
+                        <th>Precio Unitario</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+
+                <!-- Contenido - 2 Ejemplos -->
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td><img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Poncho.jpg?utm_source=es.wikipedia.org&utm_campaign=index&utm_content=original" alt="Imagen genérica de un poncho" height="300" width="200"></td>
+                        <td>Poncho</td>
+                        <td>Abrigo tradicional confeccionado en tela gruesa.</td>
+                        <td>6</td>
+                        <td>$850.000</td>
+                        <td>Activo</td>
+                        <td>
+                            <button type="button">Modificar</button>
+                            <button type="button">Eliminar</button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>2</td>
+                        <td><img src="https://matesibarra.com/wp-content/uploads/2023/02/MayoPubli-11-scaled.jpg" alt="Imagen genérica de un mate" height="300" width="200"></td>
+                        <td>Mate</td>
+                        <td>Recipiente tradicional utilizado para beber la infusión de yerba mate.</td>
+                        <td>7</td>
+                        <td>$50.000</td>
+                        <td>Activo</td>
+                        <td>
+                            <button type="button">Modificar</button>
+                            <button type="button">Eliminar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <!-- Footer: sección futuramente modularizable -->
+    <footer>
+        <p>&copy; <em>Poncho Digital - 2026 </em></p>
+    </footer>
 </body>
 </html>
