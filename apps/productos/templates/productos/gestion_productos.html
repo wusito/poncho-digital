@@ -149,10 +149,11 @@
         </section>
 
         <!--SECCIÓN 3: MODIFICACIÓN DE UN PRODUCTO -->
-        <section id="seccion-modificar">
+        <section id="seccion-modificar" style="display:none;">
+            <h2>Modificar Producto</h2>
 
             <!-- Formulario oculto hasta que JS lo active -->
-            <form id="form-modificar" action="modificar-producto" method="POST" enctype="multipart/form-data" style="display:none;">
+            <form id="form-modificar" action="modificar-producto" method="POST" enctype="multipart/form-data">
 
                 <fieldset>
                     <legend>Editar Datos del Producto</legend>
@@ -200,11 +201,12 @@
 
 
         <!-- SECCIÓN 4: ELIMINACIÓN DE PRODUCTO -->
-        <section id="seccion-eliminar">
+        <section id="seccion-eliminar" style="display:none;">
+            <h2>Eliminar Producto</h2>
 
             <!-- Modal oculto -->
-            <div id="modal-eliminar" class="modal" style="display:none;">
-                <div class="modal-contenido">
+            <div id="modal-eliminar" class="modal">
+                <div class="modal   -contenido">
                     <h3>Confirmar eliminación</h3>
                     <p>¿Estás seguro de que deseas eliminar este producto?</p>
 
