@@ -4,226 +4,289 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Producto - Poncho Digital</title>
+
+    <!-- Link CSS Boostrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="../../../../static/css/estilos3.css" rel="stylesheet">
 </head>
 
 <body>
     <!-- ENCABEZADO -->
-    <header>
-        <h1>Administración Productos</h1>
-
+    <header class="encabezado-gestion-prod">
         <!-- Menú de Navegación -->
-        <nav>
-            <ul>
-                <li><a href="#" onclick="alert('Funcionalidad en desarrollo'); return false;">Inicio</a></li>
-                <li><a href="#mis-productos">Mis Productos</a></li>
-                <li><a href="#agregar-producto">Agregar un Producto</a></li>
-            </ul>
+        <nav class="navbar" data-bs-theme="dark">
+            <div class="container-fluid d-flex flex-column flex-md-row align-items-center">
+                <a class="navbar-brand" href="../../../../templates/index.html">
+                <img src="../../../../static/img/LOGOS-PONCHO-2026-08-e1771597508102-768x223.png" alt="Logo" 
+                     class="img-fluid" style="max-width: 200px;">
+                </a>
+                <h1 class="text-center mt-3 mt-md-0 ms-md-3">Administración Productos</h1> <!-- Título Principal -->
+            </div>
+
+            <div class="nav nav-tabs flex-nowrap overflow-auto" id="nav-tab" role="tablist">
+                <button class="nav-link active" id="nav-inicio-tab"
+                    data-bs-toggle="tab" data-bs-target="#nav-inicio"
+                    type="button" role="tab" aria-controls="nav-inicio"
+                    aria-selected="true"> Inicio
+                </button>
+
+                <button class="nav-link" id="nav-mis-productos-tab"
+                    data-bs-toggle="tab" data-bs-target="#nav-mis-productos"
+                    type="button" role="tab" aria-controls="nav-mis-productos"
+                    aria-selected="false"> Mis Productos
+                </button>
+
+                <button class="nav-link" id="nav-agregar-producto-tab"
+                    data-bs-toggle="tab" data-bs-target="#nav-agregar-producto"
+                    type="button" role="tab" aria-controls="nav-agregar-producto"
+                    aria-selected="false"> Agregar un Producto
+                </button>
+
+                <a class="nav-link" id="nav-sitio-principal-tab"
+                    href="../../../../templates/index.html"
+                    role="tab" aria-controls="nav-inicio"
+                    aria-selected="false"> Sitio Principal 
+                </a>
+            </div>
         </nav>
     </header>
 
     <!-- CONTENIDO -->
     <main>
-        <!--SECCIÓN 1: VISUALIZAR LOS PRODUCTOS PUBLICADOS -->
-        <section id="mis-productos">
-            <h2>Mis Productos Publicados</h2>
 
-            <table style="border-collapse: collapse; width: 100%; text-align: left;">
-                <!--- Encabezado -->
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Imagen</th>
-                        <th>Nombre del Producto</th>
-                        <th>Descripción</th>
-                        <th>Stock</th>
-                        <th>Precio Unitario</th>
-                        <th>Categoría</th>
-                        <th>Subcategoría</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
+        <!-- CONTENIDO DE LAS PESTAÑAS -->
+        <div class="tab-content" id="nav-tabContent">
 
-                <!-- Contenido - 2 Ejemplos -->
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td><img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Poncho.jpg?utm_source=es.wikipedia.org&utm_campaign=index&utm_content=original" alt="Imagen genérica de un poncho" height="300" width="200"></td>
-                        <td>Poncho</td>
-                        <td>Abrigo tradicional confeccionado en tela gruesa.</td>
-                        <td>6</td>
-                        <td>$850.000</td>
-                        <td>Textiles Tradicionales</td>
-                        <td>Prendas de Vicuña</td>
-                        <td>Activo</td>
-                        <td>
-                            <button type="button">Modificar</button>
-                            <button type="button">Eliminar</button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>2</td>
-                        <td><img src="https://matesibarra.com/wp-content/uploads/2023/02/MayoPubli-11-scaled.jpg" alt="Imagen genérica de un mate" height="300" width="200"></td>
-                        <td>Mate</td>
-                        <td>Recipiente tradicional utilizado para beber la infusión de yerba mate.</td>
-                        <td>7</td>
-                        <td>$50.000</td>
-                        <td>Artesanías y Artículos para el Hogar</td>
-                        <td>Accesorios</td>
-                        <td>Activo</td>
-                        <td>
-                            <button type="button">Modificar</button>
-                            <button type="button">Eliminar</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-
-        <!--SECCIÓN 2: ALTA DE UN PRODUCTO -->
-        <section  id="agregar-producto">
-            <h2>Cargar un Producto</h2>
-
-            <form action="guardar-producto" method="POST" enctype="multipart/form-data">
-
-                <fieldset>
-                    <legend>Datos del Producto</legend>
-
-                    <!-- Nombre del producto -->
-                    <div class="form-grupo">
-                        <label for="nombre">Nombre del producto:</label>
-                        <input type="text" name="nombre" id="nombre" placeholder="Ej: Poncho" required>
-                    </div>
-
-                    <!-- Descripción del producto -->
-                    <div class="form-grupo">
-                        <label for="descripcion">Descripción del producto:</label>
-                        <textarea name="descripcion" id="descripcion" rows="4" placeholder="Detalla las características del producto..." required></textarea>
-                    </div>
-
-                    <!-- Categoría del producto -->
-                    <div class="form-categorias">
-                        <label for="categoria">Selecciona la categoría del producto:</label>
-                        <select name="categoria" id="categoria">
-                            <option value="textiles-tradicionales">Textiles Tradicionales</option>
-                            <option value="artesanias-articulos-hogar">Artesanías y Artículos para el Hogar</option>
-                            <option value="productos-regionales-delicatessen">Productos Regionales y Delicatessen</option>
-                            <option value="sector-comercial">Sector Comercial</option>
-                        </select>
-                    </div>
-
-                    <!-- Subcategoría del producto: deshabilitada -->
-                    <div class="form-categorias">
-                        <label for="subcategoria">Selecciona la subcategoría del producto:</label>
-                        <select name="subcategoria" id="subcategoria" disabled>
-                            <option value="">Selecciona primero una categoría.</option>
-                        </select>
-                    </div>
-
-                    <!-- Stock del producto -->
-                    <div class="form-grupo">
-                        <label for="stock">Stock (cantidad) del producto:</label>
-                        <input type="number" name="stock" id="stock" placeholder="Ej: 5" required>
-                    </div>
-
-                    <!-- Precio unitario del producto -->
-                    <div class="form-grupo">
-                        <label for="precio_unitario">Precio del producto (por unidad):</label>
-                        <input type="number" name="precio_unitario" id="precio_unitario" placeholder="Ej: 850000" required>
-                    </div>
-
-                    <!-- Imagen del producto -->
-                    <div class="form-grupo">
-                        <label for="imagen">Imagen del producto:</label>
-                        <input type="file" name="imagen" id="imagen" accept="image/*" required>
-                    </div>
-                </fieldset>
-
-                <!-- Botones -->
-                <div class="form-acciones">
-                    <button type="submit">Publicar Producto</button>
-                    <button type="reset">Limpiar Formulario</button>
-                </div>
-            </form>
-        </section>
-
-        <!--SECCIÓN 3: MODIFICACIÓN DE UN PRODUCTO -->
-        <section id="seccion-modificar" style="display:none;">
-            <h2>Modificar Producto</h2>
-
-            <!-- Formulario oculto hasta que JS lo active -->
-            <form id="form-modificar" action="modificar-producto" method="POST" enctype="multipart/form-data">
-
-                <fieldset>
-                    <legend>Editar Datos del Producto</legend>
-
-                    <input type="hidden" id="producto_id" name="producto_id">
-
-                    <!-- Nombre del producto -->
-                    <div class="form-grupo">
-                        <label for="nombre_edit">Nuevo nombre del producto:</label>
-                        <input type="text" name="nombre_edit" id="nombre_edit" placeholder="Ej: Poncho" required>
-                    </div>
-
-                    <!-- Descripción del producto -->
-                    <div class="form-grupo">
-                        <label for="descripcion_edit">Nueva descripción del producto:</label>
-                        <textarea name="descripcion_edit" id="descripcion_edit" rows="4" placeholder="Detalla las características del producto..." required></textarea>
-                    </div>
-
-                    <!-- Stock del producto -->
-                    <div class="form-grupo">
-                        <label for="stock_edit">Nuevo stock (cantidad) del producto:</label>
-                        <input type="number" name="stock_edit" id="stock_edit" placeholder="Ej: 5" required>
-                    </div>
-
-                    <!-- Precio unitario del producto -->
-                    <div class="form-grupo">
-                        <label for="precio_edit">Nuevo precio del producto (por unidad):</label>
-                        <input type="number" name="precio_edit" id="precio_edit" placeholder="Ej: 850000" required>
-                    </div>
-
-                    <!-- Imagen del producto -->
-                    <div class="form-grupo">
-                        <label for="imagen_edit">Actualizar imagen del producto:</label>
-                        <input type="file" name="imagen_edit" id="imagen_edit" accept="image/*" required>
-                    </div>
-                </fieldset>
-
-                <!-- Botones -->
-                <div class="form-acciones">
-                    <button type="submit">Guardar Cambios</button>
-                    <button type="button">Cancelar</button>
-                </div>
-            </form>
-        </section>
-
-
-        <!-- SECCIÓN 4: ELIMINACIÓN DE PRODUCTO -->
-        <section id="seccion-eliminar" style="display:none;">
-            <h2>Eliminar Producto</h2>
-
-            <!-- Modal oculto -->
-            <div id="modal-eliminar" class="modal">
-                <div class="modal   -contenido">
-                    <h3>Confirmar eliminación</h3>
-                    <p>¿Estás seguro de que deseas eliminar este producto?</p>
-
-                    <input type="hidden" id="producto_id_eliminar">
-
-                    <div class="modal-acciones">
-                        <button id="confirmar-eliminar">Sí, eliminar</button>
-                        <button id="cancelar-eliminar">Cancelar</button>
-                    </div>
-                </div>
+            <!-- Contenido de Inicio -->
+            <div class="tab-pane fade show active" id="nav-inicio"
+                role="tabpanel" aria-labelledby="nav-inicio-tab" tabindex="0">
+                
+                <!--SECCIÓN 1: PESTAÑA DE INICIO -->
+                <section>
+                    <h2>Bienvenido</h2>
+                </section>
             </div>
-        </section>
+
+            
+
+            <!-- Contenido de Mis Productos -->
+            <div class="tab-pane fade" id="nav-mis-productos"
+                role="tabpanel" aria-labelledby="nav-mis-productos-tab" tabindex="0">
+                
+                <!--SECCIÓN 2: VISUALIZAR LOS PRODUCTOS PUBLICADOS -->
+                <section id="mis-productos">
+                    <h2>Mis Productos Publicados</h2>
+
+                    <table style="border-collapse: collapse; width: 100%; text-align: left;">
+                        <!--- Encabezado -->
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Imagen</th>
+                                <th>Nombre del Producto</th>
+                                <th>Descripción</th>
+                                <th>Stock</th>
+                                <th>Precio Unitario</th>
+                                <th>Categoría</th>
+                                <th>Subcategoría</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+
+                        <!-- Contenido - 2 Ejemplos -->
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Poncho.jpg?utm_source=es.wikipedia.org&utm_campaign=index&utm_content=original" alt="Imagen genérica de un poncho" height="300" width="200"></td>
+                                <td>Poncho</td>
+                                <td>Abrigo tradicional confeccionado en tela gruesa.</td>
+                                <td>6</td>
+                                <td>$850.000</td>
+                                <td>Textiles Tradicionales</td>
+                                <td>Prendas de Vicuña</td>
+                                <td>Activo</td>
+                                <td>
+                                    <button type="button">Modificar</button>
+                                    <button type="button">Eliminar</button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>2</td>
+                                <td><img src="https://matesibarra.com/wp-content/uploads/2023/02/MayoPubli-11-scaled.jpg" alt="Imagen genérica de un mate" height="300" width="200"></td>
+                                <td>Mate</td>
+                                <td>Recipiente tradicional utilizado para beber la infusión de yerba mate.</td>
+                                <td>7</td>
+                                <td>$50.000</td>
+                                <td>Artesanías y Artículos para el Hogar</td>
+                                <td>Accesorios</td>
+                                <td>Activo</td>
+                                <td>
+                                    <button type="button">Modificar</button>
+                                    <button type="button">Eliminar</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+
+
+
+            <!-- Contenido de Agregar Producto -->
+            <div class="tab-pane fade" id="nav-agregar-producto"
+                role="tabpanel" aria-labelledby="nav-agregar-producto-tab" tabindex="0">
+
+                        <!--SECCIÓN 3: ALTA DE UN PRODUCTO -->
+                <section  id="agregar-producto">
+                    <h2>Cargar un Producto</h2>
+
+                    <form action="guardar-producto" method="POST" enctype="multipart/form-data">
+
+                        <fieldset>
+                            <legend>Datos del Producto</legend>
+
+                            <!-- Nombre del producto -->
+                            <div class="form-grupo">
+                                <label for="nombre">Nombre del producto:</label>
+                                <input type="text" name="nombre" id="nombre" placeholder="Ej: Poncho" required>
+                            </div>
+
+                            <!-- Descripción del producto -->
+                            <div class="form-grupo">
+                                <label for="descripcion">Descripción del producto:</label>
+                                <textarea name="descripcion" id="descripcion" rows="4" placeholder="Detalla las características del producto..." required></textarea>
+                            </div>
+
+                            <!-- Categoría del producto -->
+                            <div class="form-categorias">
+                                <label for="categoria">Selecciona la categoría del producto:</label>
+                                <select name="categoria" id="categoria">
+                                    <option value="textiles-tradicionales">Textiles Tradicionales</option>
+                                    <option value="artesanias-articulos-hogar">Artesanías y Artículos para el Hogar</option>
+                                    <option value="productos-regionales-delicatessen">Productos Regionales y Delicatessen</option>
+                                    <option value="sector-comercial">Sector Comercial</option>
+                                </select>
+                            </div>
+
+                            <!-- Subcategoría del producto: deshabilitada -->
+                            <div class="form-categorias">
+                                <label for="subcategoria">Selecciona la subcategoría del producto:</label>
+                                <select name="subcategoria" id="subcategoria" disabled>
+                                    <option value="">Selecciona primero una categoría.</option>
+                                </select>
+                            </div>
+
+                            <!-- Stock del producto -->
+                            <div class="form-grupo">
+                                <label for="stock">Stock (cantidad) del producto:</label>
+                                <input type="number" name="stock" id="stock" placeholder="Ej: 5" required>
+                            </div>
+
+                            <!-- Precio unitario del producto -->
+                            <div class="form-grupo">
+                                <label for="precio_unitario">Precio del producto (por unidad):</label>
+                                <input type="number" name="precio_unitario" id="precio_unitario" placeholder="Ej: 850000" required>
+                            </div>
+
+                            <!-- Imagen del producto -->
+                            <div class="form-grupo">
+                                <label for="imagen">Imagen del producto:</label>
+                                <input type="file" name="imagen" id="imagen" accept="image/*" required>
+                            </div>
+                        </fieldset>
+
+                        <!-- Botones -->
+                        <div class="form-acciones">
+                            <button type="submit">Publicar Producto</button>
+                            <button type="reset">Limpiar Formulario</button>
+                        </div>
+                    </form>
+                </section>
+
+                <!--SECCIÓN 4: MODIFICACIÓN DE UN PRODUCTO -->
+                <section id="seccion-modificar" style="display:none;">
+                    <h2>Modificar Producto</h2>
+
+                    <!-- Formulario oculto hasta que JS lo active -->
+                    <form id="form-modificar" action="modificar-producto" method="POST" enctype="multipart/form-data">
+
+                        <fieldset>
+                            <legend>Editar Datos del Producto</legend>
+
+                            <input type="hidden" id="producto_id" name="producto_id">
+
+                            <!-- Nombre del producto -->
+                            <div class="form-grupo">
+                                <label for="nombre_edit">Nuevo nombre del producto:</label>
+                                <input type="text" name="nombre_edit" id="nombre_edit" placeholder="Ej: Poncho" required>
+                            </div>
+
+                            <!-- Descripción del producto -->
+                            <div class="form-grupo">
+                                <label for="descripcion_edit">Nueva descripción del producto:</label>
+                                <textarea name="descripcion_edit" id="descripcion_edit" rows="4" placeholder="Detalla las características del producto..." required></textarea>
+                            </div>
+
+                            <!-- Stock del producto -->
+                            <div class="form-grupo">
+                                <label for="stock_edit">Nuevo stock (cantidad) del producto:</label>
+                                <input type="number" name="stock_edit" id="stock_edit" placeholder="Ej: 5" required>
+                            </div>
+
+                            <!-- Precio unitario del producto -->
+                            <div class="form-grupo">
+                                <label for="precio_edit">Nuevo precio del producto (por unidad):</label>
+                                <input type="number" name="precio_edit" id="precio_edit" placeholder="Ej: 850000" required>
+                            </div>
+
+                            <!-- Imagen del producto -->
+                            <div class="form-grupo">
+                                <label for="imagen_edit">Actualizar imagen del producto:</label>
+                                <input type="file" name="imagen_edit" id="imagen_edit" accept="image/*" required>
+                            </div>
+                        </fieldset>
+
+                        <!-- Botones -->
+                        <div class="form-acciones">
+                            <button type="submit">Guardar Cambios</button>
+                            <button type="button">Cancelar</button>
+                        </div>
+                    </form>
+                </section>
+
+
+                <!-- SECCIÓN 5: ELIMINACIÓN DE PRODUCTO -->
+                <section id="seccion-eliminar" style="display:none;">
+                    <h2>Eliminar Producto</h2>
+
+                    <!-- Modal oculto -->
+                    <div id="modal-eliminar" class="modal">
+                        <div class="modal   -contenido">
+                            <h3>Confirmar eliminación</h3>
+                            <p>¿Estás seguro de que deseas eliminar este producto?</p>
+
+                            <input type="hidden" id="producto_id_eliminar">
+
+                            <div class="modal-acciones">
+                                <button id="confirmar-eliminar">Sí, eliminar</button>
+                                <button id="cancelar-eliminar">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
     </main>
 
     <!-- Footer: sección futuramente modularizable -->
     <footer>
         <p>&copy; <em>2026 Ministerio de Cultura - Provincia de Catamarca</em></p>
     </footer>
+
+    <!-- JavaScript de Boostrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>
 </html>
