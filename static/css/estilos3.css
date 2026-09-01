@@ -1,3 +1,18 @@
-.encabezado-gestion-prod {
+.encabezado-gestion-prod{
     background-color: black;
+}
+
+.form-cuerpo{
+    background-color: rgb(255, 253, 247);
+}
+
+.subtitulos{
+    color: rgb(166, 90, 61);
+    font-family: 'Montserrat', 'Inter', 'Helvetica Neue', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+
+.form-pie{
+    background-color: rgb(166, 45, 45);
 }
