@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Producto - Poncho Digital</title>
+    <title>Gestión de Productos - Poncho Digital</title>
 
     <!-- Link CSS Boostrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
@@ -62,8 +62,37 @@
                     role="tabpanel" aria-labelledby="nav-inicio-tab" tabindex="0">
                     
                     <!--SECCIÓN 1: PESTAÑA DE INICIO -->
-                    <section>
-                        <h2 class="subtitulos">Bienvenido</h2>
+                    <section class="container py-5">
+                        <div class="p-4 p-md-5 bg-light rounded shadow-lg">
+                            <h2 class="text-center mb-4 subtitulos">Bienvenido</h2>
+
+                            <p class="lead text-center">
+                                Este espacio está diseñado para que puedas gestionar tus productos artesanales de manera sencilla y rápida. Desde aquí podrás visualizar tus publicaciones, agregar nuevos productos, modificar información existente o eliminar artículos que ya no desees mostrar en el sitio.
+                            </p>
+                            
+                            <p class="lead text-center">
+                                Poncho Digital busca promover el trabajo de los artesanos de Catamarca, ofreciendo una plataforma moderna, accesible y pensada para potenciar tu presencia en el mercado digital.
+                            </p>
+                            
+                            <hr class="my-4">
+
+                            <div class="lead mt-4 text-center mx-auto">
+                                <h3 class="fw-medium mb-3">¿Qué podés hacer desde esta página?</h3>
+                                
+                                <ul class="text-center list-unstyled">
+                                    <li class="mb-2">📦 Ver todos tus productos publicados</li>
+                                    <li class="mb-2">➕ Agregar nuevos productos</li>
+                                    <li class="mb-2">✏️ Modificar productos existentes</li>
+                                    <li class="mb-2">🗑️ Eliminar productos que ya no quieras mostrar</li>
+                                </ul>
+                            </div>
+
+                            <hr class="my-4">
+
+                            <p class="mt-4 lead text-center">
+                                Usá el menú  superior para navegar entre las diferentes secciones del sistema.
+                            </p>
+                        </div>
                     </section>
                 </div>
 
@@ -74,15 +103,15 @@
                     role="tabpanel" aria-labelledby="nav-mis-productos-tab" tabindex="0">
                     
                     <!--SECCIÓN 2: VISUALIZAR LOS PRODUCTOS PUBLICADOS -->
-                    <section>
-                        <figure class="text-center">
-                            <blockquote>
-                                <h2 class="subtitulos">Mis Productos Publicados</h2>
-                            </blockquote>
-                        </figure>
+                    <section class="container py-5">
+                        
+                        <div class="text-center">
+                            <h2 class="subtitulos">Mis Productos Publicados</h2>
+                            <p>Aquí puedes visualizar, gestionar y administrar todo tu catálogo artesanal y creaciones activas en la plataforma.</p>
+                        </div>
                         
                         <div class="row justify-content-center">
-                            <fieldset class="col-md-10 mb-3 form-fieldset">
+                            <fieldset class="col-md-10 mb-3 shadow-lg form-fieldset">
                                 <div class="table-responsive">
                                     <table class="table table-bordered">
                                         <!--- Encabezado -->
@@ -144,19 +173,18 @@
 
 
                     <!--SECCIÓN 3: MODIFICACIÓN DE UN PRODUCTO -->
-                    <section id="seccion-modificar" style="display:none;">
+                    <section class="container py-5" id="seccion-modificar" style="display:none;">
                         
-                        <figure class="text-center">
-                            <blockquote>
-                                <h2 class="subtitulos">Modificar Producto</h2>
-                            </blockquote>
-                        </figure>
-
+                        <div class="text-center">
+                            <h2 class="subtitulos">Modificar Producto</h2>
+                            <p>Modifica las características del producto completando el formulario para actualizarlo en el sistema.</p>
+                        </div>
+                        
                         <!-- Formulario oculto hasta que JS lo active -->
                         <form id="form-modificar" action="modificar-producto" method="POST" enctype="multipart/form-data">
 
                             <div class="row justify-content-center">
-                                <fieldset class="col-12 col-md-10 form-fieldset">
+                                <fieldset class="col-12 col-md-10 shadow-lg form-fieldset">
                                     <legend>Editar Datos del Producto</legend>
 
                                     <div class="row g-3">
@@ -259,13 +287,11 @@
 
 
                     <!-- SECCIÓN 4: ELIMINACIÓN DE PRODUCTO -->
-                    <section id="seccion-eliminar" style="display:none;">
+                    <section class="container py-5" id="seccion-eliminar" style="display:none;">
 
-                        <figure class="text-center">
-                            <blockquote>
-                                <h2 class="subtitulos">Eliminar Producto</h2>
-                            </blockquote>
-                        </figure>                        
+                        <div class="text-center">
+                            <h2 class="subtitulos">Eliminar Producto</h2>
+                        </div>                       
 
                         <!-- Modal Bootstrap -->
                         <div class="modal fade" id="modalEliminar" tabindex="-1" aria-labelledby="modalEliminarLabel" aria-hidden="true">
@@ -307,17 +333,17 @@
                     role="tabpanel" aria-labelledby="nav-agregar-producto-tab" tabindex="0">
 
                     <!--SECCIÓN 5: ALTA DE UN PRODUCTO -->
-                    <section  id="agregar-producto">
+                    <section class="container py-5" id="agregar-producto">
 
-                        <figure class="text-center">
-                            <blockquote>
-                                <h2 class="subtitulos">Cargar un Producto</h2>
-                            </blockquote>
-                        </figure>    
+                        <div class="text-center">
+                            <h2 class="subtitulos">Cargar un Producto</h2>
+                            <p>Registra un nuevo producto completando el formulario para publicarlo en el sistema.</p>
+                        </div>
+   
 
                         <form action="guardar-producto" method="POST" enctype="multipart/form-data">
                             <div class="row justify-content-center">
-                                <fieldset class="col-12 col-md-10 form-fieldset">
+                                <fieldset class="col-12 col-md-10 shadow-lg form-fieldset">
                                     <legend>Datos del Producto</legend>
 
                                     <div class="row g-3">
