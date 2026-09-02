@@ -75,10 +75,14 @@
                     
                     <!--SECCIÓN 2: VISUALIZAR LOS PRODUCTOS PUBLICADOS -->
                     <section>
-                        <div class="row justify-content-center">
-                            <fieldset class="col-md-10 mb-3">
+                        <figure class="text-center">
+                            <blockquote>
                                 <h2 class="subtitulos">Mis Productos Publicados</h2>
-
+                            </blockquote>
+                        </figure>
+                        
+                        <div class="row justify-content-center">
+                            <fieldset class="col-md-10 mb-3 form-fieldset">
                                 <div class="table-responsive">
                                     <table class="table table-bordered">
                                         <!--- Encabezado -->
@@ -141,13 +145,18 @@
 
                     <!--SECCIÓN 3: MODIFICACIÓN DE UN PRODUCTO -->
                     <section id="seccion-modificar" style="display:none;">
-                        <h2>Modificar Producto</h2>
+                        
+                        <figure class="text-center">
+                            <blockquote>
+                                <h2 class="subtitulos">Modificar Producto</h2>
+                            </blockquote>
+                        </figure>
 
                         <!-- Formulario oculto hasta que JS lo active -->
                         <form id="form-modificar" action="modificar-producto" method="POST" enctype="multipart/form-data">
 
                             <div class="row justify-content-center">
-                                <fieldset class="col-12 col-md-10">
+                                <fieldset class="col-12 col-md-10 form-fieldset">
                                     <legend>Editar Datos del Producto</legend>
 
                                     <div class="row g-3">
@@ -251,7 +260,12 @@
 
                     <!-- SECCIÓN 4: ELIMINACIÓN DE PRODUCTO -->
                     <section id="seccion-eliminar" style="display:none;">
-                        <h2>Eliminar Producto</h2>
+
+                        <figure class="text-center">
+                            <blockquote>
+                                <h2 class="subtitulos">Eliminar Producto</h2>
+                            </blockquote>
+                        </figure>                        
 
                         <!-- Modal Bootstrap -->
                         <div class="modal fade" id="modalEliminar" tabindex="-1" aria-labelledby="modalEliminarLabel" aria-hidden="true">
@@ -294,11 +308,16 @@
 
                     <!--SECCIÓN 5: ALTA DE UN PRODUCTO -->
                     <section  id="agregar-producto">
-                        <h2 class="subtitulos">Cargar un Producto</h2>
+
+                        <figure class="text-center">
+                            <blockquote>
+                                <h2 class="subtitulos">Cargar un Producto</h2>
+                            </blockquote>
+                        </figure>    
 
                         <form action="guardar-producto" method="POST" enctype="multipart/form-data">
                             <div class="row justify-content-center">
-                                <fieldset class="col-12 col-md-10">
+                                <fieldset class="col-12 col-md-10 form-fieldset">
                                     <legend>Datos del Producto</legend>
 
                                     <div class="row g-3">
@@ -335,7 +354,7 @@
                                         </div>
 
                                         <!-- Categoría del producto -->
-                                        <div class="col-md-12 position-relative form-categorias">
+                                        <div class="col-md-12 position-relative form-grupo">
                                             <label for="categoria">Selecciona la categoría del producto:</label>
                                             
                                             <div class="col-12 position-relative">
