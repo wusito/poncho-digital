@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Artesanos - Poncho Digital</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../../../static/css/estilos2.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <header class="py-3 text-center">
+        <h1 class="text-white m-0">Administración Artesanos</h1>
+    </header>
+
+    <main class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-10">
+                <h2>Registro de Participación</h2>
+                <p class="text-center mb-4">Complete el formulario para solicitar su espacio en la Fiesta Nacional del Poncho.</p>
+
+                <form action="" method="post">
+
+                    <!-- SECCIÓN 1: EMPRENDIMIENTO -->
+                    <fieldset>
+                        <legend>Registro de Emprendimiento</legend>
+                        <div class="row">
+                            <div class="col-md-6 grupo-entrada">
+                                <label for="nombre_emprendimiento">Nombre del Emprendimiento:</label>
+                                <input type="text" name="nombre_emprendimiento" id="nombre_emprendimiento" class="form-control" required>
+                            </div>
+                            <div class="col-md-6 grupo-entrada">
+                                <label for="rubro_principal">Rubro Principal:</label>
+                                <select name="rubro_principal" id="rubro_principal" class="form-select" required>
+                                    <option value="" disabled selected>Seleccione el rubro...</option>
+                                    <optgroup label="Arte Textil">
+                                        <option value="textil_telar">Tejido en Telar (Criollo / Pedal)</option>
+                                        <option value="textil_hilanderia">Hilandería Tradicional</option>
+                                        <option value="textil_randa">Randa y Bordado Tradicional</option>
+                                    </optgroup>
+                                    <optgroup label="Rubros Tradicionales">
+                                        <option value="ceramica">Cerámica / Alfarería</option>
+                                        <option value="cuero">Cuero y Talabartería</option>
+                                        <option value="madera">Madera y Luthería (Instrumentos)</option>
+                                        <option value="metal">Platería, Cincelado y Metales</option>
+                                        <option value="piedra">Piedra y Rodocrosita</option>
+                                        <option value="cesteria">Fibras Vegetales / Cestería</option>
+                                    </optgroup>
+                                    <optgroup label="Otros Rubros">
+                                        <option value="vidrio">Vidrio Artesanal / Vitral</option>
+                                        <option value="jugueteria">Juguetería Artesanal</option>
+                                        <option value="papel">Papel Artesanal / Cartapesta</option>
+                                        <option value="otro">Otro rubro no listado</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+                            <div class="col-12 grupo-entrada">
+                                <label for="descripcion_proceso">Descripción del Proceso Productivo y Materias Primas:</label>
+                                <textarea id="descripcion_proceso" name="descripcion_proceso" rows="3" class="form-control" placeholder="Describa brevemente cómo elabora sus piezas..." required></textarea>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <!-- SECCIÓN 2: DATOS PERSONALES -->
+                    <fieldset>
+                        <legend>Datos Personales</legend>
+                        <div class="row">
+                            <div class="col-md-6 grupo-entrada">
+                                <label for="nombre">Nombre:</label>
+                                <input id="nombre" type="text" name="nombre" class="form-control" placeholder="Ingrese su nombre" maxlength="100" required>
+                            </div>
+                            <div class="col-md-6 grupo-entrada">
+                                <label for="apellido">Apellido:</label>
+                                <input id="apellido" type="text" name="apellido" class="form-control" placeholder="Ingrese su apellido" maxlength="100" required>
+                            </div>
+                            <div class="col-md-4 grupo-entrada">
+                                <label for="dni">DNI:</label>
+                                <input id="dni" type="text" name="dni" inputmode="numeric" pattern="[0-9]*" class="form-control" placeholder="Ej: 24864587" maxlength="8" required>
+                            </div>
+                            <div class="col-md-4 grupo-entrada">
+                                <label for="cuit_o_cuil">CUIT o CUIL:</label>
+                                <input id="cuit_o_cuil" type="text" name="cuit_o_cuil" inputmode="numeric" class="form-control" placeholder="Ej: 24-58645857-9" maxlength="13" required>
+                            </div>
+                            <div class="col-md-4 grupo-entrada">
+                                <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
+                                <input id="fecha_nacimiento" type="date" name="fecha_nacimiento" class="form-control" required>
+                            </div>
+                            <div class="col-md-6 grupo-entrada">
+                                <label for="email">Correo Electrónico:</label>
+                                <input id="email" type="email" name="email" class="form-control" placeholder="Ej: correo@email.com" required>
+                            </div>
+                            <div class="col-md-6 grupo-entrada">
+                                <label for="telefono">Teléfono:</label>
+                                <input id="telefono" type="tel" name="telefono" class="form-control" placeholder="Ej: 3834 123456" required>
+                            </div>
+                            <div class="col-12 mt-2">
+                                <p class="mb-2 fw-bold text-secondary" style="font-size: 14px;">Sexo:</p>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="masculino" value="masculino" name="sexo" required>
+                                    <label class="form-check-label" for="masculino">Masculino</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="femenino" value="femenino" name="sexo">
+                                    <label class="form-check-label" for="femenino">Femenino</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="no-binario" value="no-binario" name="sexo">
+                                    <label class="form-check-label" for="no-binario">No binario</label>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <!-- SECCIÓN 3: PROCEDENCIA Y DOMICILIO -->
+                    <fieldset>
+                        <legend>Procedencia y Domicilio</legend>
+                        <div class="row">
+                            <div class="col-md-4 grupo-entrada">
+                                <label for="provincia">Provincia:</label>
+                                <input id="provincia" type="text" name="provincia" class="form-control" value="Catamarca" required>
+                            </div>
+                            <div class="col-md-4 grupo-entrada">
+                                <label for="departamento">Departamento:</label>
+                                <select id="departamento" name="departamento" class="form-select">
+                                    <option value="">Seleccione departamento...</option>
+                                    <option value="Ambato">Ambato</option>
+                                    <option value="Ancasti">Ancasti</option>
+                                    <option value="Andalgala">Andalgalá</option>
+                                    <option value="Antofagasta de la Sierra">Antofagasta de la Sierra</option>
+                                    <option value="Belen">Belén</option>
+                                    <option value="Capayan">Capayán</option>
+                                    <option value="Capital">Capital</option>
+                                    <option value="El Alto">El Alto</option>
+                                    <option value="Fray Mamerto Esquiu">Fray Mamerto Esquiú</option>
+                                    <option value="La Paz">La Paz</option>
+                                    <option value="Paclin">Paclín</option>
+                                    <option value="Poman">Pomán</option>
+                                    <option value="Santa Maria">Santa María</option>
+                                    <option value="Santa Rosa">Santa Rosa</option>
+                                    <option value="Tinogasta">Tinogasta</option>
+                                    <option value="Valle Viejo">Valle Viejo</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 grupo-entrada">
+                                <label for="localidad">Localidad / Ciudad:</label>
+                                <input id="localidad" type="text" name="localidad" class="form-control" placeholder="Ej: Belén" required>
+                            </div>
+                            <div class="col-12 grupo-entrada">
+                                <label for="direccion">Dirección:</label>
+                                <input id="direccion" type="text" name="direccion" class="form-control" placeholder="Calle y número">
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <!-- SECCIÓN 4: TÉRMINOS Y BOTONES -->
+                    <div class="mt-4 mb-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="terminos_condiciones" id="TYC" value="aceptado" required>
+                            <label class="form-check-label text-muted" for="TYC">
+                                <strong>Declaro bajo juramento</strong> que las piezas presentadas son de elaboración artesanal propia (no reventa industrial) y acepto las bases y condiciones de fiscalización del Ministerio de Cultura.
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-md-6 mb-3 mb-md-0">
+                            <button type="reset" class="btn btn-secondary w-100 py-2">Cancelar Registro</button>
+                        </div>
+                        <div class="col-md-6">
+                            <button type="submit" class="btn btn-poncho w-100 py-2">Enviar Solicitud</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="py-4 text-center mt-auto">
+        <p class="mb-0">&copy; 2026 Ministerio de Cultura - Provincia de Catamarca</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
