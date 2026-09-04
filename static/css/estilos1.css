@@ -1,0 +1,446 @@
+/* --------------------------------------------------------------------------
+   1. VARIABLES GLOBALES (selector de etiqueta: :root)
+   -------------------------------------------------------------------------- */
+:root {
+    --color-rojo: #7A2331;       
+    --color-rojo-oscuro: #591923;
+    --color-azul: #1F2E3D;       
+    --color-ocre: #C98A2B;       
+    --color-verde: #4C6444;      
+    --color-fondo: #F1E9DA;      
+    --color-tinta: #2A211C;      
+    --color-blanco: #FBF7EF;
+
+    --fuente-titulos: 'Bitter', Georgia, serif;
+    --fuente-texto: 'Work Sans', Arial, sans-serif;
+
+    --radio-borde: 3px;
+    --ancho-linea: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   2. RESET Y BASE (selectores de etiqueta)
+   -------------------------------------------------------------------------- */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background-color: var(--color-fondo);
+    color: var(--color-tinta);
+    font-family: var(--fuente-texto);
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4 {
+    font-family: var(--fuente-titulos);
+    color: var(--color-rojo-oscuro);
+    line-height: 1.2;
+    margin-top: 0;
+}
+
+h1 {
+    font-size: clamp(1.9rem, 4vw, 3rem);
+    font-weight: 700;
+    margin-bottom: 1.2rem;
+}
+
+h2 {
+    font-size: clamp(1.5rem, 3vw, 2.1rem);
+    font-weight: 700;
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+a {
+    color: var(--color-rojo);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--color-ocre);
+}
+
+ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   3. FRANJA TIPO TEJIDO (selector de clase) - motivo decorativo de bandas
+   -------------------------------------------------------------------------- */
+.franja-tejido {
+    height: 8px;
+    width: 100%;
+    background: repeating-linear-gradient(
+        90deg,
+        var(--color-rojo) 0px, var(--color-rojo) 40px,
+        var(--color-ocre) 40px, var(--color-ocre) 70px,
+        var(--color-azul) 70px, var(--color-azul) 110px,
+        var(--color-verde) 110px, var(--color-verde) 130px
+    );
+}
+
+/* --------------------------------------------------------------------------
+   4. ENCABEZADO Y MENÚ DE NAVEGACIÓN (selector de id + combinados)
+   -------------------------------------------------------------------------- */
+#cabecera {
+    background-color: var(--color-blanco);
+    border-bottom: 1px solid rgba(42, 33, 28, 0.1);
+}
+
+#cabecera .navbar {
+    padding-top: 0.9rem;
+    padding-bottom: 0.9rem;
+}
+
+#cabecera .navbar-brand {
+    font-family: var(--fuente-titulos);
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: var(--color-tinta);
+    letter-spacing: 0.3px;
+}
+
+#cabecera .navbar-brand span {
+    color: var(--color-rojo);
+}
+
+/* selector combinado: descendientes dentro de la navegación */
+#cabecera nav ul li a {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    margin-left: 0.25rem;
+    color: var(--color-tinta);
+    font-weight: 500;
+    border-bottom: 2px solid transparent;
+}
+
+#cabecera nav ul li a:hover,
+#cabecera nav ul li a.active {
+    color: var(--color-rojo);
+    border-bottom-color: var(--color-ocre);
+}
+
+.navbar-toggler {
+    border: 1px solid var(--color-rojo);
+}
+
+.navbar-toggler:focus {
+    box-shadow: 0 0 0 0.2rem rgba(122, 35, 49, 0.35);
+}
+
+/* --------------------------------------------------------------------------
+   5. HERO / SECCIÓN PRINCIPAL (selector de clase)
+   -------------------------------------------------------------------------- */
+.hero {
+    background-color: var(--color-blanco);
+    padding: 4rem 0 3rem;
+}
+
+.hero-eyebrow {
+    font-weight: 600;
+    color: var(--color-azul);
+    text-transform: none;
+    letter-spacing: 0.2px;
+    margin-bottom: 0.6rem;
+}
+
+.hero-texto {
+    max-width: 60ch;
+    font-size: 1.05rem;
+}
+
+.hero-acciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+    margin-top: 1.6rem;
+}
+
+/* botones (selectores de clase) */
+.boton {
+    display: inline-block;
+    padding: 0.7rem 1.6rem;
+    border-radius: var(--radio-borde);
+    font-weight: 600;
+    border: 2px solid transparent;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.boton-primario {
+    background-color: var(--color-rojo);
+    color: var(--color-blanco);
+    border-color: var(--color-rojo);
+}
+
+.boton-primario:hover {
+    background-color: var(--color-rojo-oscuro);
+    border-color: var(--color-rojo-oscuro);
+    color: var(--color-blanco);
+}
+
+.boton-fantasma {
+    background-color: transparent;
+    color: var(--color-tinta);
+    border-color: var(--color-tinta);
+}
+
+.boton-fantasma:hover {
+    background-color: var(--color-tinta);
+    color: var(--color-blanco);
+}
+
+.boton-secundario {
+    background-color: var(--color-azul);
+    color: var(--color-blanco);
+    border-color: var(--color-azul);
+    padding: 0.7rem 1.1rem;
+}
+
+.boton-secundario:hover {
+    background-color: #16212c;
+    border-color: #16212c;
+}
+
+/* Ilustración decorativa de bandas dentro del hero */
+.bandas-poncho {
+    width: 100%;
+    min-height: 220px;
+    border-radius: var(--radio-borde);
+    background: repeating-linear-gradient(
+        180deg,
+        var(--color-rojo) 0px, var(--color-rojo) 26px,
+        var(--color-ocre) 26px, var(--color-ocre) 44px,
+        var(--color-azul) 44px, var(--color-azul) 70px,
+        var(--color-blanco) 70px, var(--color-blanco) 78px,
+        var(--color-verde) 78px, var(--color-verde) 96px
+    );
+    border: 1px solid rgba(42, 33, 28, 0.15);
+}
+
+/* --------------------------------------------------------------------------
+   6. FRANJA DE DATOS DESTACADOS (selector de id)
+   -------------------------------------------------------------------------- */
+.franja-datos {
+    background-color: var(--color-azul);
+    color: var(--color-blanco);
+    padding: 2.2rem 0;
+}
+
+.franja-datos .dato-numero {
+    display: block;
+    font-family: var(--fuente-titulos);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-ocre);
+}
+
+.franja-datos .dato-etiqueta {
+    display: block;
+    font-size: 0.9rem;
+    color: rgba(251, 247, 239, 0.85);
+}
+
+/* --------------------------------------------------------------------------
+   7. SECCIONES / TARJETAS (selectores de clase y combinados)
+   -------------------------------------------------------------------------- */
+.secciones {
+    padding: 4rem 0;
+}
+
+.titulo-seccion {
+    text-align: center;
+    margin-bottom: 2.2rem;
+}
+
+.tarjeta {
+    height: 100%;
+    background-color: var(--color-blanco);
+    padding: 1.8rem 1.6rem;
+    border: 1px solid rgba(42, 33, 28, 0.12);
+    border-left: var(--ancho-linea) solid var(--color-rojo);
+    border-radius: var(--radio-borde);
+}
+
+.tarjeta h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.6rem;
+}
+
+.tarjeta-rojo {
+    border-left-color: var(--color-rojo);
+}
+
+.tarjeta-ocre {
+    border-left-color: var(--color-ocre);
+}
+
+.tarjeta-azul {
+    border-left-color: var(--color-azul);
+}
+
+.tarjeta-enlace {
+    display: inline-block;
+    margin-top: 0.6rem;
+    font-weight: 600;
+    color: var(--color-rojo);
+}
+
+.tarjeta-enlace-deshabilitado {
+    color: rgba(42, 33, 28, 0.45);
+    cursor: default;
+}
+
+/* --------------------------------------------------------------------------
+   8. SECCIÓN PLATAFORMA / CITA (selector de id)
+   -------------------------------------------------------------------------- */
+#plataforma {
+    background-color: var(--color-blanco);
+    padding: 3.5rem 0;
+    border-top: 1px solid rgba(42, 33, 28, 0.1);
+}
+
+.cita {
+    margin: 0;
+    padding: 1rem 0 1rem 1.2rem;
+    border-left: var(--ancho-linea) solid var(--color-ocre);
+    font-family: var(--fuente-titulos);
+    font-style: normal;
+    font-size: 1.05rem;
+    color: var(--color-azul);
+}
+
+/* --------------------------------------------------------------------------
+   9. PIE DE PÁGINA Y FORMULARIO (selector de id + clase)
+   -------------------------------------------------------------------------- */
+#pie {
+    background-color: var(--color-tinta);
+    color: rgba(251, 247, 239, 0.85);
+    padding-top: 2.6rem;
+    padding-bottom: 1.6rem;
+}
+
+.pie-titulo {
+    font-family: var(--fuente-titulos);
+    color: var(--color-blanco);
+    font-size: 1.05rem;
+    margin-bottom: 0.8rem;
+}
+
+.pie-texto {
+    font-size: 0.92rem;
+    color: rgba(251, 247, 239, 0.75);
+}
+
+.pie-lista li {
+    margin-bottom: 0.4rem;
+}
+
+.pie-lista a {
+    color: rgba(251, 247, 239, 0.85);
+    font-size: 0.92rem;
+}
+
+.pie-lista a:hover {
+    color: var(--color-ocre);
+}
+
+.form-etiqueta {
+    display: block;
+    font-size: 0.85rem;
+    margin-bottom: 0.4rem;
+    color: rgba(251, 247, 239, 0.8);
+}
+
+.form-fila {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.form-campo {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 0.55rem 0.7rem;
+    border: 1px solid rgba(251, 247, 239, 0.3);
+    border-radius: var(--radio-borde);
+    background-color: rgba(251, 247, 239, 0.06);
+    color: var(--color-blanco);
+}
+
+.form-campo::placeholder {
+    color: rgba(251, 247, 239, 0.5);
+}
+
+.form-campo:focus {
+    outline: none;
+    border-color: var(--color-ocre);
+    background-color: rgba(251, 247, 239, 0.1);
+}
+
+.pie-separador {
+    border-color: rgba(251, 247, 239, 0.15);
+    margin: 1.8rem 0 1.2rem;
+}
+
+.pie-copy {
+    text-align: center;
+    font-size: 0.85rem;
+    color: rgba(251, 247, 239, 0.6);
+    margin-bottom: 0;
+}
+
+/* ==========================================================================
+   10. DISEÑO RESPONSIVO
+   Punto de quiebre solicitado por la consigna: menor a 768px.
+   ========================================================================== */
+@media (max-width: 767.98px) {
+
+    .hero {
+        padding: 2.6rem 0 2rem;
+        text-align: center;
+    }
+
+    .hero-texto {
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-acciones {
+        justify-content: center;
+    }
+
+    .bandas-poncho {
+        min-height: 140px;
+    }
+
+    #cabecera nav ul li a {
+        margin-left: 0;
+        padding: 0.6rem 0.4rem;
+    }
+
+    .franja-datos .dato-numero {
+        font-size: 1.5rem;
+    }
+
+    .titulo-seccion {
+        text-align: center;
+        font-size: 1.5rem;
+    }
+
+    .form-fila {
+        flex-direction: column;
+    }
+
+    .boton-secundario {
+        width: 100%;
+        text-align: center;
+    }
+}
