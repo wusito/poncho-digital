@@ -7,52 +7,59 @@
 
     <!-- Link CSS Boostrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link href="../../../../static/css/estilos3.css" rel="stylesheet">
+    <link href="../../../../static/css/estilos.css" rel="stylesheet">
 </head>
 
-<body class="d-flex flex-column min-vh-100 bg-light form-cuerpo">
+<body class="d-flex flex-column min-vh-100">
         <!-- ENCABEZADO -->
-        <header class="encabezado-gestion-prod">
+        <header class="cabecera" id="cabecera">
+            <div class="franja-tejido"></div>
+
             <!-- Menú de Navegación -->
-            <nav class="navbar" data-bs-theme="dark">
+            <nav class="navbar navbar-expand-md">
                 <div class="container-fluid d-flex flex-column flex-md-row align-items-center">
-                    <a class="navbar-brand" href="../../../../templates/index.html">
-                    <img src="../../../../static/img/LOGOS-PONCHO-2026-08-e1771597508102-768x223.png"          
-                        alt="Logo" class="img-fluid" style="max-width: 200px;">
-                    </a>
-                    <h1 class="text-center mt-3 mt-md-0 ms-md-3">Administración Productos</h1> <!-- Título Principal -->
-                </div>
+                    <a class="navbar-brand" href="../../../../templates/index.html">Poncho <span>Digital</span></a>
 
-                <div class="nav nav-tabs flex-nowrap overflow-auto" id="nav-tab" role="tablist">
-                    <button class="nav-link active" id="nav-inicio-tab"
-                        data-bs-toggle="tab" data-bs-target="#nav-inicio"
-                        type="button" role="tab" aria-controls="nav-inicio"
-                        aria-selected="true"> Inicio
+                    <h1 class="text-center mt-3">Administrar Productos</h1> <!-- Título Principal -->
+
+
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuGestionProductos" aria-controls="menuGestionProductos" aria-expanded="false" aria-label="Abrir menú de navegación">
+                        <span class="navbar-toggler-icon"></span>
                     </button>
 
-                    <button class="nav-link" id="nav-mis-productos-tab"
-                        data-bs-toggle="tab" data-bs-target="#nav-mis-productos"
-                        type="button" role="tab" aria-controls="nav-mis-productos"
-                        aria-selected="false"> Mis Productos
-                    </button>
+                    <div class="collapse navbar-collapse nav-tabs" id="menuGestionProductos" role="tablist">
+                        <div class="navbar-nav ms-auto text-center">
+                            <button class="nav-link active" id="nav-inicio-tab"
+                                data-bs-toggle="tab" data-bs-target="#nav-inicio"
+                                type="button" role="tab" aria-controls="nav-inicio"
+                                aria-selected="true"> Inicio
+                            </button>
 
-                    <button class="nav-link" id="nav-agregar-producto-tab"
-                        data-bs-toggle="tab" data-bs-target="#nav-agregar-producto"
-                        type="button" role="tab" aria-controls="nav-agregar-producto"
-                        aria-selected="false"> Agregar un Producto
-                    </button>
+                            <button class="nav-link" id="nav-mis-productos-tab"
+                                data-bs-toggle="tab" data-bs-target="#nav-mis-productos"
+                                type="button" role="tab" aria-controls="nav-mis-productos"
+                                aria-selected="false"> Mis Productos
+                            </button>
 
-                    <a class="nav-link" id="nav-sitio-principal-tab"
-                        href="../../../../templates/index.html"
-                        role="tab" aria-controls="nav-inicio"
-                        aria-selected="false"> Sitio Principal 
-                    </a>
+                            <button class="nav-link" id="nav-agregar-producto-tab"
+                                data-bs-toggle="tab" data-bs-target="#nav-agregar-producto"
+                                type="button" role="tab" aria-controls="nav-agregar-producto"
+                                aria-selected="false"> Agregar un Producto
+                            </button>
+
+                            <a class="nav-link" id="nav-sitio-principal-tab"
+                                href="../../../../templates/index.html"
+                                role="tab" aria-controls="nav-inicio"
+                                aria-selected="false"> Sitio Principal 
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </nav>
         </header>
 
         <!-- CONTENIDO -->
-        <main class="flex-grow-1 d-flex justify-content-center align-items-center p-4">
+        <main class="container-fluid flex-grow-1 d-flex justify-content-center align-items-center p-4">
 
             <!-- CONTENIDO DE LAS PESTAÑAS -->
             <div class="tab-content" id="nav-tabContent">
@@ -62,34 +69,34 @@
                     role="tabpanel" aria-labelledby="nav-inicio-tab" tabindex="0">
                     
                     <!--SECCIÓN 1: PESTAÑA DE INICIO -->
-                    <section class="container py-5">
+                    <section class="container-fluid py-5">
                         <div class="p-4 p-md-5 bg-light rounded shadow-lg">
-                            <h2 class="text-center mb-4 subtitulos">Bienvenido</h2>
+                            <h2 class="text-center mb-4">Bienvenido</h2>
 
-                            <p class="lead text-center">
+                            <p class="text-center">
                                 Este espacio está diseñado para que puedas gestionar tus productos artesanales de manera sencilla y rápida. Desde aquí podrás visualizar tus publicaciones, agregar nuevos productos, modificar información existente o eliminar artículos que ya no desees mostrar en el sitio.
                             </p>
                             
-                            <p class="lead text-center">
+                            <p class="text-center">
                                 Poncho Digital busca promover el trabajo de los artesanos de Catamarca, ofreciendo una plataforma moderna, accesible y pensada para potenciar tu presencia en el mercado digital.
                             </p>
                             
                             <hr class="my-4">
 
-                            <div class="lead mt-4 text-center mx-auto">
-                                <h3 class="fw-medium mb-3">¿Qué podés hacer desde esta página?</h3>
+                            <div class="mt-4 text-center mx-auto">
+                                <h3 class="mb-3">¿Qué podés hacer desde esta página?</h3>
                                 
                                 <ul class="text-center list-unstyled">
-                                    <li class="mb-2">📦 Ver todos tus productos publicados</li>
-                                    <li class="mb-2">➕ Agregar nuevos productos</li>
-                                    <li class="mb-2">✏️ Modificar productos existentes</li>
-                                    <li class="mb-2">🗑️ Eliminar productos que ya no quieras mostrar</li>
+                                    <li class="mb-2">Ver todos tus productos publicados</li>
+                                    <li class="mb-2">Agregar nuevos productos</li>
+                                    <li class="mb-2">Modificar productos existentes</li>
+                                    <li class="mb-2">Eliminar productos que ya no quieras mostrar</li>
                                 </ul>
                             </div>
 
                             <hr class="my-4">
 
-                            <p class="mt-4 lead text-center">
+                            <p class="mt-4 text-center">
                                 Usá el menú  superior para navegar entre las diferentes secciones del sistema.
                             </p>
                         </div>
@@ -103,10 +110,10 @@
                     role="tabpanel" aria-labelledby="nav-mis-productos-tab" tabindex="0">
                     
                     <!--SECCIÓN 2: VISUALIZAR LOS PRODUCTOS PUBLICADOS -->
-                    <section class="container py-5">
+                    <section class="container-fluid py-5">
                         
                         <div class="text-center">
-                            <h2 class="subtitulos">Mis Productos Publicados</h2>
+                            <h2>Mis Productos Publicados</h2>
                             <p>Aquí puedes visualizar, gestionar y administrar todo tu catálogo artesanal y creaciones activas en la plataforma.</p>
                         </div>
                         
@@ -173,10 +180,10 @@
 
 
                     <!--SECCIÓN 3: MODIFICACIÓN DE UN PRODUCTO -->
-                    <section class="container py-5" id="seccion-modificar" style="display:none;">
+                    <section class="container-fluid py-5" id="seccion-modificar" style="display:none;">
                         
                         <div class="text-center">
-                            <h2 class="subtitulos">Modificar Producto</h2>
+                            <h2>Modificar Producto</h2>
                             <p>Modifica las características del producto completando el formulario para actualizarlo en el sistema.</p>
                         </div>
                         
@@ -287,10 +294,10 @@
 
 
                     <!-- SECCIÓN 4: ELIMINACIÓN DE PRODUCTO -->
-                    <section class="container py-5" id="seccion-eliminar" style="display:none;">
+                    <section class="container-fluid py-5" id="seccion-eliminar" style="display:none;">
 
                         <div class="text-center">
-                            <h2 class="subtitulos">Eliminar Producto</h2>
+                            <h2>Eliminar Producto</h2>
                         </div>                       
 
                         <!-- Modal Bootstrap -->
@@ -333,10 +340,10 @@
                     role="tabpanel" aria-labelledby="nav-agregar-producto-tab" tabindex="0">
 
                     <!--SECCIÓN 5: ALTA DE UN PRODUCTO -->
-                    <section class="container py-5" id="agregar-producto">
+                    <section class="container-fluid py-5" id="agregar-producto">
 
                         <div class="text-center">
-                            <h2 class="subtitulos">Cargar un Producto</h2>
+                            <h2>Cargar un Producto</h2>
                             <p>Registra un nuevo producto completando el formulario para publicarlo en el sistema.</p>
                         </div>
    
@@ -394,7 +401,7 @@
                                         </div>
 
                                         <!-- Subcategoría del producto: deshabilitada -->
-                                        <div class="col-md-12 position-relative form-categorias">
+                                        <div class="col-md-12 position-relative form-grupo">
                                             <label for="subcategoria">Selecciona la subcategoría del producto:</label>
 
                                             <div class="col-12 position-relative">
@@ -449,7 +456,7 @@
                                 </fieldset>
 
                                 <!-- Botones -->
-                                <div class="row justify-content-center form-acciones">
+                                <div class="col-10 col-lg-10 row justify-content-center">
                                     <div class="col-md-6 mb-3 mb-md-0">
                                         <button 
                                             class="btn btn-info w-100 mb-2" 
@@ -471,8 +478,44 @@
         </main>
 
         <!-- Footer: sección futuramente modularizable -->
-        <footer class="mt-auto text-light text-center py-3 mt-5 form-pie">
-            <p class="mb-0">&copy; <em>2026 Ministerio de Cultura - Provincia de Catamarca</em></p>
+        <footer class="mt-auto py-3 mt-5 pie" id="pie">
+            <div class="franja-tejido"></div>
+
+            <div class="container-fluid">
+                <div class="row gy-4">
+
+                    <div class="col-12 col-md-4">
+                        <h4 class="pie-titulo">Poncho Digital</h4>
+                        <p class="pie-texto">Ministerio de Cultura, Turismo y Deporte de la Provincia de Catamarca.</p>
+                        <p class="pie-texto">Predio Ferial Catamarca — Av. México s/n.</p>
+                    </div>
+
+                    <div class="col-12 col-md-4">
+                        <h4 class="pie-titulo">Enlaces</h4>
+                        <ul class="pie-lista">
+                            <li><a href="../../../../templates/index.html">Inicio</a></li>
+                            <li><a href="../../../../apps/artesanos/templates/artesanos/registro_artesano.html">Registro de Artesanos</a></li>
+                            <li><a href="gestion_productos.html">Gestión de Productos</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-12 col-md-4">
+                        <h4 class="pie-titulo">Recibí novedades</h4>
+                        <form class="form-novedades" action="#" method="post">
+                            <label for="correoNovedades" class="form-etiqueta">Correo electrónico</label>
+                            <div class="form-fila">
+                                <input type="email" id="correoNovedades" name="correoNovedades" class="form-campo" placeholder="tu@email.com" required>
+                                <button type="submit" class="boton boton-secundario">Sumarme</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+
+                <hr class="pie-separador">
+
+                <p class="pie-copy">&copy; 2026 Ministerio de Cultura - Provincia de Catamarca</p>
+            </div>
         </footer>
 
     <!-- JavaScript de Boostrap -->
