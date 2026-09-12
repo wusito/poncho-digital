@@ -150,7 +150,7 @@
                                                 <td>Prendas de Vicuña</td>
                                                 <td>Activo</td>
                                                 <td>
-                                                    <button class="btn btn-warning w-100 mb-2" type="button" onclick="alert('Funcionalidad en desarrollo')">Modificar</button>
+                                                    <button class="btn btn-warning w-100 mb-2" type="button" onclick="mostrarFormularioEdicion()">Modificar</button>
                                                     <button class="btn btn-danger w-100 mb-2" type="button" onclick="alert('Funcionalidad en desarrollo')">Eliminar</button>
                                                 </td>
                                             </tr>
@@ -166,7 +166,7 @@
                                                 <td>Accesorios</td>
                                                 <td>Activo</td>
                                                 <td>
-                                                    <button class="btn btn-warning w-100 mb-2" type="button" onclick="alert('Funcionalidad en desarrollo')">Modificar</button>
+                                                    <button class="btn btn-warning w-100 mb-2" type="button" onclick="mostrarFormularioEdicion()">Modificar</button>
                                                     <button class="btn btn-danger w-100 mb-2" type="button" onclick="alert('Funcionalidad en desarrollo')">Eliminar</button>
                                                 </td>
                                             </tr>
@@ -188,7 +188,7 @@
                         </div>
                         
                         <!-- Formulario oculto hasta que JS lo active -->
-                        <form id="form-modificar" action="modificar-producto" method="POST" enctype="multipart/form-data">
+                        <form id="form-modificar-producto" action="modificar-producto" method="POST" enctype="multipart/form-data">
 
                             <div class="row justify-content-center">
                                 <fieldset class="col-12 col-md-10 shadow-lg form-fieldset">
@@ -205,12 +205,12 @@
                                         <div class="col-md-12 position-relative form-grupo">
                                             <label 
                                                 class="form-label"
-                                                for="nombre_edit">Nuevo nombre del producto:</label>
+                                                for="nombre">Nuevo nombre del producto:</label>
                                             <input 
                                                 class="form-control" 
                                                 type="text" 
-                                                name="nombre_edit" 
-                                                id="nombre_edit" 
+                                                name="nombre" 
+                                                id="nombre" 
                                                 placeholder="Ej: Poncho" 
                                                 required>
                                         </div>
@@ -219,11 +219,11 @@
                                         <div class="col-md-12 position-relative form-grupo">
                                             <label 
                                                 class="form-label" 
-                                                for="descripcion_edit">Nueva descripción del producto:</label>
+                                                for="descripcion">Nueva descripción del producto:</label>
                                             <textarea 
                                                 class="form-control" 
-                                                name="descripcion_edit" 
-                                                id="descripcion_edit" 
+                                                name="descripcion" 
+                                                id="descripcion" 
                                                 rows="4" 
                                                 placeholder="Detalla las características del producto..." 
                                                 required></textarea>
@@ -233,12 +233,12 @@
                                         <div class="col-md-12 position-relative form-grupo">
                                             <label 
                                                 class="form-label" 
-                                                for="stock_edit">Nuevo stock (cantidad) del producto:</label>
+                                                for="stock">Nuevo stock (cantidad) del producto:</label>
                                             <input 
                                                 class="form-control" 
                                                 type="number" 
-                                                name="stock_edit" 
-                                                id="stock_edit" 
+                                                name="stock" 
+                                                id="stock" 
                                                 placeholder="Ej: 5" 
                                                 required>
                                         </div>
@@ -247,12 +247,12 @@
                                         <div class="col-md-12 position-relative form-grupo">
                                             <label 
                                                 lass="form-label" 
-                                                for="precio_edit">Nuevo precio del producto (por unidad):</label>
+                                                for="precio_unitario">Nuevo precio del producto (por unidad):</label>
                                             <input 
                                                 class="form-control" 
-                                                type="number" 
-                                                name="precio_edit" 
-                                                id="precio_edit" 
+                                                type="number"
+                                                name="precio_unitario" 
+                                                id="precio_unitario" 
                                                 placeholder="Ej: 850000" 
                                                 required>
                                         </div>
@@ -261,12 +261,12 @@
                                         <div class="col-md-12 position-relative form-grupo">
                                             <label 
                                                 class="form-label" 
-                                                for="imagen_edit">Actualizar imagen del producto:</label>
+                                                for="imagen">Actualizar imagen del producto:</label>
                                             <input 
                                                 class="form-control" 
                                                 type="file" 
-                                                name="imagen_edit" 
-                                                id="imagen_edit" 
+                                                name="imagen" 
+                                                id="imagen" 
                                                 accept="image/*" 
                                                 required>
                                         </div>
@@ -279,7 +279,7 @@
                                         <button 
                                             class="btn btn-info w-100 mb-2" 
                                             type="button" 
-                                            onclick="alert('Funcionalidad en desarrollo')">Cancelar</button>
+                                            onclick="cancelarFormularioEdicion()">Cancelar</button>
                                     </div>
                                     <div class="col-md-6">
                                         <button 
@@ -348,7 +348,7 @@
                         </div>
    
 
-                        <form id="alta-producto" method="POST" enctype="multipart/form-data">
+                        <form id="form-alta-producto" method="POST" enctype="multipart/form-data">
                             <div class="row justify-content-center">
                                 <fieldset class="col-12 col-md-10 shadow-lg form-fieldset">
                                     <legend>Datos del Producto</legend>

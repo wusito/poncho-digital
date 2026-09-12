@@ -1,4 +1,4 @@
-// Definició de eventos y datos globales.
+// Definición de eventos y datos globales.
 const categoriaSelect = document.getElementById("categoria");
 const subcategoriaSelect = document.getElementById("subcategoria");
 
@@ -65,9 +65,17 @@ categoriaSelect.addEventListener("change", function () {
 
 
 
-// Evento para la validación al enviar el formulario.
-document.getElementById("alta-producto").addEventListener("submit", function(e) {
+// Evento para la validación al enviar el formulario de alta y modificación.
+document.getElementById("form-alta-producto").addEventListener("submit", validarFormProductos);
+document.getElementById("form-modificar-producto").addEventListener("submit", validarFormProductos);
+
+
+
+// Función con la lógica en común para validar los formularios de alta y modificación de productos.
+function validarFormProductos(e) {
     e.preventDefault(); // evita envío si hay errores.
+
+    const formularioActual = e.target; // Captura cuál formulario se disparó
 
     const nombre = document.getElementById("nombre");
     const regexNombre = /^[a-zA-Z0-9 áéíóúÁÉÍÓÚñÑ()-]+$/;
@@ -118,4 +126,30 @@ document.getElementById("alta-producto").addEventListener("submit", function(e) 
 
     // Enviar el formulario pasadas las instancias de verificación.
     this.submit();
-});
+};
+
+
+
+// Función que muestra el formulario de modificar un producto (botón "Modificar").
+function mostrarFormularioEdicion() {
+    const seccionModificar = document.getElementById("seccion-modificar");
+    
+    // Cambia el estilo para que el contenedor sea visible.
+    seccionModificar.style.display = "block"; 
+    
+    // Hace scroll suavemente hacia el formulario.
+    seccionModificar.scrollIntoView({ behavior: "smooth" });
+}
+
+
+
+// Función que oculta el formulario de modificar un producto (botón "Cancelar").
+function cancelarFormularioEdicion() {
+    const seccionModificar = document.getElementById("seccion-modificar");
+    
+    // Cambia el estilo para que el contenedor no vuelva a ser visible.
+    seccionModificar.style.display = "none"; 
+    
+    // Hace scroll suavemente hacia arriba.
+    seccionModificar.scrollIntoView({ behavior: "smooth" });
+}
