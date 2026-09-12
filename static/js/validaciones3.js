@@ -4,13 +4,14 @@ const subcategoriaSelect = document.getElementById("subcategoria");
 
 const subcategoriasPorCategoria = {
     "textiles-tradicionales": [
-        "Ponchos",
+        "Prendas de Vicuña",
         "Fajas",
         "Mantas",
         "Chalinas"
     ],
     "artesanias-articulos-hogar": [
         "Cerámica",
+        "Accesorios",
         "Madera tallada",
         "Cestería",
         "Decoración"
@@ -75,7 +76,7 @@ document.getElementById("form-modificar-producto").addEventListener("submit", va
 function validarFormProductos(e) {
     e.preventDefault(); // evita envío si hay errores.
 
-    const formularioActual = e.target; // Captura cuál formulario se disparó
+    const formularioActual = e.target; // Captura cuál formulario se disparó.
 
     const nombre = document.getElementById("nombre");
     const regexNombre = /^[a-zA-Z0-9 áéíóúÁÉÍÓÚñÑ()-]+$/;
@@ -149,7 +150,4 @@ function cancelarFormularioEdicion() {
     
     // Cambia el estilo para que el contenedor no vuelva a ser visible.
     seccionModificar.style.display = "none"; 
-    
-    // Hace scroll suavemente hacia arriba.
-    seccionModificar.scrollIntoView({ behavior: "smooth" });
 }
