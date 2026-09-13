@@ -120,7 +120,7 @@
                         <div class="row justify-content-center">
                             <fieldset class="col-md-10 mb-3 shadow-lg form-fieldset">
                                 <div class="table-responsive">
-                                    <table class="table table-bordered">
+                                    <table class="table table-bordered" id="tabla-productos-publicados">
                                         <!--- Encabezado -->
                                         <thead class="table-dark">
                                             <tr>
@@ -138,60 +138,7 @@
                                         </thead>
 
                                         <!-- Contenido - 2 Ejemplos -->
-                                        <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td><img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Poncho.jpg?utm_source=es.wikipedia.org&utm_campaign=index&utm_content=original" alt="Imagen genérica de un poncho" class="img-fluid" style="max-width: 65px;"></td>
-                                                <td>Poncho</td>
-                                                <td>Abrigo tradicional confeccionado en tela gruesa.</td>
-                                                <td>6</td>
-                                                <td>$850.000</td>
-                                                <td>Textiles Tradicionales</td>
-                                                <td>Prendas de Vicuña</td>
-                                                <td>Activo</td>
-                                                <td>
-                                                    <button 
-                                                        class="btn btn-warning w-100 mb-2" 
-                                                        type="button" 
-                                                        onclick="mostrarFormularioEdicion()">
-                                                        Modificar
-                                                    </button>
-                                                    <button 
-                                                        class="btn btn-danger w-100 mb-2" 
-                                                        type="button" 
-                                                        data-bs-toggle="modal" 
-                                                        data-bs-target="#modalEliminar">
-                                                        Eliminar
-                                                    </button>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td>2</td>
-                                                <td><img src="https://matesibarra.com/wp-content/uploads/2023/02/MayoPubli-11-scaled.jpg" alt="Imagen genérica de un mate" class="img-fluid" style="max-width: 65px;"></td>
-                                                <td>Mate</td>
-                                                <td>Recipiente tradicional utilizado para beber la infusión de yerba mate.</td>
-                                                <td>7</td>
-                                                <td>$50.000</td>
-                                                <td>Artesanías y Artículos para el Hogar</td>
-                                                <td>Accesorios</td>
-                                                <td>Activo</td>
-                                                <td>
-                                                    <button
-                                                        class="btn btn-warning w-100 mb-2" 
-                                                        type="button" 
-                                                        onclick="mostrarFormularioEdicion()">
-                                                        Modificar
-                                                    </button>
-                                                    <button 
-                                                        class="btn btn-danger w-100 mb-2" 
-                                                        type="button" 
-                                                        data-bs-toggle="modal" 
-                                                        data-bs-target="#modalEliminar">
-                                                        Eliminar
-                                                    </button>
-                                                </td>
-                                            </tr>
+                                        <tbody id="cuerpo-tabla-productos-publicados">
                                         </tbody>
                                     </table>
                                 </div>
@@ -232,7 +179,7 @@
                                                 class="form-control" 
                                                 type="text" 
                                                 name="nombre" 
-                                                id="nombre" 
+                                                id="nombre_edit" 
                                                 placeholder="Ej: Poncho" 
                                                 required>
                                         </div>
@@ -245,7 +192,7 @@
                                             <textarea 
                                                 class="form-control" 
                                                 name="descripcion" 
-                                                id="descripcion" 
+                                                id="descripcion_edit" 
                                                 rows="4" 
                                                 placeholder="Detalla las características del producto..." 
                                                 required></textarea>
@@ -256,7 +203,11 @@
                                             <label for="categoria">Selecciona la categoría del producto:</label>
                                             
                                             <div class="col-12 position-relative">
-                                                <select class="form-select" name="categoria" id="categoria" aria-label="Default select example">
+                                                <select
+                                                    class="form-select" 
+                                                    name="categoria" 
+                                                    id="categoria_edit" 
+                                                    aria-label="Default select example">
                                                     <option value="textiles-tradicionales">Textiles Tradicionales</option>
                                                     <option value="artesanias-articulos-hogar">Artesanías y Artículos para el Hogar</option>
                                                     <option value="productos-regionales-delicatessen">Productos Regionales y Delicatessen</option>
@@ -270,7 +221,11 @@
                                             <label for="subcategoria">Selecciona la subcategoría del producto:</label>
 
                                             <div class="col-12 position-relative">
-                                                <select class="form-select" name="subcategoria" id="subcategoria" aria-label="Default select example" disabled>
+                                                <select 
+                                                    class="form-select" 
+                                                    name="subcategoria" 
+                                                    id="subcategoria_edit" 
+                                                    aria-label="Default select example" disabled>
                                                 <option value="">Selecciona primero una categoría.</option>
                                             </select>
                                             </div>
@@ -285,7 +240,7 @@
                                                 class="form-control" 
                                                 type="number" 
                                                 name="stock" 
-                                                id="stock" 
+                                                id="stock_edit" 
                                                 placeholder="Ej: 5" 
                                                 required>
                                         </div>
@@ -299,7 +254,7 @@
                                                 class="form-control" 
                                                 type="number"
                                                 name="precio_unitario" 
-                                                id="precio_unitario" 
+                                                id="precio_unitario_edit" 
                                                 placeholder="Ej: 850000" 
                                                 required>
                                         </div>
@@ -313,7 +268,7 @@
                                                 class="form-control" 
                                                 type="file" 
                                                 name="imagen" 
-                                                id="imagen" 
+                                                id="imagen_edit" 
                                                 accept="image/*">
                                         </div>
                                     </div>
@@ -332,8 +287,7 @@
                                     <div class="col-md-6">
                                         <button 
                                             class="btn btn-success w-100 mb-2" 
-                                            type="submit" 
-                                            onclick="alert('Funcionalidad en desarrollo')">
+                                            type="submit" >
                                             Guardar Cambios
                                         </button>
                                     </div>
@@ -367,7 +321,7 @@
                                             type="button" 
                                             class="btn btn-danger" 
                                             id="confirmar-eliminar"
-                                            onclick="alert('Funcionalidad de borrado en backend en desarrollo')">
+                                            onclick="ejecutarEliminacion()">
                                             Sí, eliminar
                                         </button>
                                         
