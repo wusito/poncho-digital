@@ -3,10 +3,11 @@ document.getElementById("formRegistroArtesano").addEventListener("submit", valid
 
 // Función con la lógica para validar el formulario de artesanos.
 function validarFormArtesano(e) {
+    
     e.preventDefault(); // evita envío si hay errores.
 
     const formularioActual = e.target; // Captura cuál formulario se disparó.
-
+    const nombre=document.getElementById("nombre").value;
     const dni = document.getElementById("dni");
     const cuil = document.getElementById("cuil");
     const fechaNacimiento = document.getElementById("fechaNacimiento");
@@ -26,6 +27,9 @@ function validarFormArtesano(e) {
 
     if (!fechaNacimiento.value) {
         errores.push("Debe ingresar una fecha de nacimiento.");
+    }
+    if(nombre.length<2){
+        errores.push("debe ingresar un nombre valido")
     }
 
     // Validaciones intermedias (Edad y Fecha).
