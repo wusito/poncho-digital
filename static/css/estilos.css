@@ -64,7 +64,6 @@ iframe{
     transform: translateX(-50%);
     width: 90%;
     max-width: 900px;
-    padding: 20px 25px;
     background: rgba(0, 0, 0, 0.55);
     border-radius: 6px;
     color: #ffffff;
