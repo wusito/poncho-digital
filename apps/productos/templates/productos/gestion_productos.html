@@ -120,7 +120,7 @@
                         <div class="row justify-content-center">
                             <fieldset class="col-md-10 mb-3 shadow-lg form-fieldset">
                                 <div class="table-responsive">
-                                    <table class="table table-bordered">
+                                    <table class="table table-bordered" id="tabla-productos-publicados">
                                         <!--- Encabezado -->
                                         <thead class="table-dark">
                                             <tr>
@@ -138,38 +138,7 @@
                                         </thead>
 
                                         <!-- Contenido - 2 Ejemplos -->
-                                        <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td><img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Poncho.jpg?utm_source=es.wikipedia.org&utm_campaign=index&utm_content=original" alt="Imagen genérica de un poncho" class="img-fluid" style="max-width: 65px;"></td>
-                                                <td>Poncho</td>
-                                                <td>Abrigo tradicional confeccionado en tela gruesa.</td>
-                                                <td>6</td>
-                                                <td>$850.000</td>
-                                                <td>Textiles Tradicionales</td>
-                                                <td>Prendas de Vicuña</td>
-                                                <td>Activo</td>
-                                                <td>
-                                                    <button class="btn btn-warning w-100 mb-2" type="button" onclick="alert('Funcionalidad en desarrollo')">Modificar</button>
-                                                    <button class="btn btn-danger w-100 mb-2" type="button" onclick="alert('Funcionalidad en desarrollo')">Eliminar</button>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td>2</td>
-                                                <td><img src="https://matesibarra.com/wp-content/uploads/2023/02/MayoPubli-11-scaled.jpg" alt="Imagen genérica de un mate" class="img-fluid" style="max-width: 65px;"></td>
-                                                <td>Mate</td>
-                                                <td>Recipiente tradicional utilizado para beber la infusión de yerba mate.</td>
-                                                <td>7</td>
-                                                <td>$50.000</td>
-                                                <td>Artesanías y Artículos para el Hogar</td>
-                                                <td>Accesorios</td>
-                                                <td>Activo</td>
-                                                <td>
-                                                    <button class="btn btn-warning w-100 mb-2" type="button" onclick="alert('Funcionalidad en desarrollo')">Modificar</button>
-                                                    <button class="btn btn-danger w-100 mb-2" type="button" onclick="alert('Funcionalidad en desarrollo')">Eliminar</button>
-                                                </td>
-                                            </tr>
+                                        <tbody id="cuerpo-tabla-productos-publicados">
                                         </tbody>
                                     </table>
                                 </div>
@@ -188,7 +157,7 @@
                         </div>
                         
                         <!-- Formulario oculto hasta que JS lo active -->
-                        <form id="form-modificar" action="modificar-producto" method="POST" enctype="multipart/form-data">
+                        <form id="form-modificar-producto" action="modificar-producto" method="POST" enctype="multipart/form-data">
 
                             <div class="row justify-content-center">
                                 <fieldset class="col-12 col-md-10 shadow-lg form-fieldset">
@@ -205,11 +174,11 @@
                                         <div class="col-md-12 position-relative form-grupo">
                                             <label 
                                                 class="form-label"
-                                                for="nombre_edit">Nuevo nombre del producto:</label>
+                                                for="nombre">Nuevo nombre del producto:</label>
                                             <input 
                                                 class="form-control" 
                                                 type="text" 
-                                                name="nombre_edit" 
+                                                name="nombre" 
                                                 id="nombre_edit" 
                                                 placeholder="Ej: Poncho" 
                                                 required>
@@ -219,25 +188,58 @@
                                         <div class="col-md-12 position-relative form-grupo">
                                             <label 
                                                 class="form-label" 
-                                                for="descripcion_edit">Nueva descripción del producto:</label>
+                                                for="descripcion">Nueva descripción del producto:</label>
                                             <textarea 
                                                 class="form-control" 
-                                                name="descripcion_edit" 
+                                                name="descripcion" 
                                                 id="descripcion_edit" 
                                                 rows="4" 
                                                 placeholder="Detalla las características del producto..." 
                                                 required></textarea>
                                         </div>
 
+                                        <!-- Categoría del producto -->
+                                        <div class="col-md-12 position-relative form-grupo">
+                                            <label for="categoria">Selecciona la categoría del producto:</label>
+                                            
+                                            <div class="col-12 position-relative">
+                                                <select
+                                                    class="form-select" 
+                                                    name="categoria" 
+                                                    id="categoria_edit" 
+                                                    aria-label="Default select example">
+                                                    <option value="textiles-tradicionales">Textiles Tradicionales</option>
+                                                    <option value="artesanias-articulos-hogar">Artesanías y Artículos para el Hogar</option>
+                                                    <option value="productos-regionales-delicatessen">Productos Regionales y Delicatessen</option>
+                                                    <option value="sector-comercial">Sector Comercial</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <!-- Subcategoría del producto: deshabilitada -->
+                                        <div class="col-md-12 position-relative form-grupo">
+                                            <label for="subcategoria">Selecciona la subcategoría del producto:</label>
+
+                                            <div class="col-12 position-relative">
+                                                <select 
+                                                    class="form-select" 
+                                                    name="subcategoria" 
+                                                    id="subcategoria_edit" 
+                                                    aria-label="Default select example" disabled>
+                                                <option value="">Selecciona primero una categoría.</option>
+                                            </select>
+                                            </div>
+                                        </div>
+
                                         <!-- Stock del producto -->
                                         <div class="col-md-12 position-relative form-grupo">
                                             <label 
                                                 class="form-label" 
-                                                for="stock_edit">Nuevo stock (cantidad) del producto:</label>
+                                                for="stock">Nuevo stock (cantidad) del producto:</label>
                                             <input 
                                                 class="form-control" 
                                                 type="number" 
-                                                name="stock_edit" 
+                                                name="stock" 
                                                 id="stock_edit" 
                                                 placeholder="Ej: 5" 
                                                 required>
@@ -247,12 +249,12 @@
                                         <div class="col-md-12 position-relative form-grupo">
                                             <label 
                                                 lass="form-label" 
-                                                for="precio_edit">Nuevo precio del producto (por unidad):</label>
+                                                for="precio_unitario">Nuevo precio del producto (por unidad):</label>
                                             <input 
                                                 class="form-control" 
-                                                type="number" 
-                                                name="precio_edit" 
-                                                id="precio_edit" 
+                                                type="number"
+                                                name="precio_unitario" 
+                                                id="precio_unitario_edit" 
                                                 placeholder="Ej: 850000" 
                                                 required>
                                         </div>
@@ -261,14 +263,13 @@
                                         <div class="col-md-12 position-relative form-grupo">
                                             <label 
                                                 class="form-label" 
-                                                for="imagen_edit">Actualizar imagen del producto:</label>
+                                                for="imagen">Actualizar imagen del producto:</label>
                                             <input 
                                                 class="form-control" 
                                                 type="file" 
-                                                name="imagen_edit" 
+                                                name="imagen" 
                                                 id="imagen_edit" 
-                                                accept="image/*" 
-                                                required>
+                                                accept="image/*">
                                         </div>
                                     </div>
                                 </fieldset>
@@ -279,13 +280,16 @@
                                         <button 
                                             class="btn btn-info w-100 mb-2" 
                                             type="button" 
-                                            onclick="alert('Funcionalidad en desarrollo')">Cancelar</button>
+                                            onclick="cancelarFormularioEdicion()">
+                                            Cancelar
+                                        </button>
                                     </div>
                                     <div class="col-md-6">
                                         <button 
                                             class="btn btn-success w-100 mb-2" 
-                                            type="submit" 
-                                            onclick="alert('Funcionalidad en desarrollo')">Guardar Cambios</button>
+                                            type="submit" >
+                                            Guardar Cambios
+                                        </button>
                                     </div>
                                 </div>
                             </div>       
@@ -294,38 +298,40 @@
 
 
                     <!-- SECCIÓN 4: ELIMINACIÓN DE PRODUCTO -->
-                    <section class="container-fluid py-5" id="seccion-eliminar" style="display:none;">
-
-                        <div class="text-center">
-                            <h2>Eliminar Producto</h2>
-                        </div>                       
+                    <section class="container-fluid py-5" id="seccion-eliminar">                       
 
                         <!-- Modal Bootstrap -->
                         <div class="modal fade" id="modalEliminar" tabindex="-1" aria-labelledby="modalEliminarLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
 
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="modalEliminarLabel">Confirmar eliminación</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    <div class="text-center">
+                                        <h2>Eliminar Producto</h2>
+                                        <p>ADVERTENCIA: Al apretar el botón "Sí, eliminar" eliminarás este producto del sistema.</p>
                                     </div>
 
-                                    <div class="modal-body">
+                                    <div class="modal-body text-center">
                                         <p>¿Estás seguro de que deseas eliminar este producto?</p>
                                         <input type="hidden" id="producto_id_eliminar">
                                     </div>
 
                                     <div class="modal-footer">
+                                        <!-- Este botón se conectará a Django en el futuro. -->
                                         <button 
                                             type="button" 
                                             class="btn btn-danger" 
                                             id="confirmar-eliminar"
-                                            onclick="alert('Funcionalidad en desarrollo')">Sí, eliminar</button>
+                                            onclick="ejecutarEliminacion()">
+                                            Sí, eliminar
+                                        </button>
+                                        
+                                        <!-- Este botón cierra el modal. -->
                                         <button 
                                             type="button" 
                                             class="btn btn-secondary" 
-                                            data-bs-dismiss="modal"
-                                            onclick="alert('Funcionalidad en desarrollo')">Cancelar</button>
+                                            data-bs-dismiss="modal">
+                                            Cancelar
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -348,7 +354,7 @@
                         </div>
    
 
-                        <form action="guardar-producto" method="POST" enctype="multipart/form-data">
+                        <form id="form-alta-producto" method="POST" enctype="multipart/form-data">
                             <div class="row justify-content-center">
                                 <fieldset class="col-12 col-md-10 shadow-lg form-fieldset">
                                     <legend>Datos del Producto</legend>
@@ -380,10 +386,6 @@
                                                 rows="4" 
                                                 placeholder="Detalla las características del producto..." 
                                                 required></textarea>
-                                            <button 
-                                                class="btn btn-secondary w-100 mb-2" 
-                                                type="submit"  
-                                                onclick="alert('Funcionalidad en desarrollo')">Enviar</button>
                                         </div>
 
                                         <!-- Categoría del producto -->
@@ -460,13 +462,16 @@
                                     <div class="col-md-6 mb-3 mb-md-0">
                                         <button 
                                             class="btn btn-info w-100 mb-2" 
-                                            type="reset">Limpiar Formulario</button>
+                                            type="reset">
+                                            Limpiar Formulario
+                                        </button>
                                     </div>
                                     <div class="col-md-6">
                                         <button 
                                             class="btn btn-success w-100 mb-2"
-                                            type="submit" 
-                                            onclick="alert('Funcionalidad en desarrollo')">Publicar Producto</button>
+                                            type="submit">
+                                            Publicar Producto
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -517,6 +522,9 @@
                 <p class="pie-copy">&copy; 2026 Ministerio de Cultura - Provincia de Catamarca</p>
             </div>
         </footer>
+
+    <!-- Validaciones.js -->
+    <script src="../../../../static/js/validaciones3.js"></script>
 
     <!-- JavaScript de Boostrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
