@@ -41,7 +41,6 @@
 
     <main>
 
-        <!-- HERO -->
         <section class="hero" id="inicio">
             <div class="container-fluid">
                 <div class="row align-items-center gy-4">
@@ -92,7 +91,6 @@
             </div>
         </section>
 
-        <!-- SECCIONES / MÓDULOS DEL SISTEMA -->
         <section class="secciones" id="secciones">
             <div class="container-fluid">
 
@@ -131,7 +129,6 @@
             </div>
         </section>
 
-        <!-- PLATAFORMA / TEXTO INSTITUCIONAL -->
         <section class="plataforma" id="plataforma">
             <div class="container-fluid">
                 <div class="row align-items-center gy-4">
@@ -178,12 +175,14 @@
 
                 <div class="col-12 col-md-4">
                     <h4 class="pie-titulo">Recibí novedades</h4>
-                    <form class="form-novedades" action="#" method="post">
+                    <form class="form-novedades" id="formNovedades" action="#" method="post" novalidate>
                         <label for="correoNovedades" class="form-etiqueta">Correo electrónico</label>
                         <div class="form-fila">
-                            <input type="email" id="correoNovedades" name="correoNovedades" class="form-campo" placeholder="tu@email.com" required>
-                            <button type="submit" class="boton boton-secundario">Sumarme</button>
+                            <input type="email" id="correoNovedades" name="correoNovedades" class="form-campo" placeholder="tu@email.com" required autocomplete="email">
+                            <button type="submit" class="boton boton-secundario" id="botonNovedades" disabled>Sumarme</button>
                         </div>
+                        <p class="mensaje-error d-none" id="errorNovedades"></p>
+                        <p class="mensaje-exito d-none" id="exitoNovedades">¡Gracias por sumarte! Vas a recibir las novedades de la Fiesta del Poncho en tu correo.</p>
                     </form>
                 </div>
 
@@ -196,6 +195,7 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../static/js/validaciones1.js"></script>
 
 </body>
 </html>
