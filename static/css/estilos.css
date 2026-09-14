@@ -44,7 +44,7 @@ iframe{
     display: flex;
     padding: 0;
     width: 300%;
-    animation: slide 20s infinite alternate ease-in-out;
+    animation: slide 30s infinite alternate ease-in-out;
 }
 .slider-box li{
     width: 100%;
