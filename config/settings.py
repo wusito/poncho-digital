@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Apps Poncho Digital:
     'apps.productos',
+    'apps.artesanos',
+    'apps.stands',
 ]
 
 MIDDLEWARE = [
