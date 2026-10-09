@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     # Apps Poncho Digital:
     'apps.productos',
     'apps.usuarios',
+    'apps.reportes',
+    'apps.artesanos',
+    'apps.stands',
 ]
 
 MIDDLEWARE = [
