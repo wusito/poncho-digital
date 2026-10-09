@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Apps Poncho Digital:
     'apps.productos',
+    'apps.usuarios',
     'apps.reportes',
     'apps.artesanos',
     'apps.stands',
