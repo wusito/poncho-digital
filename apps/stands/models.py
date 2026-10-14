@@ -11,8 +11,6 @@ class Stand(models.Model):
     ubicacion_mapa = models.CharField(max_length=255)
     estado = models.CharField(max_length=15, choices=ESTADOS, default='Disponible')
 
-    # Asociación OneToOne: Un stand pertenece a un artesano.
-    # Usamos SET_NULL para que, si se borra el artesano, el stand no se destruya y vuelva a quedar libre.
     artesano = models.OneToOneField(
         'artesanos.Artesano',
         on_delete=models.SET_NULL,
