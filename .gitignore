@@ -1,6 +1,8 @@
 # File: .idea and virtual environment
 .idea/
 .poncho-digital/
+*.env
+.env
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
