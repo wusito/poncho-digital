@@ -52,7 +52,6 @@ class Producto(models.Model):
 
     # Precio con validación de valor mínimo positivo (> 0).
     precio_unitario = models.DecimalField(
-        max_length=10, 
         max_digits=12, 
         decimal_places=2,
         validators=[MinValueValidator(0.01)],
