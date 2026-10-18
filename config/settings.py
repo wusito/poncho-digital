@@ -14,10 +14,11 @@ import os
 from dotenv import load_dotenv
 from pathlib import Path
 
-load_dotenv()
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# BASE_DIR apunta a la raíz del proyecto (donde está manage.py)
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Carga explícitamente el credenciales.env ubicado en la raíz
+load_dotenv(BASE_DIR / '.env')
 
 
 # Quick-start development settings - unsuitable for production
@@ -88,8 +89,8 @@ DATABASES = {
         'NAME': os.getenv('DB_NAME'),
         'USER': os.getenv('DB_USER'),
         'PASSWORD': os.getenv('DB_PASSWORD'),
-        'HOST': os.getenv('DB_HOST'),
-        'PORT': os.getenv('DB_PORT'),
+        'HOST': os.getenv('DB_HOST', 'localhost'),
+        'PORT': os.getenv('DB_PORT', '5432'),
     }
 }
 
