@@ -22,6 +22,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     # Aquí van las URLs de las apps (artesanos, productos, stands)
+    path('', include('apps.productos.urls')),
 ]
 
 # Servir archivos media subidos por usuarios en modo desarrollo (DEBUG=True)
