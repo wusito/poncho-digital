@@ -68,9 +68,9 @@ class ProductoForm(forms.ModelForm):
             'imagen': 'Imagen del producto',
         }
 
-    # -------------------------------------------------------------------------
-    # VALIDACIONES PERSONALIZADAS (Mismas reglas que validaciones3.js)
-    # -------------------------------------------------------------------------
+
+
+    # VALIDACIONES PERSONALIZADAS
 
     def clean_nombre(self):
         nombre = self.cleaned_data.get('nombre')
@@ -103,12 +103,12 @@ class ProductoForm(forms.ModelForm):
     def clean_imagen(self):
         imagen = self.cleaned_data.get('imagen')
         if imagen:
-            # Validación de formato de imagen (JPG, PNG, WEBP)
+            # Validación de formato de imagen (JPG, PNG, WEBP).
             extensiones_validas = ['image/jpeg', 'image/png', 'image/webp']
             if hasattr(imagen, 'content_type') and imagen.content_type not in extensiones_validas:
                 raise forms.ValidationError("La imagen debe ser JPG, PNG o WEBP.")
 
-            # Validación de tamaño máximo (2 MB = 2 * 1024 * 1024 bytes)
+            # Validación de tamaño máximo (2 MB = 2 * 1024 * 1024 bytes).
             max_bytes = 2 * 1024 * 1024
             if hasattr(imagen, 'size') and imagen.size > max_bytes:
                 raise forms.ValidationError("La imagen no debe superar los 2 MB.")

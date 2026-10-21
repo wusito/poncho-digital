@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from .models import Producto
 from .forms import ProductoForm
-from apps.artesanos.models import Artesano  # Importamos el modelo Artesano
+from apps.artesanos.models import Artesano  # Importamos el modelo Artesano.
 
 # Create your views here.
 def gestion_productos(view_context_request):
@@ -12,10 +12,10 @@ def gestion_productos(view_context_request):
     - Procesar el formulario de Alta (creación).
     - Renderizar la plantilla 'gestion_productos.html'.
     """
-    # 1. Consulta de productos (Consulta/Listado HU-05)
+    # 1. Consulta de productos (Consulta/Listado HU-05).
     productos = Producto.objects.all()
 
-    # 2. Instancia del formulario para alta de nuevo producto
+    # 2. Instancia del formulario para alta de nuevo producto.
     if view_context_request.method == 'POST':
         form_alta = ProductoForm(view_context_request.POST, view_context_request.FILES)
         if form_alta.is_valid():
@@ -24,10 +24,10 @@ def gestion_productos(view_context_request):
             # NOTA: En un entorno con autenticación, el artesano se asocia desde el usuario logueado.
             # Se asigna o verifica la relación según la estructura activa.
             if hasattr(view_context_request.user, 'artesano'):
-                # Si existe un usuario logueado con perfil de artesano vinculado
+                # Si existe un usuario logueado con perfil de artesano vinculado.
                 nuevo_producto.artesano = view_context_request.user.artesano
             else:
-                # Toma el artesano creado de prueba desde la shell (para ello crear un artesano de prueba)
+                # Toma el artesano creado de prueba desde la shell (para ello crear un artesano de prueba).
                 artesano_default = Artesano.objects.first()
                 if artesano_default:
                     nuevo_producto.artesano = artesano_default
