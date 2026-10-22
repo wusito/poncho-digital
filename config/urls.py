@@ -18,10 +18,12 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from .views import index
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     # Aquí van las URLs de las apps (artesanos, productos, stands)
+    path('', index, name='index'),
 ]
 
 # Servir archivos media subidos por usuarios en modo desarrollo (DEBUG=True)
