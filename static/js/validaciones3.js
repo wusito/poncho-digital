@@ -6,29 +6,29 @@ const subcategoriaSelect = document.getElementById("subcategoria");
 
 const subcategoriasPorCategoria = {
     "textiles-tradicionales": [
-        "Prendas de Vicuña",
-        "Fajas",
-        "Mantas",
-        "Chalinas"
+        { valor: "prendas-de-vicuna", texto: "Prendas de Vicuña" },
+        { valor: "fajas", texto: "Fajas" },
+        { valor: "mantas", texto: "Mantas" },
+        { valor: "chalinas", texto: "Chalinas" }
     ],
     "artesanias-articulos-hogar": [
-        "Cerámica",
-        "Accesorios",
-        "Madera tallada",
-        "Cestería",
-        "Decoración"
+        { valor: "ceramica", texto: "Cerámica" },
+        { valor: "accesorios", texto: "Accesorios" },
+        { valor: "madera-tallada", texto: "Madera tallada" },
+        { valor: "cesteria", texto: "Cestería" },
+        { valor: "decoracion", texto: "Decoración" }
     ],
     "productos-regionales-delicatessen": [
-        "Dulces",
-        "Miel",
-        "Frutos secos",
-        "Vinos regionales"
+        { valor: "dulces", texto: "Dulces" },
+        { valor: "miel", texto: "Miel" },
+        { valor: "frutos-secos", texto: "Frutos secos" },
+        { valor: "vinos-regionales", texto: "Vinos regionales" }
     ],
     "sector-comercial": [
-        "Souvenirs",
-        "Accesorios",
-        "Regalos",
-        "Merchandising"
+        { valor: "souvenirs", texto: "Souvenirs" },
+        { valor: "accesorios-comercial", texto: "Accesorios" },
+        { valor: "regalos", texto: "Regalos" },
+        { valor: "merchandising", texto: "Merchandising" }
     ]
 };
 
@@ -49,11 +49,17 @@ if (categoriaSelect) {
                 // Habilitar el selector.
                 subcategoriaSelect.disabled = false;
 
-                // Agregar las nuevas subcategorías.
+                // Opción por defecto inicial
+                const opcionDefault = document.createElement("option");
+                opcionDefault.value = "";
+                opcionDefault.textContent = "Selecciona una subcategoría...";
+                subcategoriaSelect.appendChild(opcionDefault);
+
+                // Agregar las nuevas subcategorías con sus valores exactos
                 subcategoriasPorCategoria[categoriaSeleccionada].forEach(sub => {
                     const opcion = document.createElement("option");
-                    opcion.value = sub.toLowerCase().replace(/\s+/g, "-");
-                    opcion.textContent = sub;
+                    opcion.value = sub.valor;       // Toma el valor exacto (ej: "prendas-de-vicuna" o "accesorios-comercial")
+                    opcion.textContent = sub.texto; // Muestra el texto legible al usuario
                     subcategoriaSelect.appendChild(opcion);
                 });
 
