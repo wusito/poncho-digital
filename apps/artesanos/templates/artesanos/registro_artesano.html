@@ -7,17 +7,55 @@
     <header class="cabecera" id="cabecera">
         <div class="franja-tejido"></div>
 
-        <div class="container-fluid">
-            <a class="navbar-brand" href="{% url 'index' %}">Poncho <span>Digital</span></a>
+        <nav class="navbar navbar-expand-md">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{% url 'index' %}">Poncho <span>Digital</span></a>
 
-            <h1 class="text-center mt-3 mt-md-0 ms-md-3">Administración Artesanos</h1>
-        </div>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuGestionProductos" aria-controls="menuGestionProductos" aria-expanded="false" aria-label="Abrir menú de navegación">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="menuGestionProductos">
+                    <ul class="navbar-nav ms-auto text-center" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'index' %}">Página Principal</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
     </header>
 {% endblock header %}
 
 {% block content %}
     <main class="container-fluid py-5">
-        <div class="row justify-content-center">
+
+        <!-- TÍTULO DE LA SECCIÓN -->
+        <div class="container-fluid py-4 mb-3 hero position-relative overflow-hidden shadow-sm">
+            <div class="container-fluid">
+                <div class="row align-items-center gy-4">
+                    
+                    <div class="col-12 col-lg-7 text-start">
+                        <p class="hero-eyebrow text-uppercase mb-1" style="color: var(--color-ocre); letter-spacing: 1px; font-weight: 600;">
+                            Panel de Registro · Poncho Digital · Catamarca
+                        </p>
+                        <h1 class="display-5 fw-bold mb-2" style="font-family: var(--fuente-titulos); color: var(--color-rojo-oscuro);">
+                            Administración de Artesanos
+                        </h1>
+                        <p class="text-muted" style="max-width: 60ch;">
+                            Gestioná tu solicitud como artesano o expositor completando tus datos para participar en la Feria Anual e Internacional del Porncho de la provincia.
+                        </p>
+                    </div>
+
+                    <div class="col-12 col-lg-5">
+                        <div class="bandas-poncho" role="img" aria-label="Ilustración de bandas de tejido tradicional del poncho"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex flex-column align-items-center justify-content-center p-4 p-md-5 bg-light rounded shadow-lg border-top border-4" style="border-color: var(--color-rojo) !important;">
             <div class="col-12 col-lg-10">
                 {% include 'includes/mensajes.html' %}
 
