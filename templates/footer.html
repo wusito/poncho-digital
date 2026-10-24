@@ -1,0 +1,43 @@
+<!-- PIE DE PÁGINA -->
+    <footer class="mt-auto py-3 mt-5 pie" id="pie">
+        <div class="franja-tejido"></div>
+
+        <div class="container-fluid">
+            <div class="row gy-4">
+
+                <div class="col-12 col-md-4">
+                    <h4 class="pie-titulo">Poncho Digital</h4>
+                    <p class="pie-texto">Ministerio de Cultura, Turismo y Deporte de la Provincia de Catamarca.</p>
+                    <p class="pie-texto">Predio Ferial Catamarca — Av. México s/n.</p>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <h4 class="pie-titulo">Enlaces</h4>
+                    <ul class="pie-lista">
+                        <li><a href="{% url 'index' %}">Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../apps/artesanos/templates/artesanos/registro_artesano.html">Registro de Artesanos</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'gestion_productos' %}">Gestión de Productos</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <h4 class="pie-titulo">Recibí novedades</h4>
+                    <form class="form-novedades" id="formNovedades" action="#" method="post" novalidate>
+                        {% csrf_token %}
+                        <label for="correoNovedades" class="form-etiqueta">Correo electrónico</label>
+                        <div class="form-fila">
+                            <input type="email" id="correoNovedades" name="correoNovedades" class="form-campo" placeholder="tu@email.com" required autocomplete="email">
+                            <button type="submit" class="boton boton-secundario" id="botonNovedades" disabled>Sumarme</button>
+                        </div>
+                        <p class="mensaje-error d-none" id="errorNovedades"></p>
+                        <p class="mensaje-exito d-none" id="exitoNovedades">¡Gracias por sumarte! Vas a recibir las novedades de la Fiesta del Poncho en tu correo.</p>
+                    </form>
+                </div>
+
+            </div>
+
+            <hr class="pie-separador">
+
+            <p class="pie-copy">&copy; 2026 Ministerio de Cultura - Provincia de Catamarca</p>
+        </div>
+    </footer>

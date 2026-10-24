@@ -137,13 +137,35 @@ function realizarBusqueda() {
     if (!inputBusqueda || !contenedorResultados) return;
 
     const query = inputBusqueda.value.toLowerCase().trim();
-    const rubroSelec = selectFiltroRubro.value;
+    const rubroSelec = selectFiltroRubro.value.toLowerCase().trim();
+
+    // Función radical para limpiar espacios, guiones y mayúsculas
+    const normalizar = (texto) => {
+        if (!texto) return "";
+        return String(texto)
+            .toLowerCase()
+            .trim()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "") // Elimina tildes y acentos (ej: ú -> u)
+            .replace(/[-_\s]+/g, "");        // Elimina guiones y espacios
+    };
+
+    const rubroLimpio = normalizar(rubroSelec);
 
     const filtrados = artesanosYProductosData.filter(item => {
         const coincidenciaTexto = item.nombre.toLowerCase().includes(query) ||
                                   (item.localidad && item.localidad.toLowerCase().includes(query)) ||
                                   (item.detalle && item.detalle.toLowerCase().includes(query));
-        const coincidenciaRubro = rubroSelec === "" || item.rubro === rubroSelec || item.categoria === rubroSelec;
+        
+        const itemRubro = normalizar(item.rubro);
+        const itemCategoria = normalizar(item.categoria);
+        const itemSubcategoria = normalizar(item.subcategoria);
+
+        const coincidenciaRubro = rubroLimpio === "" || 
+            itemRubro === rubroLimpio || 
+            itemCategoria === rubroLimpio || 
+            itemSubcategoria === rubroLimpio;
+
         return coincidenciaTexto && coincidenciaRubro;
     });
 
@@ -166,6 +188,7 @@ function realizarBusqueda() {
                         <p class="card-text small mb-1"><strong>Localidad:</strong> ${item.localidad || 'Catamarca'}</p>
                         <p class="card-text small mb-2"><strong>Stand Asignado:</strong> ${item.stand || 'Sin asignar'}</p>
                         <p class="card-text text-muted small">${item.detalle || ''}</p>
+                        <p class="card-text text-muted small"><strong>Subcat (Debug):</strong> ${item.subcategoria || 'N/A'}</p>
                     </div>
                 </div>
             `;

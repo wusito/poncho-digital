@@ -1,572 +1,178 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Productos - Poncho Digital</title>
 
-    <!-- Link CSS Boostrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link href="{% static 'css/estilos.css' %}" rel="stylesheet">
-</head>
+{% block title %}Gestión de Productos - Poncho Digital{% endblock %}
 
-<body class="d-flex flex-column min-vh-100">
-        <!-- ENCABEZADO -->
+{% block header %}
+        <!-- ENCABEZADO LOCAL DE GESTIÓN -->
         <header class="cabecera" id="cabecera">
             <div class="franja-tejido"></div>
 
-            <!-- Menú de Navegación -->
             <nav class="navbar navbar-expand-md">
-                <div class="container-fluid d-flex flex-column flex-md-row align-items-center">
-                    <a class="navbar-brand" href="../../../../templates/index.html">Poncho <span>Digital</span></a>
+                <div class="container-fluid">
 
-                    <h1 class="text-center mt-3">Administrar Productos</h1> <!-- Título Principal -->
-
+                    <a class="navbar-brand" href="{% url 'index' %}">Poncho <span>Digital</span></a>
 
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuGestionProductos" aria-controls="menuGestionProductos" aria-expanded="false" aria-label="Abrir menú de navegación">
                         <span class="navbar-toggler-icon"></span>
                     </button>
 
-                    <div class="collapse navbar-collapse nav-tabs" id="menuGestionProductos" role="tablist">
-                        <div class="navbar-nav ms-auto text-center">
-                            <button class="nav-link active" id="nav-inicio-tab"
-                                data-bs-toggle="tab" data-bs-target="#nav-inicio"
-                                type="button" role="tab" aria-controls="nav-inicio"
-                                aria-selected="true"> Inicio
-                            </button>
-
-                            <button class="nav-link" id="nav-mis-productos-tab"
-                                data-bs-toggle="tab" data-bs-target="#nav-mis-productos"
-                                type="button" role="tab" aria-controls="nav-mis-productos"
-                                aria-selected="false"> Mis Productos
-                            </button>
-
-                            <button class="nav-link" id="nav-agregar-producto-tab"
-                                data-bs-toggle="tab" data-bs-target="#nav-agregar-producto"
-                                type="button" role="tab" aria-controls="nav-agregar-producto"
-                                aria-selected="false"> Agregar un Producto
-                            </button>
-
-                            <a class="nav-link" id="nav-sitio-principal-tab" 
-                                href="../../../../templates/index.html" 
-                                role="tab" aria-controls="nav-inicio" 
-                                aria-selected="false"> Sitio Principal 
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </nav>
-        </header>
-
-        <!-- CONTENIDO -->
-        <main class="container-fluid flex-grow-1 d-flex justify-content-center align-items-center p-4">
-
-            <!-- CONTENIDO DE LAS PESTAÑAS -->
-            <div class="tab-content" id="nav-tabContent">
-
-                <!-- Contenido de Inicio -->
-                <div class="tab-pane fade show active" id="nav-inicio"
-                    role="tabpanel" aria-labelledby="nav-inicio-tab" tabindex="0">
-                    
-                    <!--SECCIÓN 1: PESTAÑA DE INICIO -->
-                    <section class="container-fluid py-5">
-                        <div class="p-4 p-md-5 bg-light rounded shadow-lg">
-                            <h2 class="text-center mb-4">Bienvenido</h2>
-
-                            <p class="text-center">
-                                Este espacio está diseñado para que puedas gestionar tus productos artesanales de manera sencilla y rápida. Desde aquí podrás visualizar tus publicaciones, agregar nuevos productos, modificar información existente o eliminar artículos que ya no desees mostrar en el sitio.
-                            </p>
-                            
-                            <p class="text-center">
-                                Poncho Digital busca promover el trabajo de los artesanos de Catamarca, ofreciendo una plataforma moderna, accesible y pensada para potenciar tu presencia en el mercado digital.
-                            </p>
-                            
-                            <hr class="my-4">
-
-                            <div class="mt-4 text-center mx-auto">
-                                <h3 class="mb-3">¿Qué podés hacer desde esta página?</h3>
-                                
-                                <ul class="text-center list-unstyled">
-                                    <li class="mb-2">Ver todos tus productos publicados</li>
-                                    <li class="mb-2">Agregar nuevos productos</li>
-                                    <li class="mb-2">Modificar productos existentes</li>
-                                    <li class="mb-2">Eliminar productos que ya no quieras mostrar</li>
-                                </ul>
-                            </div>
-
-                            <hr class="my-4">
-
-                            <p class="mt-4 text-center">
-                                Usá el menú  superior para navegar entre las diferentes secciones del sistema.
-                            </p>
-                        </div>
-                    </section>
-                </div>
-
-                
-
-                <!-- Contenido de Mis Productos -->
-                <div class="tab-pane fade" id="nav-mis-productos"
-                    role="tabpanel" aria-labelledby="nav-mis-productos-tab" tabindex="0">
-                    
-                    <!--SECCIÓN 2: VISUALIZAR LOS PRODUCTOS PUBLICADOS -->
-                    <section class="container-fluid py-5">
-                        
-                        <div class="text-center">
-                            <h2>Mis Productos Publicados</h2>
-                            <p>Aquí puedes visualizar, gestionar y administrar todo tu catálogo artesanal y creaciones activas en la plataforma.</p>
-                        </div>
-                        
-                        <div class="row justify-content-center">
-                            <fieldset class="col-md-10 mb-3 shadow-lg form-fieldset">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered" id="tabla-productos-publicados">
-                                        <!--- Encabezado -->
-                                        <thead class="table-dark">
-                                            <tr>
-                                                <th>ID</th>
-                                                <th>Imagen</th>
-                                                <th>Nombre</th>
-                                                <th>Descripción</th>
-                                                <th>Stock</th>
-                                                <th>Precio</th>
-                                                <th>Categoría</th>
-                                                <th>Subcategoría</th>
-                                                <th>Estado</th>
-                                                <th>Acciones</th>
-                                            </tr>
-                                        </thead>
-
-                                        <!-- Contenido - Tabla Dinámica desde Django -->
-                                        <tbody id="cuerpo-tabla-productos-publicados">
-                                            {% for producto in productos %}
-                                            <tr>
-                                                <td>{{ producto.id }}</td>
-                                                <td>
-                                                    {% if producto.imagen %}
-                                                        <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" width="120">
-                                                    {% else %}
-                                                        <span class="text-muted">Sin imagen</span>
-                                                    {% endif %}
-                                                </td>
-                                                <td>{{ producto.nombre }}</td>
-                                                <td>{{ producto.descripcion }}</td>
-                                                <td>{{ producto.stock }}</td>
-                                                <td>${{ producto.precio_unitario }}</td>
-                                                <td>{{ producto.get_categoria_display }}</td>
-                                                <td>{{ producto.subcategoria|default:"-" }}</td>
-                                                <td>Activo</td>
-                                                <td>
-                                                    <button
-                                                        class="btn btn-warning w-100 mb-2"
-                                                        type="button"
-                                                        onclick="mostrarFormularioEdicion(
-                                                            '{{ producto.id }}', 
-                                                            '{{ producto.nombre|escapejs }}', 
-                                                            '{{ producto.descripcion|escapejs }}', 
-                                                            '{{ producto.stock }}', 
-                                                            '{{ producto.precio_unitario }}'
-                                                        )">
-                                                        Modificar
-                                                    </button>
-
-                                                    <button
-                                                        class="btn btn-danger w-100 mb-2"
-                                                        type="button"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#modalEliminar"
-                                                        data-producto-id="{{ producto.id }}">
-                                                        Eliminar
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            {% empty %}
-                                            <tr>
-                                                <td colspan="10" class="text-center py-3">No hay productos registrados en el sistema.</td>
-                                            </tr>
-                                            {% endfor %}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </fieldset>
-                        </div>
-                    </section>
-
-
-
-                    <!--SECCIÓN 3: MODIFICACIÓN DE UN PRODUCTO -->
-                    <section class="container-fluid py-5" id="seccion-modificar" style="display:none;">
-                        
-                        <div class="text-center">
-                            <h2>Modificar Producto</h2>
-                            <p>Modifica las características del producto completando el formulario para actualizarlo en el sistema.</p>
-                        </div>
-                        
-                        <!-- Formulario oculto hasta que JS lo active -->
-                        <!-- POR ESTO: -->
-                        <form id="form-modificar-producto" action="" method="POST" enctype="multipart/form-data">
-                            {% csrf_token %}
-
-                            <div class="row justify-content-center">
-                                <fieldset class="col-12 col-md-10 shadow-lg form-fieldset">
-                                    <legend>Editar Datos del Producto</legend>
-
-                                    <div class="row g-3">
-
-                                        <input 
-                                            type="hidden" 
-                                            id="producto_id" 
-                                            name="producto_id">
-
-                                        <!-- Nombre del producto -->
-                                        <div class="col-md-12 position-relative form-grupo">
-                                            <label 
-                                                class="form-label"
-                                                for="nombre">Nuevo nombre del producto:</label>
-                                            <input 
-                                                class="form-control" 
-                                                type="text" 
-                                                name="nombre" 
-                                                id="nombre_edit" 
-                                                placeholder="Ej: Poncho" 
-                                                required>
-                                        </div>
-
-                                        <!-- Descripción del producto -->
-                                        <div class="col-md-12 position-relative form-grupo">
-                                            <label 
-                                                class="form-label" 
-                                                for="descripcion">Nueva descripción del producto:</label>
-                                            <textarea 
-                                                class="form-control" 
-                                                name="descripcion" 
-                                                id="descripcion_edit" 
-                                                rows="4" 
-                                                placeholder="Detalla las características del producto..." 
-                                                required></textarea>
-                                        </div>
-
-                                        <!-- Categoría del producto -->
-                                        <div class="col-md-12 position-relative form-grupo">
-                                            <label for="categoria">Selecciona la categoría del producto:</label>
-                                            
-                                            <div class="col-12 position-relative">
-                                                <select
-                                                    class="form-select" 
-                                                    name="categoria" 
-                                                    id="categoria_edit" 
-                                                    aria-label="Default select example">
-                                                    <option value="textiles-tradicionales">Textiles Tradicionales</option>
-                                                    <option value="artesanias-articulos-hogar">Artesanías y Artículos para el Hogar</option>
-                                                    <option value="productos-regionales-delicatessen">Productos Regionales y Delicatessen</option>
-                                                    <option value="sector-comercial">Sector Comercial</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <!-- Subcategoría del producto: deshabilitada -->
-                                        <div class="col-md-12 position-relative form-grupo">
-                                            <label for="subcategoria">Selecciona la subcategoría del producto:</label>
-
-                                            <div class="col-12 position-relative">
-                                                <select 
-                                                    class="form-select" 
-                                                    name="subcategoria" 
-                                                    id="subcategoria_edit" 
-                                                    aria-label="Default select example" disabled>
-                                                <option value="">Selecciona primero una categoría.</option>
-                                            </select>
-                                            </div>
-                                        </div>
-
-                                        <!-- Stock del producto -->
-                                        <div class="col-md-12 position-relative form-grupo">
-                                            <label 
-                                                class="form-label" 
-                                                for="stock">Nuevo stock (cantidad) del producto:</label>
-                                            <input 
-                                                class="form-control" 
-                                                type="number" 
-                                                name="stock" 
-                                                id="stock_edit" 
-                                                placeholder="Ej: 5" 
-                                                required>
-                                        </div>
-
-                                        <!-- Precio unitario del producto -->
-                                        <div class="col-md-12 position-relative form-grupo">
-                                            <label 
-                                                class="form-label" 
-                                                for="precio_unitario">Nuevo precio del producto (por unidad):</label>
-                                            <input 
-                                                class="form-control" 
-                                                type="number"
-                                                name="precio_unitario" 
-                                                id="precio_unitario_edit" 
-                                                placeholder="Ej: 850000" 
-                                                required>
-                                        </div>
-
-                                        <!-- Imagen del producto -->
-                                        <div class="col-md-12 position-relative form-grupo">
-                                            <label 
-                                                class="form-label" 
-                                                for="imagen">Actualizar imagen del producto:</label>
-                                            <input 
-                                                class="form-control" 
-                                                type="file" 
-                                                name="imagen" 
-                                                id="imagen_edit" 
-                                                accept="image/*">
-                                        </div>
-                                    </div>
-                                </fieldset>
-
-                                <!-- Botones -->
-                                <div class="row justify-content-center form-acciones">
-                                    <div class="col-md-6 mb-3 mb-md-0">
-                                        <button 
-                                            class="btn btn-info w-100 mb-2" 
-                                            type="button" 
-                                            onclick="cancelarFormularioEdicion()">
-                                            Cancelar
-                                        </button>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <button 
-                                            class="btn btn-success w-100 mb-2" 
-                                            type="submit" >
-                                            Guardar Cambios
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>       
-                        </form>
-                    </section>
-
-
-                    <!-- SECCIÓN 4: ELIMINACIÓN DE PRODUCTO CON FORMULARIO POST -->
-                    <section class="container-fluid py-5" id="seccion-eliminar">                       
-                        <div class="modal fade" id="modalEliminar" tabindex="-1" aria-labelledby="modalEliminarLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <form id="form-eliminar-producto" method="POST" action="">
-                                        {% csrf_token %}
-                                        <div class="text-center p-3">
-                                            <h2>Eliminar Producto</h2>
-                                            <p class="text-danger fw-bold">ADVERTENCIA  : Al apretar el botón "Sí, eliminar" eliminarás este producto del sistema.</p>
-                                        </div>
-
-                                        <div class="modal-body text-center">
-                                            <p>¿Estás seguro de que deseas eliminar este producto?</p>
-                                        </div>
-
-                                        <div class="modal-footer justify-content-center">
-                                            <button type="submit" class="btn btn-danger">
-                                                Sí, eliminar
-                                            </button>
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                Cancelar
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-
-
-
-                <!-- Contenido de Agregar Producto -->
-                <div class="tab-pane fade" id="nav-agregar-producto"
-                    role="tabpanel" aria-labelledby="nav-agregar-producto-tab" tabindex="0">
-
-                    <!--SECCIÓN 5: ALTA DE UN PRODUCTO -->
-                    <section class="container-fluid py-5" id="agregar-producto">
-
-                        <div class="text-center">
-                            <h2>Cargar un Producto</h2>
-                            <p>Registra un nuevo producto completando el formulario para publicarlo en el sistema.</p>
-                        </div>
-   
-
-                        <form id="form-alta-producto" method="POST" enctype="multipart/form-data">
-                            {% csrf_token %}
-                            <div class="row justify-content-center">
-                                <fieldset class="col-12 col-md-10 shadow-lg form-fieldset">
-                                    <legend>Datos del Producto</legend>
-
-                                    <div class="row g-3">
-                                        <!-- Nombre del producto -->
-                                        <div class="col-md-12 position-relative form-grupo">
-                                            <label 
-                                                class="form-label" 
-                                                for="nombre">Nombre del producto:</label>
-                                            <input 
-                                                class="form-control" 
-                                                type="text" 
-                                                name="nombre" 
-                                                id="nombre" 
-                                                placeholder="Ej: Poncho" 
-                                                required>
-                                        </div>
-
-                                        <!-- Descripción del producto -->
-                                        <div class="col-md-12 position-relative form-grupo">
-                                            <label 
-                                                class="form-label"
-                                                for="descripcion">Descripción del producto:</label>
-                                            <textarea 
-                                                class="form-control" 
-                                                name="descripcion" 
-                                                id="descripcion" 
-                                                rows="4" 
-                                                placeholder="Detalla las características del producto..." 
-                                                required></textarea>
-                                        </div>
-
-                                        <!-- Categoría del producto -->
-                                        <div class="col-md-12 position-relative form-grupo">
-                                            <label for="categoria">Selecciona la categoría del producto:</label>
-                                            
-                                            <div class="col-12 position-relative">
-                                                <select class="form-select" name="categoria" id="categoria" aria-label="Default select example">
-                                                    <option value="textiles-tradicionales">Textiles Tradicionales</option>
-                                                    <option value="artesanias-articulos-hogar">Artesanías y Artículos para el Hogar</option>
-                                                    <option value="productos-regionales-delicatessen">Productos Regionales y Delicatessen</option>
-                                                    <option value="sector-comercial">Sector Comercial</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <!-- Subcategoría del producto: deshabilitada -->
-                                        <div class="col-md-12 position-relative form-grupo">
-                                            <label for="subcategoria">Selecciona la subcategoría del producto:</label>
-
-                                            <div class="col-12 position-relative">
-                                                <select class="form-select" name="subcategoria" id="subcategoria" aria-label="Default select example" disabled>
-                                                <option value="">Selecciona primero una categoría.</option>
-                                            </select>
-                                            </div>
-                                        </div>
-
-                                        <!-- Stock del producto -->
-                                        <div class="col-md-12 position-relative form-grupo">
-                                            <label 
-                                                class="form-label" 
-                                                for="stock">Stock (cantidad) del producto:</label>
-                                            <input 
-                                                class="form-control" 
-                                                type="number" 
-                                                name="stock" 
-                                                id="stock" 
-                                                placeholder="Ej: 5" 
-                                                required>
-                                        </div>
-
-                                        <!-- Precio unitario del producto -->
-                                        <div class="col-md-12 position-relative form-grupo">
-                                            <label
-                                                class="form-label"
-                                                for="precio_unitario">Precio del producto (por unidad):</label>
-                                            <input
-                                                class="form-control"
-                                                type="number" 
-                                                name="precio_unitario" 
-                                                id="precio_unitario" 
-                                                placeholder="Ej: 850000" 
-                                                required>
-                                        </div>
-
-                                        <!-- Imagen del producto -->
-                                        <div class="col-md-12 position-relative form-grupo">
-                                            <label 
-                                                class="form-label"
-                                                for="imagen">Imagen del producto:</label>
-                                            <input 
-                                                class="form-control"
-                                                type="file" 
-                                                name="imagen" 
-                                                id="imagen" 
-                                                accept="image/*" 
-                                                required>
-                                        </div>
-                                    </div>
-                                </fieldset>
-
-                                <!-- Botones -->
-                                <div class="col-10 col-lg-10 row justify-content-center">
-                                    <div class="col-md-6 mb-3 mb-md-0">
-                                        <button 
-                                            class="btn btn-info w-100 mb-2" 
-                                            type="reset">
-                                            Limpiar Formulario
-                                        </button>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <button 
-                                            class="btn btn-success w-100 mb-2"
-                                            type="submit">
-                                            Publicar Producto
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </section>
-                </div>
-            </div>
-
-        </main>
-
-        <!-- Footer: sección futuramente modularizable -->
-        <footer class="mt-auto py-3 mt-5 pie" id="pie">
-            <div class="franja-tejido"></div>
-
-            <div class="container-fluid">
-                <div class="row gy-4">
-
-                    <div class="col-12 col-md-4">
-                        <h4 class="pie-titulo">Poncho Digital</h4>
-                        <p class="pie-texto">Ministerio de Cultura, Turismo y Deporte de la Provincia de Catamarca.</p>
-                        <p class="pie-texto">Predio Ferial Catamarca — Av. México s/n.</p>
-                    </div>
-
-                    <div class="col-12 col-md-4">
-                        <h4 class="pie-titulo">Enlaces</h4>
-                        <ul class="pie-lista">
-                            <li><a href="../../../../templates/index.html">Inicio</a></li>
-                            <li><a href="../../../../apps/artesanos/templates/artesanos/registro_artesano.html">Registro de Artesanos</a></li>
-                            <li><a href="{% url 'gestion_productos' %}">Gestión de Productos</a></li>
+                    <div class="collapse navbar-collapse" id="menuGestionProductos">
+                        <ul class="navbar-nav ms-auto text-center" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link active" id="nav-inicio-tab" data-bs-toggle="tab" data-bs-target="#nav-inicio" href="#nav-inicio" role="tab" aria-controls="nav-inicio" aria-selected="true">Inicio</a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link" id="nav-mis-productos-tab" data-bs-toggle="tab" data-bs-target="#nav-mis-productos" href="#nav-mis-productos" role="tab" aria-controls="nav-mis-productos" aria-selected="false">Mis Productos</a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link" id="nav-agregar-producto-tab" data-bs-toggle="tab" data-bs-target="#nav-agregar-producto" href="#nav-agregar-producto" role="tab" aria-controls="nav-agregar-producto" aria-selected="false">Agregar un Producto</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'index' %}">Página Principal</a>
+                            </li>
                         </ul>
                     </div>
 
-                    <div class="col-12 col-md-4">
-                        <h4 class="pie-titulo">Recibí novedades</h4>
-                        <form class="form-novedades" action="#" method="post">
-                            {% csrf_token %}
-                            <label for="correoNovedades" class="form-etiqueta">Correo electrónico</label>
-                            <div class="form-fila">
-                                <input type="email" id="correoNovedades" name="correoNovedades" class="form-campo" placeholder="tu@email.com" required>
-                                <button type="submit" class="boton boton-secundario">Sumarme</button>
-                            </div>
-                        </form>
+                </div>
+            </nav>
+        </header>
+{% endblock header %}
+
+{% block content %}
+        <!-- TÍTULO DE LA SECCIÓN -->
+        <div class="container-fluid py-4 mb-3 hero position-relative overflow-hidden shadow-sm">
+            <div class="container-fluid">
+                <div class="row align-items-center gy-4">
+                    
+                    <div class="col-12 col-lg-7 text-start">
+                        <p class="hero-eyebrow text-uppercase mb-1" style="color: var(--color-ocre); letter-spacing: 1px; font-weight: 600;">
+                            Panel de Administración para Artesanos · Poncho Digital · Catamarca
+                        </p>
+                        <h1 class="display-5 fw-bold mb-2" style="font-family: var(--fuente-titulos); color: var(--color-rojo-oscuro);">
+                            Administrar Productos
+                        </h1>
+                        <p class="text-muted" style="max-width: 60ch;">
+                            Publicá, actualizá o gestioná las creaciones artesanales y regionales que forman parte de nuestro catálogo digital.
+                        </p>
+                        <div class="d-flex justify-content-start mt-3">
+                            <span class="badge px-3 py-2" style="background-color: var(--color-azul); color: var(--color-blanco); font-weight: 500;">
+                                Gestión Exclusiva para Expositores y Artesanos
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-5">
+                        <div class="bandas-poncho" role="img" aria-label="Ilustración de bandas de tejido tradicional del poncho"></div>
                     </div>
 
                 </div>
-
-                <hr class="pie-separador">
-
-                <p class="pie-copy">&copy; 2026 Ministerio de Cultura - Provincia de Catamarca</p>
             </div>
-        </footer>
+        </div>
+
+        <!-- CONTENIDO DE LAS PESTAÑAS -->
+        <div class="tab-content w-100" id="nav-tabContent">
+
+           <!-- Contenido de Inicio -->
+            <div class="tab-pane fade show active" id="nav-inicio"
+                role="tabpanel" aria-labelledby="nav-inicio-tab" tabindex="0">
+                
+                <!--SECCIÓN 1: PESTAÑA DE INICIO -->
+                <section class="container-fluid py-5">
+                    <div class="p-4 p-md-5 bg-light rounded shadow-lg border-top border-4" style="border-color: var(--color-rojo) !important;">
+                        
+                        <!-- Cabecera de bienvenida -->
+                        <div class="text-center mb-5">
+                            <h2 class="display-6 fw-bold" style="font-family: var(--fuente-titulos); color: var(--color-rojo-oscuro);">
+                                Bienvenido a la Gestión de Productos
+                            </h2>
+                            <p class="text-muted mx-auto mt-2" style="max-width: 70ch;">
+                                Este espacio está diseñado para que puedas gestionar tus productos artesanales de manera sencilla y rápida. <strong>Poncho Digital</strong> busca promover el trabajo de los artesanos de Catamarca, ofreciendo una plataforma moderna para potenciar tu presencia en el mercado digital.
+                            </p>
+                        </div>
+                        
+                        <hr class="my-4" style="opacity: 0.15;">
+
+                        <!-- ¿Qué podés hacer? estructurado en Tarjetas (Grid) -->
+                        <div class="mt-4">
+                            <h3 class="text-center mb-4 h4" style="font-family: var(--fuente-titulos); color: var(--color-azul);">
+                                ¿Qué podés hacer desde esta página?
+                            </h3>
+                            
+                            <div class="row g-4 justify-content-center">
+                                
+                                <!-- Tarjeta 1 -->
+                                <div class="col-12 col-md-6 col-lg-3">
+                                    <div class="card h-100 border-0 shadow-sm p-3 text-center" style="border-top: 3px solid var(--color-rojo) !important;">
+                                        <div class="card-body">
+                                            <div class="mb-2 fs-3" style="color: var(--color-rojo);"></div>
+                                            <h4 class="h6 fw-bold mb-2">Ver Publicaciones</h4>
+                                            <p class="small text-muted mb-0">Visualizá todos tus productos publicados y activos en la plataforma.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Tarjeta 2 -->
+                                <div class="col-12 col-md-6 col-lg-3">
+                                    <div class="card h-100 border-0 shadow-sm p-3 text-center" style="border-top: 3px solid var(--color-ocre) !important;">
+                                        <div class="card-body">
+                                            <div class="mb-2 fs-3" style="color: var(--color-ocre);"></div>
+                                            <h4 class="h6 fw-bold mb-2">Agregar Productos</h4>
+                                            <p class="small text-muted mb-0">Cargá nuevos artículos con fotos, descripción, stock y precios.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Tarjeta 3 -->
+                                <div class="col-12 col-md-6 col-lg-3">
+                                    <div class="card h-100 border-0 shadow-sm p-3 text-center" style="border-top: 3px solid var(--color-azul) !important;">
+                                        <div class="card-body">
+                                            <div class="mb-2 fs-3" style="color: var(--color-azul);"></div>
+                                            <h4 class="h6 fw-bold mb-2">Modificar Artículos</h4>
+                                            <p class="small text-muted mb-0">Actualiza información existente de tus creaciones cuando lo requieras.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Tarjeta 4 -->
+                                <div class="col-12 col-md-6 col-lg-3">
+                                    <div class="card h-100 border-0 shadow-sm p-3 text-center" style="border-top: 3px solid #591923 !important;">
+                                        <div class="card-body">
+                                            <div class="mb-2 fs-3" style="color: #591923;"></div>
+                                            <h4 class="h6 fw-bold mb-2">Eliminar Artículos</h4>
+                                            <p class="small text-muted mb-0">Removedor seguro de artículos que ya no desees mostrar en el sitio.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <hr class="my-5" style="opacity: 0.15;">
+
+                        <div class="text-center">
+                            <p class="text-muted small mb-0">
+                                💡 <em>Usá el menú superior para navegar entre las diferentes secciones del sistema.</em>
+                            </p>
+                        </div>
+
+                    </div>
+                </section>
+            </div>
+
+            <!-- Contenido de Mis Productos -->
+            <div class="tab-pane fade" id="nav-mis-productos"
+                role="tabpanel" aria-labelledby="nav-mis-productos-tab" tabindex="0">
+                {% include 'productos/mis_productos.html' %}
+            </div>
+
+            <!-- Contenido de Agregar Producto -->
+            <div class="tab-pane fade" id="nav-agregar-producto"
+                role="tabpanel" aria-labelledby="nav-agregar-producto-tab" tabindex="0">
+                {% include 'productos/agregar_productos.html' %}
+            </div>
+        </div>
 
     <!-- Validaciones.js -->
     <script src="{% static 'js/validaciones3.js' %}"></script>
-
-    <!-- JavaScript de Boostrap -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-</body>
-</html>
+{% endblock %}

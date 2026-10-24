@@ -40,6 +40,7 @@ def index(request):
             'tipo': 'Producto',
             'nombre': p.nombre,
             'categoria': p.categoria,
+            'subcategoria': p.subcategoria,
             'rubro_display': p.get_categoria_display(),
             'localidad': p.artesano.localidad,
             'detalle': p.descripcion,

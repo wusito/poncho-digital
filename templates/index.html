@@ -1,48 +1,9 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="es">
-<head>
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio - Poncho Digital</title>
-    
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@500;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-    <link href="{% static 'css/estilos.css' %}" rel="stylesheet">
+{% block title %}Inicio - Poncho Digital{% endblock %}
 
-</head>
-
-<body class="d-flex flex-column min-vh-100">
-
-    <header class="cabecera" id="cabecera">
-        <div class="franja-tejido"></div>
-
-        <nav class="navbar navbar-expand-md">
-            <div class="container-fluid">
-
-                <a class="navbar-brand" href="{% url 'index' %}">Poncho <span>Digital</span></a>
-
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal" aria-controls="menuPrincipal" aria-expanded="false" aria-label="Abrir menú de navegación">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="menuPrincipal">
-                    <ul class="navbar-nav ms-auto text-center">
-                        <li class="nav-item"><a class="nav-link active" href="{% url 'index' %}">Inicio</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#busqueda">Búsqueda</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#stands">Mapa de Stands</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../apps/artesanos/templates/artesanos/registro_artesano.html">Registro de Artesanos</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../apps/productos/templates/productos/gestion_productos.html">Gestión de Productos</a></li>
-                    </ul>
-                </div>
-
-            </div>
-        </nav>
-    </header>
-
-    <main>
+{% block content %}
 
         <!-- SECCIÓN HERO -->
         <section class="hero" id="inicio">
@@ -105,15 +66,40 @@
                     </div>
                     <div class="col-12 col-md-4">
                         <select id="selectFiltroRubro" name="rubro" class="form-select form-campo-claro">
-                            <option value="">Todos los rubros y categorías</option>
-                            <option value="textil_telar">Tejido en Telar (Criollo / Pedal)</option>
-                            <option value="textil_hilanderia">Hilandería Tradicional</option>
-                            <option value="ceramica">Cerámica / Alfarería</option>
-                            <option value="cuero">Cuero y Talabartería</option>
-                            <option value="madera">Madera y Luthería</option>
-                            <option value="metal">Platería, Cincelado y Metales</option>
-                            <option value="piedra">Piedra y Rodocrosita</option>
-                            <option value="cesteria">Fibras Vegetales / Cestería</option>
+                            <option value="">Todas las categorías y subcategorías</option>
+                            
+                            <!-- Textiles Tradicionales -->
+                            <optgroup label="Textiles Tradicionales">
+                                <option value="prendas-de-vicuna">Prendas de Vicuña</option>
+                                <option value="fajas">Fajas</option>
+                                <option value="mantas">Mantas</option>
+                                <option value="chalinas">Chalinas</option>
+                            </optgroup>
+
+                            <!-- Artesanías y Artículos para el Hogar -->
+                            <optgroup label="Artesanías y Artículos para el Hogar">
+                                <option value="ceramica">Cerámica</option>
+                                <option value="accesorios">Accesorios</option>
+                                <option value="madera-tallada">Madera tallada</option>
+                                <option value="cesteria">Cestería</option>
+                                <option value="decoracion">Decoración</option>
+                            </optgroup>
+
+                            <!-- Productos Regionales y Delicatessen -->
+                            <optgroup label="Productos Regionales y Delicatessen">
+                                <option value="dulces">Dulces</option>
+                                <option value="miel">Miel</option>
+                                <option value="frutos-secos">Frutos secos</option>
+                                <option value="vinos-regionales">Vinos regionales</option>
+                            </optgroup>
+
+                            <!-- Sector Comercial -->
+                            <optgroup label="Sector Comercial">
+                                <option value="souvenirs">Souvenirs</option>
+                                <option value="accesorios-comercial">Accesorios</option>
+                                <option value="regalos">Regalos</option>
+                                <option value="merchandising">Merchandising</option>
+                            </optgroup>
                         </select>
                     </div>
                     <div class="col-12 col-md-2">
@@ -126,41 +112,7 @@
         </section>
 
         <!-- HU-07: MÓDULO DE MAPA Y PLANO DE STANDS -->
-        <section class="secciones" id="stands">
-            <div class="container-fluid">
-                <h2 class="titulo-seccion">Mapa del Predio y Ubicación de Stands</h2>
-                <div class="row gy-4">
-                    
-                    <!-- Plano del predio sobre static/img/mapa.jpg -->
-                    <div class="col-12 col-lg-7">
-                        <div class="card p-3 shadow-sm">
-                            <h4 class="h5 mb-3">Plano Interactivo del Predio Ferial</h4>
-                            <div class="mapa-contenedor position-relative border rounded overflow-hidden">
-                                <img src="{% static 'img/mapa.jpg' %}" alt="Mapa del Predio Ferial Catamarca" class="img-fluid w-100 id-imagen-mapa">
-                                <!-- Capa de marcadores interactivos asignados a coordenadas sobre el mapa -->
-                                <div id="capaMarcadoresStands" class="position-absolute top-0 start-0 w-100 h-100"></div>
-                            </div>
-                            <div class="mt-3 d-flex justify-content-between align-items-center text-muted small">
-                                <div><span class="badge bg-success">●</span> Disponible</div>
-                                <div><span class="badge bg-danger">●</span> Asignado (Artesano Habilitado)</div>
-                                <div><span class="badge bg-warning text-dark">●</span> En Mantenimiento</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Panel de Información e Interacción con el Stand -->
-                    <div class="col-12 col-lg-5">
-                        <div class="card p-3 shadow-sm h-100" id="panelDetalleStand">
-                            <h4 class="h5 mb-3">Detalle del Stand Seleccionado</h4>
-                            <div id="infoStandSeleccionado" class="d-flex flex-column justify-content-center h-100 text-center">
-                                <p class="text-muted fs-6">Haga clic sobre un marcador de stand dentro del mapa para ver la ubicación exacta, el estado y el artesano asignado.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </section>
+        {% include 'stands/mapa_stands.html' %}
 
         <!-- SECCIÓN DE IFRAMES ACTUALIZADA -->
         <section class="secciones" id="iframes">
@@ -243,7 +195,7 @@
                             <h3>Gestión de Productos</h3>
                             <p>Publicación y administración del catálogo de productos regionales y textiles
                                 que se exhiben durante la feria.</p>
-                            <a href="../apps/productos/templates/productos/gestion_productos.html" class="tarjeta-enlace">Ir al catálogo →</a>
+                            <a href="{% url 'gestion_productos' %}" class="tarjeta-enlace">Ir al catálogo →</a>
                         </article>
                     </div>
 
@@ -282,61 +234,4 @@
             </div>
         </section>
 
-    </main>
-
-    <!-- PIE DE PÁGINA -->
-    <footer class="mt-auto py-3 mt-5 pie" id="pie">
-        <div class="franja-tejido"></div>
-
-        <div class="container-fluid">
-            <div class="row gy-4">
-
-                <div class="col-12 col-md-4">
-                    <h4 class="pie-titulo">Poncho Digital</h4>
-                    <p class="pie-texto">Ministerio de Cultura, Turismo y Deporte de la Provincia de Catamarca.</p>
-                    <p class="pie-texto">Predio Ferial Catamarca — Av. México s/n.</p>
-                </div>
-
-                <div class="col-12 col-md-4">
-                    <h4 class="pie-titulo">Enlaces</h4>
-                    <ul class="pie-lista">
-                        <li><a href="{% url 'index' %}">Inicio</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../apps/artesanos/templates/artesanos/registro_artesano.html">Registro de Artesanos</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../apps/productos/templates/productos/gestion_productos.html">Gestión de Productos</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-12 col-md-4">
-                    <h4 class="pie-titulo">Recibí novedades</h4>
-                    <form class="form-novedades" id="formNovedades" action="#" method="post" novalidate>
-                        {% csrf_token %}
-                        <label for="correoNovedades" class="form-etiqueta">Correo electrónico</label>
-                        <div class="form-fila">
-                            <input type="email" id="correoNovedades" name="correoNovedades" class="form-campo" placeholder="tu@email.com" required autocomplete="email">
-                            <button type="submit" class="boton boton-secundario" id="botonNovedades" disabled>Sumarme</button>
-                        </div>
-                        <p class="mensaje-error d-none" id="errorNovedades"></p>
-                        <p class="mensaje-exito d-none" id="exitoNovedades">¡Gracias por sumarte! Vas a recibir las novedades de la Fiesta del Poncho en tu correo.</p>
-                    </form>
-                </div>
-
-            </div>
-
-            <hr class="pie-separador">
-
-            <p class="pie-copy">&copy; 2026 Ministerio de Cultura - Provincia de Catamarca</p>
-        </div>
-    </footer>
-
-    <!-- INYECCIÓN DE DATOS DE DJANGO A JAVASCRIPT A TRAVÉS DE JSON_SCRIPT -->
-    {{ stands_json|json_script:"datos-stands-json" }}
-    {{ busqueda_json|json_script:"datos-busqueda-json" }}
-
-    <!-- JavaScript de Bootstrap -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- Validaciones.js -->
-    <script src="{% static 'js/validaciones1.js' %}"></script>
-
-</body>
-</html>
+{% endblock %}
