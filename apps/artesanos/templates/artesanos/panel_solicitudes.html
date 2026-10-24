@@ -1,0 +1,470 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluación de Solicitudes - Poncho Digital</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@500;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="{% static 'css/estilos.css' %}" rel="stylesheet">
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+    <header class="cabecera" id="cabecera">
+        <div class="franja-tejido"></div>
+
+        <nav class="navbar navbar-expand-md">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{% url 'index' %}">Poncho <span>Digital</span></a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuSolicitudes" aria-controls="menuSolicitudes" aria-expanded="false" aria-label="Abrir menú de navegación">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="menuSolicitudes">
+                    <ul class="navbar-nav ms-auto text-center">
+                        <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'registro_artesano' %}">Registro de Artesanos</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="{% url 'panel_solicitudes' %}">Evaluación de Solicitudes</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'gestion_productos' %}">Gestión de Productos</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container-fluid py-5 flex-grow-1">
+        <div class="row justify-content-center">
+            <div class="col-12 col-xl-11">
+
+                {% include 'includes/mensajes.html' %}
+
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
+                    <div>
+                        <h2 class="mb-1">Panel de Evaluación de Solicitudes</h2>
+                        <p class="mb-0 text-muted">
+                            Revise las postulaciones recibidas y apruebe o rechace su incorporación al padrón oficial de artesanos.
+                        </p>
+                    </div>
+                    <a href="{% url 'registro_artesano' %}" class="boton boton-primario text-center">+ Nueva Solicitud</a>
+                </div>
+
+                <!-- RESUMEN DE ESTADOS -->
+                <div class="row g-3 mb-4">
+                    <div class="col-6 col-lg-3">
+                        <div class="tarjeta tarjeta-azul py-3 px-3">
+                            <span class="text-muted small fw-semibold d-block">Total Recibidas</span>
+                            <span class="fs-2 fw-bold">{{ total_solicitudes }}</span>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-3">
+                        <div class="tarjeta tarjeta-ocre py-3 px-3">
+                            <span class="text-muted small fw-semibold d-block">Pendientes</span>
+                            <span class="fs-2 fw-bold text-warning-emphasis">{{ total_pendientes }}</span>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-3">
+                        <div class="tarjeta py-3 px-3" style="border-left-color: var(--color-verde);">
+                            <span class="text-muted small fw-semibold d-block">Aprobadas</span>
+                            <span class="fs-2 fw-bold text-success">{{ total_aprobadas }}</span>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-3">
+                        <div class="tarjeta tarjeta-rojo py-3 px-3">
+                            <span class="text-muted small fw-semibold d-block">Rechazadas</span>
+                            <span class="fs-2 fw-bold text-danger">{{ total_rechazadas }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FILTROS Y BÚSQUEDA -->
+                <fieldset class="mb-4 py-3">
+                    <form method="get" action="{% url 'panel_solicitudes' %}" class="row g-3 align-items-end">
+                        <div class="col-12 col-md-5">
+                            <label for="busquedaSolicitudes" class="form-label fw-semibold small mb-1">Buscar postulación:</label>
+                            <input
+                                type="text"
+                                id="busquedaSolicitudes"
+                                name="q"
+                                value="{{ busqueda }}"
+                                class="form-control"
+                                placeholder="DNI, CUIT/CUIL, apellido, nombre, emprendimiento o localidad...">
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <label for="filtroEstado" class="form-label fw-semibold small mb-1">Filtrar por estado:</label>
+                            <select id="filtroEstado" name="estado" class="form-select">
+                                <option value="" {% if not estado_filtro %}selected{% endif %}>Todos los estados</option>
+                                <option value="PENDIENTE" {% if estado_filtro == 'PENDIENTE' %}selected{% endif %}>Pendientes</option>
+                                <option value="APROBADO" {% if estado_filtro == 'APROBADO' %}selected{% endif %}>Aprobados</option>
+                                <option value="RECHAZADO" {% if estado_filtro == 'RECHAZADO' %}selected{% endif %}>Rechazados</option>
+                            </select>
+                        </div>
+                        <div class="col-12 col-md-3 d-flex gap-2">
+                            <button type="submit" class="btn btn-poncho flex-grow-1">Filtrar</button>
+                            {% if busqueda or estado_filtro %}
+                            <a href="{% url 'panel_solicitudes' %}" class="btn btn-outline-secondary">Limpiar</a>
+                            {% endif %}
+                        </div>
+                    </form>
+                </fieldset>
+
+                <!-- LISTADO DE SOLICITUDES -->
+                <fieldset class="shadow-sm">
+                    <legend class="h5 mb-3">Solicitudes Registradas</legend>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0" id="tablaSolicitudes">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Fecha</th>
+                                    <th>Emprendimiento / Rubro</th>
+                                    <th>Postulante</th>
+                                    <th>Procedencia</th>
+                                    <th>Contacto</th>
+                                    <th class="text-center">Estado</th>
+                                    <th class="text-center">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for s in solicitudes %}
+                                <tr>
+                                    <td class="fw-semibold">{{ s.id }}</td>
+                                    <td class="small text-muted">{{ s.fecha_solicitud|date:"d/m/Y H:i" }}</td>
+                                    <td>
+                                        <div class="fw-bold">{{ s.nombre_emprendimiento }}</div>
+                                        <div class="small text-muted">{{ s.get_rubro_principal_display }}</div>
+                                    </td>
+                                    <td>
+                                        <div class="fw-semibold">{{ s.apellido }}, {{ s.nombre }}</div>
+                                        <div class="small text-muted">DNI: {{ s.dni }} · CUIL: {{ s.cuit_o_cuil }}</div>
+                                    </td>
+                                    <td>
+                                        <div>{{ s.localidad }}</div>
+                                        <div class="small text-muted">
+                                            {% if s.departamento %}{{ s.get_departamento_display }}, {% endif %}{{ s.provincia }}
+                                        </div>
+                                    </td>
+                                    <td class="small">
+                                        <div>{{ s.email }}</div>
+                                        <div class="text-muted">{{ s.telefono }}</div>
+                                    </td>
+                                    <td class="text-center">
+                                        {% if s.estado_solicitud == 'PENDIENTE' %}
+                                            <span class="badge bg-warning text-dark">Pendiente</span>
+                                        {% elif s.estado_solicitud == 'APROBADO' %}
+                                            <span class="badge bg-success">Aprobado</span>
+                                            {% if s.usuario %}
+                                            <div class="small text-muted mt-1">Usuario: {{ s.usuario.username }}</div>
+                                            {% endif %}
+                                        {% else %}
+                                            <span class="badge bg-danger">Rechazado</span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="d-flex flex-wrap justify-content-center gap-1">
+                                            <button
+                                                type="button"
+                                                class="btn btn-sm btn-outline-dark"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#modalDetalleSolicitud"
+                                                data-id="{{ s.id }}"
+                                                data-emprendimiento="{{ s.nombre_emprendimiento }}"
+                                                data-rubro="{{ s.get_rubro_principal_display }}"
+                                                data-descripcion="{{ s.descripcion_proceso }}"
+                                                data-postulante="{{ s.apellido }}, {{ s.nombre }}"
+                                                data-dni="{{ s.dni }}"
+                                                data-cuil="{{ s.cuit_o_cuil }}"
+                                                data-nacimiento="{{ s.fecha_nacimiento|date:'d/m/Y' }}"
+                                                data-sexo="{{ s.get_sexo_display }}"
+                                                data-email="{{ s.email }}"
+                                                data-telefono="{{ s.telefono }}"
+                                                data-provincia="{{ s.provincia }}"
+                                                data-departamento="{{ s.get_departamento_display|default:'-' }}"
+                                                data-localidad="{{ s.localidad }}"
+                                                data-direccion="{{ s.direccion|default:'No especificada' }}"
+                                                data-fecha="{{ s.fecha_solicitud|date:'d/m/Y H:i' }}"
+                                                data-estado="{{ s.estado_solicitud }}"
+                                                data-estado-display="{{ s.get_estado_solicitud_display }}">
+                                                Ver ficha
+                                            </button>
+
+                                            {% if s.estado_solicitud == 'PENDIENTE' %}
+                                            <button
+                                                type="button"
+                                                class="btn btn-sm btn-success"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#modalEvaluarSolicitud"
+                                                data-accion="aprobar"
+                                                data-url="{% url 'aprobar_solicitud' s.pk %}"
+                                                data-emprendimiento="{{ s.nombre_emprendimiento }}"
+                                                data-postulante="{{ s.apellido }}, {{ s.nombre }}"
+                                                data-dni="{{ s.dni }}">
+                                                Aprobar
+                                            </button>
+
+                                            <button
+                                                type="button"
+                                                class="btn btn-sm btn-danger"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#modalEvaluarSolicitud"
+                                                data-accion="rechazar"
+                                                data-url="{% url 'rechazar_solicitud' s.pk %}"
+                                                data-emprendimiento="{{ s.nombre_emprendimiento }}"
+                                                data-postulante="{{ s.apellido }}, {{ s.nombre }}"
+                                                data-dni="{{ s.dni }}">
+                                                Rechazar
+                                            </button>
+                                            {% endif %}
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="8" class="text-center py-5">
+                                        <p class="text-muted mb-2">No hay solicitudes registradas para mostrar.</p>
+                                        <a href="{% url 'registro_artesano' %}" class="btn btn-sm btn-poncho">Ir al formulario de registro</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </fieldset>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- MODAL DE DETALLE DE LA SOLICITUD -->
+    <div class="modal fade" id="modalDetalleSolicitud" tabindex="-1" aria-labelledby="modalDetalleLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div>
+                        <h3 class="modal-title h5 mb-0" id="modalDetalleLabel">Ficha de Solicitud #<span id="detId"></span></h3>
+                        <small class="text-muted">Recibida el <span id="detFecha"></span></small>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3 p-2 bg-light rounded border">
+                        <div>
+                            <span class="small text-muted d-block">Emprendimiento</span>
+                            <strong class="fs-5" id="detEmprendimiento"></strong>
+                        </div>
+                        <span class="badge fs-6" id="detEstadoBadge"></span>
+                    </div>
+
+                    <h4 class="h6 text-uppercase text-muted border-bottom pb-1 mt-3">1. Emprendimiento</h4>
+                    <div class="row g-2 mb-3">
+                        <div class="col-md-12">
+                            <span class="small text-muted">Rubro Principal:</span>
+                            <div class="fw-semibold" id="detRubro"></div>
+                        </div>
+                        <div class="col-md-12 mt-2">
+                            <span class="small text-muted">Proceso Productivo y Materias Primas:</span>
+                            <p class="p-2 bg-light border rounded mb-0 mt-1" id="detDescripcion"></p>
+                        </div>
+                    </div>
+
+                    <h4 class="h6 text-uppercase text-muted border-bottom pb-1 mt-3">2. Datos Personales</h4>
+                    <div class="row g-2 mb-3">
+                        <div class="col-md-6">
+                            <span class="small text-muted">Apellido y Nombre:</span>
+                            <div class="fw-semibold" id="detPostulante"></div>
+                        </div>
+                        <div class="col-md-3">
+                            <span class="small text-muted">DNI:</span>
+                            <div class="fw-semibold" id="detDni"></div>
+                        </div>
+                        <div class="col-md-3">
+                            <span class="small text-muted">CUIT / CUIL:</span>
+                            <div class="fw-semibold" id="detCuil"></div>
+                        </div>
+                        <div class="col-md-4">
+                            <span class="small text-muted">Fecha de Nacimiento:</span>
+                            <div id="detNacimiento"></div>
+                        </div>
+                        <div class="col-md-4">
+                            <span class="small text-muted">Sexo:</span>
+                            <div id="detSexo"></div>
+                        </div>
+                        <div class="col-md-4">
+                            <span class="small text-muted">Teléfono:</span>
+                            <div id="detTelefono"></div>
+                        </div>
+                        <div class="col-md-12">
+                            <span class="small text-muted">Correo Electrónico:</span>
+                            <div id="detEmail"></div>
+                        </div>
+                    </div>
+
+                    <h4 class="h6 text-uppercase text-muted border-bottom pb-1 mt-3">3. Procedencia y Domicilio</h4>
+                    <div class="row g-2">
+                        <div class="col-md-4">
+                            <span class="small text-muted">Provincia:</span>
+                            <div id="detProvincia"></div>
+                        </div>
+                        <div class="col-md-4">
+                            <span class="small text-muted">Departamento:</span>
+                            <div id="detDepartamento"></div>
+                        </div>
+                        <div class="col-md-4">
+                            <span class="small text-muted">Localidad:</span>
+                            <div id="detLocalidad"></div>
+                        </div>
+                        <div class="col-md-12">
+                            <span class="small text-muted">Dirección:</span>
+                            <div id="detDireccion"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE CONFIRMACIÓN DE EVALUACIÓN (APROBAR / RECHAZAR) -->
+    <div class="modal fade" id="modalEvaluarSolicitud" tabindex="-1" aria-labelledby="modalEvaluarLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form id="formEvaluarSolicitud" method="post" action="">
+                    {% csrf_token %}
+                    <div class="modal-header">
+                        <h3 class="modal-title h5 mb-0" id="modalEvaluarLabel">Confirmar evaluación</h3>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="evalMensajePrincipal" class="mb-2"></p>
+                        <div class="p-3 bg-light rounded border small" id="evalDetalleImpacto"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" id="btnConfirmarEvaluacion" class="btn">Confirmar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer class="mt-auto py-3 mt-5 pie" id="pie">
+        <div class="franja-tejido"></div>
+
+        <div class="container-fluid">
+            <div class="row gy-4">
+
+                <div class="col-12 col-md-4">
+                    <h4 class="pie-titulo">Poncho Digital</h4>
+                    <p class="pie-texto">Ministerio de Cultura, Turismo y Deporte de la Provincia de Catamarca.</p>
+                    <p class="pie-texto">Predio Ferial Catamarca — Av. México s/n.</p>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <h4 class="pie-titulo">Enlaces</h4>
+                    <ul class="pie-lista">
+                        <li><a href="{% url 'index' %}">Inicio</a></li>
+                        <li><a href="{% url 'registro_artesano' %}">Registro de Artesanos</a></li>
+                        <li><a href="{% url 'panel_solicitudes' %}">Evaluación de Solicitudes</a></li>
+                        <li><a href="{% url 'gestion_productos' %}">Gestión de Productos</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <h4 class="pie-titulo">Recibí novedades</h4>
+                    <form class="form-novedades" action="#" method="post">
+                        {% csrf_token %}
+                        <label for="correoNovedades" class="form-etiqueta">Correo electrónico</label>
+                        <div class="form-fila">
+                            <input type="email" id="correoNovedades" name="correoNovedades" class="form-campo" placeholder="tu@email.com" required>
+                            <button type="submit" class="boton boton-secundario">Sumarme</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+            <hr class="pie-separador">
+
+            <p class="pie-copy">&copy; 2026 Ministerio de Cultura - Provincia de Catamarca</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Poblar modal de detalle de solicitud
+        const modalDetalle = document.getElementById('modalDetalleSolicitud');
+        if (modalDetalle) {
+            modalDetalle.addEventListener('show.bs.modal', function (event) {
+                const btn = event.relatedTarget;
+                if (!btn) return;
+
+                document.getElementById('detId').textContent = btn.getAttribute('data-id');
+                document.getElementById('detFecha').textContent = btn.getAttribute('data-fecha');
+                document.getElementById('detEmprendimiento').textContent = btn.getAttribute('data-emprendimiento');
+                document.getElementById('detRubro').textContent = btn.getAttribute('data-rubro');
+                document.getElementById('detDescripcion').textContent = btn.getAttribute('data-descripcion');
+                document.getElementById('detPostulante').textContent = btn.getAttribute('data-postulante');
+                document.getElementById('detDni').textContent = btn.getAttribute('data-dni');
+                document.getElementById('detCuil').textContent = btn.getAttribute('data-cuil');
+                document.getElementById('detNacimiento').textContent = btn.getAttribute('data-nacimiento');
+                document.getElementById('detSexo').textContent = btn.getAttribute('data-sexo');
+                document.getElementById('detEmail').textContent = btn.getAttribute('data-email');
+                document.getElementById('detTelefono').textContent = btn.getAttribute('data-telefono');
+                document.getElementById('detProvincia').textContent = btn.getAttribute('data-provincia');
+                document.getElementById('detDepartamento').textContent = btn.getAttribute('data-departamento');
+                document.getElementById('detLocalidad').textContent = btn.getAttribute('data-localidad');
+                document.getElementById('detDireccion').textContent = btn.getAttribute('data-direccion');
+
+                const estado = btn.getAttribute('data-estado');
+                const badge = document.getElementById('detEstadoBadge');
+                badge.textContent = btn.getAttribute('data-estado-display');
+                badge.className = 'badge fs-6 ' + (
+                    estado === 'APROBADO' ? 'bg-success' :
+                    estado === 'RECHAZADO' ? 'bg-danger' : 'bg-warning text-dark'
+                );
+            });
+        }
+
+        // Configurar modal de confirmación para Aprobar / Rechazar
+        const modalEvaluar = document.getElementById('modalEvaluarSolicitud');
+        if (modalEvaluar) {
+            modalEvaluar.addEventListener('show.bs.modal', function (event) {
+                const btn = event.relatedTarget;
+                if (!btn) return;
+
+                const accion = btn.getAttribute('data-accion');
+                const url = btn.getAttribute('data-url');
+                const emprendimiento = btn.getAttribute('data-emprendimiento');
+                const postulante = btn.getAttribute('data-postulante');
+                const dni = btn.getAttribute('data-dni');
+
+                const form = document.getElementById('formEvaluarSolicitud');
+                const titulo = document.getElementById('modalEvaluarLabel');
+                const mensaje = document.getElementById('evalMensajePrincipal');
+                const impacto = document.getElementById('evalDetalleImpacto');
+                const btnSubmit = document.getElementById('btnConfirmarEvaluacion');
+
+                form.action = url;
+
+                if (accion === 'aprobar') {
+                    titulo.textContent = 'Confirmar Aprobación de Solicitud';
+                    mensaje.textContent = `¿Desea APROBAR la solicitud de "${emprendimiento}" (${postulante})?`;
+                    impacto.textContent = `Se creará automáticamente el perfil oficial de Artesano y se vinculará una cuenta de usuario con DNI ${dni} como usuario y contraseña inicial.`;
+                    btnSubmit.className = 'btn btn-success';
+                    btnSubmit.textContent = 'Sí, aprobar solicitud';
+                } else {
+                    titulo.textContent = 'Confirmar Rechazo de Solicitud';
+                    mensaje.textContent = `¿Desea RECHAZAR la solicitud de "${emprendimiento}" (${postulante})?`;
+                    impacto.textContent = 'La postulación pasará a estado RECHAZADO y no se generará perfil oficial en el padrón de artesanos.';
+                    btnSubmit.className = 'btn btn-danger';
+                    btnSubmit.textContent = 'Sí, rechazar solicitud';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

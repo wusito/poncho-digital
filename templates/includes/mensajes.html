@@ -1,0 +1,21 @@
+{% if messages %}
+<div class="contenedor-mensajes mb-4" aria-live="polite">
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show shadow-sm d-flex align-items-center" role="alert">
+        <div class="me-2 fw-bold">
+            {% if 'success' in message.tags %}
+                &#10004;
+            {% elif 'danger' in message.tags or 'error' in message.tags %}
+                &#9888;
+            {% elif 'warning' in message.tags %}
+                &#9888;
+            {% else %}
+                &#8505;
+            {% endif %}
+        </div>
+        <div class="flex-grow-1">{{ message }}</div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar mensaje"></button>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
