@@ -1,0 +1,37 @@
+{% load static %}
+        <!-- HU-07: MÓDULO DE MAPA Y PLANO DE STANDS -->
+        <section class="secciones" id="stands">
+            <div class="container-fluid">
+                <h2 class="titulo-seccion">Mapa del Predio y Ubicación de Stands</h2>
+                <div class="row gy-4">
+                    
+                    <!-- Plano del predio sobre static/img/mapa.jpg -->
+                    <div class="col-12 col-lg-7">
+                        <div class="card p-3 shadow-sm">
+                            <h4 class="h5 mb-3">Plano Interactivo del Predio Ferial</h4>
+                            <div class="mapa-contenedor position-relative border rounded overflow-hidden">
+                                <img src="{% static 'img/mapa.jpg' %}" alt="Mapa del Predio Ferial Catamarca" class="img-fluid w-100 id-imagen-mapa">
+                                <!-- Capa de marcadores interactivos asignados a coordenadas sobre el mapa -->
+                                <div id="capaMarcadoresStands" class="position-absolute top-0 start-0 w-100 h-100"></div>
+                            </div>
+                            <div class="mt-3 d-flex justify-content-between align-items-center text-muted small">
+                                <div><span class="badge bg-success">●</span> Disponible</div>
+                                <div><span class="badge bg-danger">●</span> Asignado (Artesano Habilitado)</div>
+                                <div><span class="badge bg-warning text-dark">●</span> En Mantenimiento</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Panel de Información e Interacción con el Stand -->
+                    <div class="col-12 col-lg-5">
+                        <div class="card p-3 shadow-sm h-100" id="panelDetalleStand">
+                            <h4 class="h5 mb-3">Detalle del Stand Seleccionado</h4>
+                            <div id="infoStandSeleccionado" class="d-flex flex-column justify-content-center h-100 text-center">
+                                <p class="text-muted fs-6">Haga clic sobre un marcador de stand dentro del mapa para ver la ubicación exacta, el estado y el artesano asignado.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
