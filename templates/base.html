@@ -16,6 +16,7 @@
 
 <body class="d-flex flex-column min-vh-100">
 
+    {% block header %}
     <header class="cabecera" id="cabecera">
         <div class="franja-tejido"></div>
 
@@ -34,13 +35,14 @@
                         <li class="nav-item"><a class="nav-link" href="#busqueda">Búsqueda</a></li>
                         <li class="nav-item"><a class="nav-link" href="#stands">Mapa de Stands</a></li>
                         <li class="nav-item"><a class="nav-link" href="../apps/artesanos/templates/artesanos/registro_artesano.html">Registro de Artesanos</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../apps/productos/templates/productos/gestion_productos.html">Gestión de Productos</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'gestion_productos' %}">Gestión de Productos</a></li>
                     </ul>
                 </div>
 
             </div>
         </nav>
     </header>
+    {% endblock header %}
 
     <main>
         {% block content %}
