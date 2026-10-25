@@ -9,7 +9,7 @@
     --color-verde: #4C6444;      
     --color-fondo: #F1E9DA;      
     --color-tinta: #2A211C;      
-    --color-blanco: #FBF7EF;
+    --color-blanco: #fffefb;
 
     --fuente-titulos: 'Bitter', Georgia, serif;
     --fuente-texto: 'Work Sans', Arial, sans-serif;
@@ -576,7 +576,7 @@ fieldset {
     border-radius: 8px;
     padding: 24px;
     margin-bottom: 30px;
-    background-color: rgb(255, 255, 255);
+    background-color: var(--color-blanco);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
 }
 

@@ -3,7 +3,7 @@
                     <section class="container-fluid py-5">
                         
                         <div class="row justify-content-center">
-                            <div class="p-4 p-md-5 bg-light rounded shadow-lg border-top border-4" style="border-color: var(--color-rojo) !important;">
+                            <div class="p-4 p-md-5 hero rounded shadow-lg border-top border-4" style="border-color: var(--color-rojo) !important;">
 
                                 <!-- ENCABEZADO -->
                                 <div class="text-center mb-5">
@@ -89,7 +89,7 @@
                     </section>
 
                     <!--SECCIÓN 3: MODIFICACIÓN DE UN PRODUCTO -->
-                    <section class="container-fluid py-5" id="seccion-modificar" style="display:none;">
+                    <section class="container-fluid py-5 hero" id="seccion-modificar" style="display:none;">
                         
                         <div class="text-center mb-4">
                             <h2 style="font-family: var(--fuente-titulos); color: var(--color-rojo-oscuro);" class="fw-bold">Modificar Producto</h2>
@@ -97,12 +97,11 @@
                         </div>
                         
                         <!-- Formulario oculto hasta que JS lo active -->
-                        <!-- POR ESTO: -->
                         <form id="form-modificar-producto" action="" method="POST" enctype="multipart/form-data">
                             {% csrf_token %}
 
                             <div class="row justify-content-center">
-                                <fieldset class="col-12 col-md-10 shadow-sm rounded border-top border-4 p-4 p-md-5 bg-white" style="border-color: var(--color-ocre) !important;">
+                                <fieldset class="col-12 col-md-10 shadow-sm rounded border-top border-1 p-4 p-md-5 bg-white" style="border-color: var(--color-ocre) !important;">
                                     <legend class="float-none w-auto px-3 h5 fw-bold" style="font-family: var(--fuente-titulos); color: var(--color-rojo);">Editar Datos del Producto</legend>
 
                                     <div class="row g-3">
@@ -239,7 +238,7 @@
                     </section>
 
                     <!-- SECCIÓN 4: ELIMINACIÓN DE PRODUCTO CON FORMULARIO POST -->
-                    <section class="container-fluid py-5" id="seccion-eliminar">                       
+                    <section class="container-fluid py-5 hero" id="seccion-eliminar">                       
                         <div class="modal fade" id="modalEliminar" tabindex="-1" aria-labelledby="modalEliminarLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content border-0 shadow-lg rounded">
