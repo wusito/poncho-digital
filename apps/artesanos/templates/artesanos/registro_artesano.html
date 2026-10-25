@@ -28,7 +28,7 @@
 {% endblock header %}
 
 {% block content %}
-    <main class="container-fluid py-5">
+    <div class="p-4 p-md-5 rounded shadow-lg border-top border-4" style="border-color: var(--color-rojo) !important;">
 
         <!-- TÍTULO DE LA SECCIÓN -->
         <div class="container-fluid py-4 mb-3 hero position-relative overflow-hidden shadow-sm">
@@ -40,11 +40,17 @@
                             Panel de Registro · Poncho Digital · Catamarca
                         </p>
                         <h1 class="display-5 fw-bold mb-2" style="font-family: var(--fuente-titulos); color: var(--color-rojo-oscuro);">
-                            Administración de Artesanos
+                            Registro de Artesanos
                         </h1>
                         <p class="text-muted" style="max-width: 60ch;">
-                            Gestioná tu solicitud como artesano o expositor completando tus datos para participar en la Feria Anual e Internacional del Porncho de la provincia.
+                            Gestioná tu solicitud como artesano o expositor completando tus datos para participar en la Feria Anual e Internacional del Poncho de la provincia.
                         </p>
+
+                        <div class="d-flex justify-content-start mt-3">
+                            <span class="badge px-3 py-2" style="background-color: var(--color-rojo-oscuro); color: var(--color-blanco); font-weight: 500;">
+                                Panel para Postulantes a Artesanos
+                            </span>
+                        </div>
                     </div>
 
                     <div class="col-12 col-lg-5">
@@ -219,7 +225,7 @@
                 </form>
             </div>
         </div>
-    </main>
+    </div>
 {% endblock %}
 
 {% block extra_js %}
