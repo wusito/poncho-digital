@@ -111,8 +111,6 @@
             </div>
         </section>
 
-        <!-- HU-07: MÓDULO DE MAPA Y PLANO DE STANDS -->
-        {% include 'stands/mapa_stands.html' %}
 
         <!-- SECCIÓN DE IFRAMES ACTUALIZADA -->
         <section class="secciones" id="iframes">
@@ -204,7 +202,7 @@
                             <h3>Predio y Stands</h3>
                             <p>Visitantes y organizadores localizan fácilmente los stands dentro del predio
                                 ferial durante los diez días de la fiesta.</p>
-                            <a href="#stands" class="tarjeta-enlace">Ver Mapa →</a>
+                            <a href="{% url 'mapa_stands' %}" class="tarjeta-enlace">Ver Mapa →</a>
                         </article>
                     </div>
 
