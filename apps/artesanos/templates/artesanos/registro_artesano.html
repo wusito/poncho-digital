@@ -18,7 +18,7 @@
                 <div class="collapse navbar-collapse" id="menuGestionProductos">
                     <ul class="navbar-nav ms-auto text-center" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'index' %}">Página Principal</a>
+                            <a class="nav-link" href="{% url 'index' %}">Inicio</a>
                         </li>
                     </ul>
                 </div>
@@ -61,7 +61,7 @@
             </div>
         </div>
 
-        <div class="d-flex flex-column align-items-center justify-content-center p-4 p-md-5 bg-light rounded shadow-lg border-top border-4" style="border-color: var(--color-rojo) !important;">
+        <div class="d-flex flex-column align-items-center justify-content-center p-4 p-md-5 hero rounded shadow-lg border-top border-4" style="border-color: var(--color-rojo) !important;">
             <div class="col-12 col-lg-10">
                 {% include 'includes/mensajes.html' %}
 
@@ -72,7 +72,7 @@
                     {% csrf_token %}
 
                     <!-- SECCIÓN 1: EMPRENDIMIENTO -->
-                    <fieldset>
+                    <fieldset class="shadow-sm rounded border-top border-1 p-4 p-md-5 bg-white" style="border-color: var(--color-ocre) !important;">
                         <legend>Registro de Emprendimiento</legend>
                         <div class="row">
                             <div class="col-md-6 grupo-entrada">
@@ -112,7 +112,7 @@
                     </fieldset>
 
                     <!-- SECCIÓN 2: DATOS PERSONALES -->
-                    <fieldset>
+                    <fieldset class="shadow-sm rounded border-top border-1 p-4 p-md-5 bg-white" style="border-color: var(--color-ocre) !important;">
                         <legend>Datos Personales</legend>
                         <div class="row">
                             <div class="col-md-6 grupo-entrada">
@@ -164,7 +164,7 @@
                     </fieldset>
 
                     <!-- SECCIÓN 3: PROCEDENCIA Y DOMICILIO -->
-                    <fieldset>
+                    <fieldset class="shadow-sm rounded border-top border-1 p-4 p-md-5 bg-white" style="border-color: var(--color-ocre) !important;">
                         <legend>Procedencia y Domicilio</legend>
                         <div class="row">
                             <div class="col-md-4 grupo-entrada">

@@ -6,7 +6,7 @@
 {% block content %}
     <div class="p-4 p-md-4 rounded shadow-lg border-top border-4" style="border-color: var(--color-rojo) !important;">
         <!-- SECCIÓN HERO -->
-        <section class="hero" id="inicio">
+        <section class="hero mb-4" id="inicio">
             <div class="container-fluid">
                 <div class="row align-items-center gy-4">
 
@@ -33,7 +33,7 @@
         </section>
 
         <!-- DATOS DESTACADOS -->
-        <section class="franja-datos">
+        <section class="franja-datos mb-4">
             <div class="container-fluid">
                 <div class="row text-center gy-3">
                     <div class="col-6 col-md-3">
@@ -57,7 +57,7 @@
         </section>
 
         <!-- HU-08: FILTROS Y BÚSQUEDA EN TIEMPO REAL -->
-        <section class="secciones bg-light" id="busqueda">
+        <section class="hero" id="busqueda">
             <div class="container-fluid">
                 <h2 class="titulo-seccion">Buscador de Artesanos y Productos</h2>
                 <form id="formBusqueda" class="row g-3 mb-4" method="get">
@@ -111,8 +111,6 @@
             </div>
         </section>
 
-        <!-- HU-07: MÓDULO DE MAPA Y PLANO DE STANDS -->
-        {% include 'stands/mapa_stands.html' %}
 
         <!-- SECCIÓN DE IFRAMES ACTUALIZADA -->
         <section class="secciones" id="iframes">
@@ -128,7 +126,7 @@
         </section>
 
         <!-- imagenes del poncho con sliderbox-->
-        <section class="secciones" id="galeria">
+        <section class="hero mb-4" id="galeria">
             <div class="container-fluid">
                 <h2 class="titulo-seccion">Imágenes Destacadas</h2>
 
@@ -174,7 +172,7 @@
         </section>
 
         <!-- SECCIÓN DE HUB -->
-        <section class="secciones" id="secciones">
+        <section class="secciones mb-4" id="secciones">
             <div class="container-fluid">
 
                 <h2 class="titulo-seccion">¿Qué podés hacer en Poncho Digital?</h2>
@@ -204,7 +202,7 @@
                             <h3>Predio y Stands</h3>
                             <p>Visitantes y organizadores localizan fácilmente los stands dentro del predio
                                 ferial durante los diez días de la fiesta.</p>
-                            <a href="#stands" class="tarjeta-enlace">Ver Mapa →</a>
+                            <a href="{% url 'mapa_stands' %}" class="tarjeta-enlace">Ver Mapa →</a>
                         </article>
                     </div>
 

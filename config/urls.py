@@ -25,6 +25,7 @@ urlpatterns = [
     # Aquí van las URLs de las apps (artesanos, productos, stands)
     path('', include('apps.artesanos.urls')),
     path('', include('apps.productos.urls')),
+    path('', include('apps.stands.urls')),
     path('', index, name='index'),
 ]
 

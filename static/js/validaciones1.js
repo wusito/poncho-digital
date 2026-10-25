@@ -185,10 +185,10 @@ function realizarBusqueda() {
                         <span class="badge ${item.tipo === 'Artesano' ? 'bg-primary' : 'bg-success'} mb-2">${item.tipo}</span>
                         <h5 class="card-title h6">${item.nombre}</h5>
                         <p class="card-text small mb-1"><strong>Rubro/Categoría:</strong> ${item.rubro_display || item.rubro || item.categoria}</p>
+                        <p class="card-text small mb-1"><strong>Subcategoría:</strong> ${item.subcategoria || 'N/A'}</p>
                         <p class="card-text small mb-1"><strong>Localidad:</strong> ${item.localidad || 'Catamarca'}</p>
                         <p class="card-text small mb-2"><strong>Stand Asignado:</strong> ${item.stand || 'Sin asignar'}</p>
                         <p class="card-text text-muted small">${item.detalle || ''}</p>
-                        <p class="card-text text-muted small"><strong>Subcat (Debug):</strong> ${item.subcategoria || 'N/A'}</p>
                     </div>
                 </div>
             `;

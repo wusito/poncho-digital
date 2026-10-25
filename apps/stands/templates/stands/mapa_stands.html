@@ -1,8 +1,69 @@
+{% extends 'base.html' %}
 {% load static %}
-        <!-- HU-07: MÓDULO DE MAPA Y PLANO DE STANDS -->
-        <section class="secciones" id="stands">
+
+{% block title %}Mapas y Stands - Poncho Digital{% endblock %}
+
+{% block header %}
+    <header class="cabecera" id="cabecera">
+        <div class="franja-tejido"></div>
+
+        <nav class="navbar navbar-expand-md">
             <div class="container-fluid">
-                <h2 class="titulo-seccion">Mapa del Predio y Ubicación de Stands</h2>
+                <a class="navbar-brand" href="{% url 'index' %}">Poncho <span>Digital</span></a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuGestionProductos" aria-controls="menuGestionProductos" aria-expanded="false" aria-label="Abrir menú de navegación">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="menuGestionProductos">
+                    <ul class="navbar-nav ms-auto text-center" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'index' %}">Inicio</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+{% endblock header %}
+
+{% block content %}
+    <div class="p-4 p-md-4 rounded shadow-lg border-top border-4" style="border-color: var(--color-rojo) !important;">
+
+        <!-- TÍTULO DE LA SECCIÓN -->
+        <div class="container-fluid py-4 mb-3 hero position-relative overflow-hidden shadow-sm">
+            <div class="container-fluid">
+                <div class="row align-items-center gy-4">
+                    
+                    <div class="col-12 col-lg-7 text-start">
+                        <p class="hero-eyebrow text-uppercase mb-1" style="color: var(--color-ocre); letter-spacing: 1px; font-weight: 600;">
+                            Mapa del Predio · Poncho Digital · Catamarca
+                        </p>
+                        <h1 class="display-5 fw-bold mb-2" style="font-family: var(--fuente-titulos); color: var(--color-rojo-oscuro);">
+                            Mapa y Ubicación de Stands
+                        </h1>
+                        <p class="text-muted" style="max-width: 60ch;">
+                            Explorá el plano interactivo del predio ferial, consultá la distribución de los espacios y verificá el estado y asignación de cada stand.
+                        </p>
+
+                        <div class="d-flex justify-content-start mt-3">
+                            <span class="badge px-3 py-2" style="background-color: var(--color-rojo-oscuro); color: var(--color-blanco); font-weight: 500;">
+                                Panel del Mapa y Plano Ferial
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-5">
+                        <div class="bandas-poncho" role="img" aria-label="Ilustración de bandas de tejido tradicional del poncho"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- HU-07: MÓDULO DE MAPA Y PLANO DE STANDS -->
+        <section class="secciones py-3" id="stands">
+            <div class="container-fluid px-0">
                 <div class="row gy-4">
                     
                     <!-- Plano del predio sobre static/img/mapa.jpg -->
@@ -35,3 +96,6 @@
                 </div>
             </div>
         </section>
+
+    </div>
+{% endblock %}
