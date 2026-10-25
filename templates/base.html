@@ -56,6 +56,7 @@
     <!-- INYECCIÓN DE DATOS DE DJANGO A JAVASCRIPT A TRAVÉS DE JSON_SCRIPT -->
     {{ stands_json|json_script:"datos-stands-json" }}
     {{ busqueda_json|json_script:"datos-busqueda-json" }}
+    {% block extra_js %}{% endblock %}
 
     <!-- JavaScript de Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
