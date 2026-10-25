@@ -1,29 +1,67 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="es">
-<head>
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de Artesanos - Poncho Digital</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.css" rel="stylesheet">
-    <link href="{% static 'css/estilos.css' %}" rel="stylesheet">
+{% block title %}Registro de Artesanos - Poncho Digital{% endblock %}
 
-</head>
-
-<body class="d-flex flex-column min-vh-100">
+{% block header %}
     <header class="cabecera" id="cabecera">
         <div class="franja-tejido"></div>
 
-        <div class="container-fluid">
-            <a class="navbar-brand" href="../../../../templates/index.html">Poncho <span>Digital</span></a>
+        <nav class="navbar navbar-expand-md">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{% url 'index' %}">Poncho <span>Digital</span></a>
 
-            <h1 class="text-center mt-3 mt-md-0 ms-md-3">Administración Artesanos</h1>
-        </div>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuGestionProductos" aria-controls="menuGestionProductos" aria-expanded="false" aria-label="Abrir menú de navegación">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="menuGestionProductos">
+                    <ul class="navbar-nav ms-auto text-center" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'index' %}">Página Principal</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
     </header>
+{% endblock header %}
 
-    <main class="container-fluid py-5">
-        <div class="row justify-content-center">
+{% block content %}
+    <div class="p-4 p-md-5 rounded shadow-lg border-top border-4" style="border-color: var(--color-rojo) !important;">
+
+        <!-- TÍTULO DE LA SECCIÓN -->
+        <div class="container-fluid py-4 mb-3 hero position-relative overflow-hidden shadow-sm">
+            <div class="container-fluid">
+                <div class="row align-items-center gy-4">
+                    
+                    <div class="col-12 col-lg-7 text-start">
+                        <p class="hero-eyebrow text-uppercase mb-1" style="color: var(--color-ocre); letter-spacing: 1px; font-weight: 600;">
+                            Panel de Registro · Poncho Digital · Catamarca
+                        </p>
+                        <h1 class="display-5 fw-bold mb-2" style="font-family: var(--fuente-titulos); color: var(--color-rojo-oscuro);">
+                            Registro de Artesanos
+                        </h1>
+                        <p class="text-muted" style="max-width: 60ch;">
+                            Gestioná tu solicitud como artesano o expositor completando tus datos para participar en la Feria Anual e Internacional del Poncho de la provincia.
+                        </p>
+
+                        <div class="d-flex justify-content-start mt-3">
+                            <span class="badge px-3 py-2" style="background-color: var(--color-rojo-oscuro); color: var(--color-blanco); font-weight: 500;">
+                                Panel para Postulantes a Artesanos
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-5">
+                        <div class="bandas-poncho" role="img" aria-label="Ilustración de bandas de tejido tradicional del poncho"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex flex-column align-items-center justify-content-center p-4 p-md-5 bg-light rounded shadow-lg border-top border-4" style="border-color: var(--color-rojo) !important;">
             <div class="col-12 col-lg-10">
                 {% include 'includes/mensajes.html' %}
 
@@ -187,50 +225,10 @@
                 </form>
             </div>
         </div>
-    </main>
+    </div>
+{% endblock %}
 
-    <footer class="mt-auto py-3 mt-5 pie" id="pie">
-        <div class="franja-tejido"></div>
-
-        <div class="container-fluid">
-            <div class="row gy-4">
-
-                <div class="col-12 col-md-4">
-                    <h4 class="pie-titulo">Poncho Digital</h4>
-                    <p class="pie-texto">Ministerio de Cultura, Turismo y Deporte de la Provincia de Catamarca.</p>
-                    <p class="pie-texto">Predio Ferial Catamarca — Av. México s/n.</p>
-                </div>
-
-                <div class="col-12 col-md-4">
-                    <h4 class="pie-titulo">Enlaces</h4>
-                    <ul class="pie-lista">
-                        <li><a href="../../../../templates/index.html">Inicio</a></li>
-                        <li><a href="registro_artesano.html">Registro de Artesanos</a></li>
-                        <li><a href="../../../../apps/productos/templates/productos/gestion_productos.html">Gestión de Productos</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-12 col-md-4">
-                    <h4 class="pie-titulo">Recibí novedades</h4>
-                    <form class="form-novedades" action="#" method="post">
-                        <label for="correoNovedades" class="form-etiqueta">Correo electrónico</label>
-                        <div class="form-fila">
-                            <input type="email" id="correoNovedades" name="correoNovedades" class="form-campo" placeholder="tu@email.com" required>
-                            <button type="submit" class="boton boton-secundario">Sumarme</button>
-                        </div>
-                    </form>
-                </div>
-
-            </div>
-
-            <hr class="pie-separador">
-
-            <p class="pie-copy">&copy; 2026 Ministerio de Cultura - Provincia de Catamarca</p>
-        </div>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+{% block extra_js %}
+    <!-- Script específico de validaciones para el registro de artesanos -->
     <script src="{% static 'js/validaciones2.js' %}"></script>
-
-</body>
-</html>
+{% endblock %}

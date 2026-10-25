@@ -40,6 +40,7 @@
 {% endblock header %}
 
 {% block content %}
+    <div class="p-4 p-md-5 rounded shadow-lg border-top border-4" style="border-color: var(--color-rojo) !important;">
         <!-- TÍTULO DE LA SECCIÓN -->
         <div class="container-fluid py-4 mb-3 hero position-relative overflow-hidden shadow-sm">
             <div class="container-fluid">
@@ -56,7 +57,7 @@
                             Publicá, actualizá o gestioná las creaciones artesanales y regionales que forman parte de nuestro catálogo digital.
                         </p>
                         <div class="d-flex justify-content-start mt-3">
-                            <span class="badge px-3 py-2" style="background-color: var(--color-azul); color: var(--color-blanco); font-weight: 500;">
+                            <span class="badge px-3 py-2" style="background-color: var(--color-rojo-oscuro); color: var(--color-blanco); font-weight: 500;">
                                 Gestión Exclusiva para Expositores y Artesanos
                             </span>
                         </div>
@@ -78,7 +79,7 @@
                 role="tabpanel" aria-labelledby="nav-inicio-tab" tabindex="0">
                 
                 <!--SECCIÓN 1: PESTAÑA DE INICIO -->
-                <section class="container-fluid py-5">
+                <section class="container-fluid py-4 px-0">
                     <div class="p-4 p-md-5 bg-light rounded shadow-lg border-top border-4" style="border-color: var(--color-rojo) !important;">
                         
                         <!-- Cabecera de bienvenida -->
@@ -172,6 +173,7 @@
                 {% include 'productos/agregar_productos.html' %}
             </div>
         </div>
+    </div>
 
     <!-- Validaciones.js -->
     <script src="{% static 'js/validaciones3.js' %}"></script>
