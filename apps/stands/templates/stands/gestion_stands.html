@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+
+{% block title %}Gestión de Stands - Poncho Digital{% endblock %}
+
+{% block header %}
+    <header class="cabecera" id="cabecera">
+        <div class="franja-tejido"></div>
+
+        <nav class="navbar navbar-expand-md">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{% url 'index' %}">Poncho <span>Digital</span></a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuGestionProductos" aria-controls="menuGestionProductos" aria-expanded="false" aria-label="Abrir menú de navegación">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="menuGestionProductos">
+                    <ul class="navbar-nav ms-auto text-center" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'index' %}">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'mapa_stands' %}">Volver al mapa</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+{% endblock header %}
+
+{% block content %}
+<div class="p-4 p-md-4 rounded shadow-lg border-top border-4" style="border-color: var(--color-rojo) !important;">
+
+    <!-- TÍTULO DE LA SECCIÓN -->
+    <div class="container-fluid py-4 mb-3 hero position-relative overflow-hidden shadow-sm">
+        <div class="container-fluid">
+            <div class="row align-items-center gy-4">
+                
+                <div class="col-12 col-lg-7 text-start">
+                    <p class="hero-eyebrow text-uppercase mb-1" style="color: var(--color-ocre); letter-spacing: 1px; font-weight: 600;">
+                        Panel de Administración · Poncho Digital · Catamarca
+                    </p>
+                    <h1 class="display-5 fw-bold mb-2" style="font-family: var(--fuente-titulos); color: var(--color-rojo-oscuro);">
+                        Gestión de Stands
+                    </h1>
+                    <p class="text-muted" style="max-width: 60ch;">
+                        Registrá stands y definí su ubicación en el plano.
+                    </p>
+                    <div class="d-flex justify-content-start mt-3">
+                        <span class="badge px-3 py-2" style="background-color: var(--color-rojo-oscuro); color: var(--color-blanco); font-weight: 500;">
+                            Acceso Restringido · Solo Administradores
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-5">
+                    <div class="bandas-poncho" role="img" aria-label="Ilustración de bandas de tejido tradicional del poncho"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    {% include 'includes/mensajes.html' %}
+
+    <section class="secciones py-3">
+        <div class="container-fluid px-0">
+
+            <section class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h2 class="h5 mb-3">{% if stand_editando %}Editar stand {{ stand_editando.numero_stand }}{% else %}Registrar stand{% endif %}</h2>
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+                        {% for field in form %}
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.help_text %}<div class="form-text">{{ field.help_text }}</div>{% endif %}
+                            {% for error in field.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+                        </div>
+                        {% endfor %}
+                        {% if form.non_field_errors %}
+                        <div class="alert alert-danger" role="alert">{{ form.non_field_errors }}</div>
+                        {% endif %}
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-primary" type="submit">{% if stand_editando %}Guardar cambios{% else %}Registrar stand{% endif %}</button>
+                            {% if stand_editando %}<a class="btn btn-outline-secondary" href="{% url 'gestion_stands' %}">Cancelar</a>{% endif %}
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <section class="card shadow-sm">
+                <div class="card-body">
+                    <h2 class="h5 mb-3">Stands registrados</h2>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Número</th>
+                                    <th>Ubicación X,Y</th>
+                                    <th>Estado</th>
+                                    <th>Artesano</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for stand in stands %}
+                                <tr>
+                                    <td>{{ stand.numero_stand }}</td>
+                                    <td>{{ stand.ubicacion_mapa }}</td>
+                                    <td>{{ stand.get_estado_display }}</td>
+                                    <td>{% if stand.artesano %}{{ stand.artesano.nombre_comercial }}{% else %}—{% endif %}</td>
+                                    <td><a class="btn btn-sm btn-outline-primary" href="{% url 'editar_stand' stand.pk %}">Editar</a></td>
+                                </tr>
+                                {% empty %}
+                                <tr><td colspan="5" class="text-center text-muted py-4">Todavía no hay stands registrados.</td></tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </section>
+
+</div>
+{% endblock %}
