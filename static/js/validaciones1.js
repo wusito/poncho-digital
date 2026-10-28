@@ -210,75 +210,134 @@ if (formBusqueda) {
 
 /* ==========================================================================
    HU-07: MÓDULO DE STANDS & MAPA INTERACTIVO (static/img/mapa.jpg)
-   Obtención de los modelos 'Stand' y 'Artesano' desde PostgreSQL
    ========================================================================== */
 let modeloStands = [];
+let standsJsonValido = true;
 const scriptStandsData = document.getElementById("datos-stands-json");
 
 if (scriptStandsData) {
     try {
         modeloStands = JSON.parse(scriptStandsData.textContent);
-    } catch (e) {
-        console.error("Error al parsear los datos del modelo Stand:", e);
+        if (!Array.isArray(modeloStands)) {
+            throw new TypeError("El listado de stands no tiene el formato esperado.");
+        }
+    } catch (error) {
+        standsJsonValido = false;
+        console.error("Error al parsear los datos del modelo Stand:", error);
     }
 }
 
 const capaMarcadores = document.getElementById("capaMarcadoresStands");
 const infoStandContenedor = document.getElementById("infoStandSeleccionado");
 
-function renderizarMarcadoresEnMapa() {
-    if (!capaMarcadores) return;
+function mostrarMensajeStand(mensaje) {
+    if (!infoStandContenedor) return;
+    infoStandContenedor.replaceChildren();
+    const parrafo = document.createElement("p");
+    parrafo.className = "text-muted fs-6";
+    parrafo.textContent = mensaje;
+    infoStandContenedor.appendChild(parrafo);
+}
 
-    capaMarcadores.innerHTML = "";
-    if (modeloStands.length === 0) {
-        capaMarcadores.innerHTML = '<div class="p-3 text-center text-muted small">No hay stands registrados en la base de datos.</div>';
-        return;
-    }
-
-    modeloStands.forEach(stand => {
-        const pin = document.createElement("button");
-        pin.type = "button";
-        
-        let colorEstado = "btn-success";
-        if (stand.estado === "Asignado" || stand.estado === "ocupado") colorEstado = "btn-danger";
-        if (stand.estado === "Mantenimiento" || stand.estado === "reservado") colorEstado = "btn-warning text-dark";
-
-        pin.className = `btn ${colorEstado} btn-sm position-absolute rounded-circle marcador-pin`;
-        
-        // Separa las coordenadas configuradas en el modelo Stand (por ejemplo "25%,30%")
-        const coords = stand.ubicacion_mapa ? stand.ubicacion_mapa.split(",") : ["50%", "50%"];
-        pin.style.left = coords[0] ? coords[0].trim() : "50%";
-        pin.style.top = coords[1] ? coords[1].trim() : "50%";
-        
-        pin.style.transform = "translate(-50%, -50%)";
-        pin.setAttribute("title", `Stand ${stand.numero_stand}`);
-        pin.innerHTML = `<strong>${stand.numero_stand}</strong>`;
-
-        pin.addEventListener("click", () => consultarUbicacionStand(stand));
-        capaMarcadores.appendChild(pin);
-    });
+function agregarDatoStand(contenedor, etiqueta, valor) {
+    const fila = document.createElement("p");
+    fila.className = "mb-2";
+    const titulo = document.createElement("strong");
+    titulo.textContent = `${etiqueta}: `;
+    fila.append(titulo, document.createTextNode(valor));
+    contenedor.appendChild(fila);
 }
 
 function consultarUbicacionStand(stand) {
     if (!infoStandContenedor) return;
 
-    let badgeClass = "bg-success";
-    if (stand.estado === "Asignado" || stand.estado === "ocupado") badgeClass = "bg-danger";
-    if (stand.estado === "Mantenimiento" || stand.estado === "reservado") badgeClass = "bg-warning text-dark";
+    infoStandContenedor.replaceChildren();
+    const titulo = document.createElement("h5");
+    titulo.className = "mb-3";
+    titulo.textContent = `Stand ${stand.numero_stand}`;
+    infoStandContenedor.appendChild(titulo);
 
-    infoStandContenedor.innerHTML = `
-        <div class="text-start">
-            <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
-                <h5 class="mb-0">Stand ${stand.numero_stand}</h5>
-                <span class="badge ${badgeClass}">${stand.estado.toUpperCase()}</span>
-            </div>
-            <p class="mb-2"><strong>Artesano Asignado:</strong> ${stand.artesano_nombre ? stand.artesano_nombre : '<em>Sin asignar / Disponible</em>'}</p>
-            <p class="mb-2"><strong>Rubro:</strong> ${stand.artesano_rubro ? stand.artesano_rubro : '-'}</p>
-            <p class="mb-0"><strong>Localidad de Origen:</strong> ${stand.artesano_localidad ? stand.artesano_localidad : '-'}</p>
-        </div>
-    `;
+    const estado = document.createElement("span");
+    const claseEstado = stand.estado === "Asignado"
+        ? "bg-danger"
+        : stand.estado === "Mantenimiento"
+            ? "bg-warning text-dark"
+            : "bg-success";
+    estado.className = `badge ${claseEstado} align-self-center mb-3`;
+    estado.textContent = stand.estado_display || stand.estado;
+    infoStandContenedor.appendChild(estado);
+    agregarDatoStand(infoStandContenedor, "Ubicación en el mapa", stand.ubicacion_mapa);
+
+    if (stand.artesano_nombre) {
+        const subtitulo = document.createElement("h6");
+        subtitulo.className = "mt-3";
+        subtitulo.textContent = "Artesano asignado";
+        infoStandContenedor.appendChild(subtitulo);
+        agregarDatoStand(infoStandContenedor, "Nombre comercial", stand.artesano_nombre);
+        agregarDatoStand(infoStandContenedor, "Rubro", stand.artesano_rubro || "No especificado");
+        agregarDatoStand(infoStandContenedor, "Localidad", stand.artesano_localidad || "No especificada");
+    }
 }
 
-if (capaMarcadores) {
-    renderizarMarcadoresEnMapa();
+function leerCoordenadasStand(ubicacion) {
+    if (typeof ubicacion !== "string") return null;
+    const coincidencia = /^\s*(\d{1,3}(?:\.\d{1,4})?)\s*,\s*(\d{1,3}(?:\.\d{1,4})?)\s*$/.exec(ubicacion);
+    if (!coincidencia) return null;
+
+    const x = Number(coincidencia[1]);
+    const y = Number(coincidencia[2]);
+    if (x < 0 || x > 100 || y < 0 || y > 100) return null;
+    return {x, y};
+}
+
+if (capaMarcadores && infoStandContenedor) {
+    if (!standsJsonValido) {
+        mostrarMensajeStand("No fue posible cargar los stands del mapa. Actualizá la página o contactá al administrador.");
+    } else if (modeloStands.length === 0) {
+        mostrarMensajeStand("Todavía no hay stands registrados en el mapa.");
+    } else {
+        const coordenadasInvalidas = [];
+
+        modeloStands.forEach(stand => {
+            const coordenadas = leerCoordenadasStand(stand.ubicacion_mapa);
+            if (!coordenadas) {
+                coordenadasInvalidas.push(`Stand ${stand.numero_stand}: ${stand.ubicacion_mapa}`);
+                return;
+            }
+
+            const pin = document.createElement("button");
+            pin.type = "button";
+            pin.className = "btn btn-sm position-absolute rounded-circle marcador-pin";
+            pin.classList.add(
+                stand.estado === "Asignado"
+                    ? "btn-danger"
+                    : stand.estado === "Mantenimiento"
+                        ? "btn-warning"
+                        : "btn-success",
+                stand.estado === "Mantenimiento" ? "text-dark" : "text-white"
+            );
+            pin.style.left = `${coordenadas.x}%`;
+            pin.style.top = `${coordenadas.y}%`;
+            pin.style.transform = "translate(-50%, -50%)";
+            pin.textContent = stand.numero_stand;
+            pin.setAttribute(
+                "aria-label",
+                `Ver stand ${stand.numero_stand}, ${stand.estado_display || stand.estado}`
+            );
+            pin.addEventListener("click", () => consultarUbicacionStand(stand));
+            capaMarcadores.appendChild(pin);
+        });
+
+        if (coordenadasInvalidas.length > 0) {
+            const aviso = document.getElementById("erroresCoordenadas");
+            if (aviso) {
+                aviso.hidden = false;
+                aviso.textContent = `No se pudieron ubicar estos stands. Corregí sus coordenadas X,Y (0–100) desde la gestión: ${coordenadasInvalidas.join("; ")}.`;
+            }
+        }
+
+        if (capaMarcadores.childElementCount === 0) {
+            mostrarMensajeStand("No hay stands con coordenadas válidas para mostrar. Revisá las coordenadas indicadas.");
+        }
+    }
 }
