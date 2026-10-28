@@ -4,6 +4,8 @@ from django.db import IntegrityError, transaction
 from django.db.models import Case, IntegerField, Q, Value, When
 from django.shortcuts import get_object_or_404, redirect, render
 
+from apps.stands.models import Stand
+
 from .forms import PostulanteArtesanoForm
 from .models import Artesano, PostulanteArtesano
 
@@ -62,6 +64,7 @@ def panel_solicitudes(request):
     """
     Vista/panel de evaluación de solicitudes de artesanos (HU-02).
     Permite listar, buscar, filtrar por estado, ver la ficha completa y aprobar o rechazar solicitudes.
+    Al aprobar, requiere y asigna un stand disponible.
     """
     estado_filtro = request.GET.get('estado', '').strip().upper()
     busqueda = request.GET.get('q', '').strip()
@@ -113,6 +116,10 @@ def panel_solicitudes(request):
 
     context = {
         'solicitudes': solicitudes,
+        'stands_disponibles': Stand.objects.filter(
+            estado=Stand.EstadoStand.DISPONIBLE,
+            artesano__isnull=True,
+        ).order_by('numero_stand'),
         'estado_filtro': estado_filtro,
         'busqueda': busqueda,
         'total_solicitudes': total_solicitudes,
@@ -127,18 +134,23 @@ def aprobar_solicitud(request, pk):
     """
     Aprueba una solicitud pendiente de forma atómica (HU-02):
     crea/vincula el User con DNI como username y contraseña inicial,
-    crea el perfil oficial Artesano y pasa la solicitud a estado APROBADO.
+    crea el perfil oficial Artesano, asigna el stand seleccionado y pasa la solicitud a estado APROBADO.
     """
     if request.method != 'POST':
         return redirect('panel_solicitudes')
 
     postulante = get_object_or_404(PostulanteArtesano, pk=pk)
+    stand_id = request.POST.get('stand_id', '').strip()
 
     if postulante.estado_solicitud == PostulanteArtesano.EstadoSolicitud.APROBADO:
         messages.error(
             request,
             f"La solicitud de '{postulante.nombre_emprendimiento}' ya se encuentra aprobada.",
         )
+        return redirect('panel_solicitudes')
+
+    if not stand_id.isdecimal():
+        messages.error(request, "Debe seleccionar un stand disponible para aprobar la solicitud.")
         return redirect('panel_solicitudes')
 
     if Artesano.objects.filter(nombre_comercial__iexact=postulante.nombre_emprendimiento).exists():
@@ -153,6 +165,20 @@ def aprobar_solicitud(request, pk):
 
     try:
         with transaction.atomic():
+            try:
+                stand = Stand.objects.select_for_update().get(
+                    pk=stand_id,
+                    estado=Stand.EstadoStand.DISPONIBLE,
+                    artesano__isnull=True,
+                )
+            except Stand.DoesNotExist:
+                messages.error(
+                    request,
+                    "No se pudo aprobar: el stand seleccionado ya no está disponible. "
+                    "Actualizá el panel y seleccioná otro stand.",
+                )
+                return redirect('panel_solicitudes')
+
             if postulante.usuario:
                 usuario = postulante.usuario
             else:
@@ -180,7 +206,7 @@ def aprobar_solicitud(request, pk):
                 )
                 return redirect('panel_solicitudes')
 
-            Artesano.objects.create(
+            artesano = Artesano.objects.create(
                 usuario=usuario,
                 nombre_comercial=postulante.nombre_emprendimiento,
                 rubro=postulante.rubro_principal,
@@ -191,6 +217,9 @@ def aprobar_solicitud(request, pk):
                 localidad=postulante.localidad,
                 direccion=postulante.direccion or None,
             )
+
+            stand.artesano = artesano
+            stand.save(update_fields=['artesano', 'estado'])
 
             postulante.usuario = usuario
             postulante.estado_solicitud = PostulanteArtesano.EstadoSolicitud.APROBADO

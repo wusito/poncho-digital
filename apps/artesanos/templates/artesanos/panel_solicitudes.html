@@ -361,6 +361,18 @@
                     <div class="modal-body">
                         <p id="evalMensajePrincipal" class="mb-2"></p>
                         <div class="p-3 bg-light rounded border small" id="evalDetalleImpacto"></div>
+                        <div class="mt-3 d-none" id="evalStandContainer">
+                            <label for="evalStand" class="form-label fw-semibold">Stand disponible</label>
+                            <select class="form-select" id="evalStand" name="stand_id" disabled>
+                                <option value="">Seleccione un stand</option>
+                                {% for stand in stands_disponibles %}
+                                <option value="{{ stand.pk }}">Stand {{ stand.numero_stand }} — {{ stand.ubicacion_mapa }}</option>
+                                {% empty %}
+                                <option value="" disabled>No hay stands disponibles</option>
+                                {% endfor %}
+                            </select>
+                            <div class="form-text" id="evalStandHelp">El stand se asignará al aprobar la solicitud.</div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -428,6 +440,9 @@
                 const mensaje = document.getElementById('evalMensajePrincipal');
                 const impacto = document.getElementById('evalDetalleImpacto');
                 const btnSubmit = document.getElementById('btnConfirmarEvaluacion');
+                const standContainer = document.getElementById('evalStandContainer');
+                const standSelect = document.getElementById('evalStand');
+                const standHelp = document.getElementById('evalStandHelp');
 
                 // CORRECCIÓN CLAVE: Asigna la URL al action del formulario para que se ejecute la vista correspondiente
                 if (form && url) {
@@ -437,18 +452,34 @@
                 if (accion === 'aprobar') {
                     if (titulo) titulo.textContent = 'Confirmar Aprobación de Solicitud';
                     if (mensaje) mensaje.textContent = `¿Desea APROBAR la solicitud de "${emprendimiento}" (${postulante})?`;
-                    if (impacto) impacto.textContent = `Se creará automáticamente el perfil oficial de Artesano y se vinculará una cuenta de usuario con DNI ${dni} como usuario y contraseña inicial.`;
+                    if (impacto) impacto.textContent = `Se creará el perfil oficial de Artesano, se vinculará una cuenta con DNI ${dni} como usuario y contraseña inicial, y se asignará el stand seleccionado.`;
+                    if (standContainer) standContainer.classList.remove('d-none');
+                    if (standSelect) {
+                        standSelect.disabled = false;
+                        standSelect.required = true;
+                        standSelect.value = '';
+                    }
                     if (btnSubmit) {
                         btnSubmit.className = 'btn btn-success';
                         btnSubmit.textContent = 'Sí, aprobar solicitud';
+                        btnSubmit.disabled = !standSelect || !Array.from(standSelect.options).some(option => option.value && !option.disabled);
+                    }
+                    if (standHelp && standSelect && btnSubmit && btnSubmit.disabled) {
+                        standHelp.textContent = 'No hay stands disponibles. No se puede aprobar la solicitud hasta que haya uno libre.';
                     }
                 } else {
                     if (titulo) titulo.textContent = 'Confirmar Rechazo de Solicitud';
                     if (mensaje) mensaje.textContent = `¿Desea RECHAZAR la solicitud de "${emprendimiento}" (${postulante})?`;
                     if (impacto) impacto.textContent = 'La postulación pasará a estado RECHAZADO y no se generará perfil oficial en el padrón de artesanos.';
+                    if (standContainer) standContainer.classList.add('d-none');
+                    if (standSelect) {
+                        standSelect.disabled = true;
+                        standSelect.required = false;
+                    }
                     if (btnSubmit) {
                         btnSubmit.className = 'btn btn-danger';
                         btnSubmit.textContent = 'Sí, rechazar solicitud';
+                        btnSubmit.disabled = false;
                     }
                 }
             });
