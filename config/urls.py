@@ -26,6 +26,7 @@ urlpatterns = [
     path('', include('apps.artesanos.urls')),
     path('', include('apps.productos.urls')),
     path('', include('apps.stands.urls')),
+    path('reportes/', include('apps.reportes.urls')),
     path('', index, name='index'),
 ]
 
