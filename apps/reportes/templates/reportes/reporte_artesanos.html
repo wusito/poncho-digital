@@ -1,0 +1,106 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte de Artesanos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'css/estilos.css' %}" rel="stylesheet">
+    <style>@media print { .no-print { display: none !important; } .cabecera { display: none !important; } }</style>
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <header class="cabecera no-print" id="cabecera">
+        <div class="franja-tejido"></div>
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+            <a class="navbar-brand" href="#">Poncho <span>Digital</span></a>
+            <h1 class="text-center mt-3 mt-md-0 ms-md-3">Reporte de Artesanos</h1>
+            <a href="#" class="btn btn-outline-light">Volver</a>
+        </div>
+    </header>
+
+    <main class="container py-4">
+        <!-- Botones de Exportación (RNF-03) -->
+        <div class="d-flex justify-content-end mb-4 no-print gap-2">
+            <button onclick="window.print()" class="btn btn-danger">Exportar a PDF</button>
+            <a href="{% url 'reportes:exportar_excel_artesanos' %}" class="btn btn-success">Exportar a Excel</a>
+        </div>
+
+        <!-- Filtros -->
+        <form method="GET" class="row g-3 mb-4 no-print bg-light p-3 border rounded">
+            <div class="col-md-4">
+                <select name="rubro" class="form-select">
+                    <option value="">Todos los Rubros</option>
+                    {% for r in rubros_disponibles %}
+                    <option value="{{ r.valor }}" {% if rubro_filtro == r.valor %}selected{% endif %}>{{ r.etiqueta }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-4">
+                <select name="localidad" class="form-select">
+                    <option value="">Todas las Localidades</option>
+                    {% for loc in localidades_disponibles %}
+                    <option value="{{ loc }}" {% if localidad_filtro == loc %}selected{% endif %}>{{ loc }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-4 d-flex gap-2">
+                <button type="submit" class="btn btn-primary w-100">Filtrar</button>
+                <a href="{% url 'reportes:reporte_artesanos' %}" class="btn btn-secondary w-100">Limpiar</a>
+            </div>
+        </form>
+
+        <h3 class="mb-3 text-poncho">Listado de Artesanos (Total: {{ total_artesanos }})</h3>
+        <div class="table-responsive mb-5">
+            <table class="table table-striped table-hover border">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Emprendimiento</th>
+                        <th>Rubro</th>
+                        <th>Localidad</th>
+                        <th>Stand</th>
+                        <th>Productos Creados</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for a in artesanos %}
+                    <tr>
+                        <td>{{ a.nombre_comercial }}</td>
+                        <td>{{ a.rubro_display }}</td>
+                        <td>{{ a.localidad }}</td>
+                        <td>{{ a.stand }}</td>
+                        <td>{{ a.cantidad_productos }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="5" class="text-center text-muted">No hay artesanos registrados.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Tablas resumen -->
+        <div class="row">
+            <div class="col-md-6">
+                <h4 class="text-poncho">Por Localidad</h4>
+                <ul class="list-group border">
+                    {% for fila in por_localidad %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        {{ fila.localidad }} <span class="badge bg-primary rounded-pill">{{ fila.total }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h4 class="text-poncho">Por Rubro</h4>
+                <ul class="list-group border mt-3 mt-md-0">
+                    {% for fila in por_rubro %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        {{ fila.rubro_display }} <span class="badge bg-success rounded-pill">{{ fila.total }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

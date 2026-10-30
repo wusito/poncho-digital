@@ -26,9 +26,16 @@ urlpatterns = [
     path('', include('apps.artesanos.urls')),
     path('', include('apps.productos.urls')),
     path('', include('apps.stands.urls')),
+    path('reportes/', include('apps.reportes.urls')),
     path('', index, name='index'),
 ]
 
 # Servir archivos media subidos por usuarios en modo desarrollo (DEBUG=True)
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+from django.urls import path, include
+
+urlpatterns = [
+    path('reportes/', include('apps.reportes.urls', namespace='reportes')),
+]
