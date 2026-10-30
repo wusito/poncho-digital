@@ -33,3 +33,9 @@ urlpatterns = [
 # Servir archivos media subidos por usuarios en modo desarrollo (DEBUG=True)
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+from django.urls import path, include
+
+urlpatterns = [
+    path('reportes/', include('apps.reportes.urls', namespace='reportes')),
+]

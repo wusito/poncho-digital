@@ -281,3 +281,23 @@ def reporte_productos(request):
         ],
     }
     return render(request, 'reportes/reporte_productos.html', context)
+
+import openpyxl
+from django.http import HttpResponse
+from apps.artesanos.models import Artesano
+
+def exportar_excel_artesanos(request):
+    wb = openpyxl.Workbook()
+    ws = wb.active
+    ws.title = "Reporte Artesanos"
+
+    encabezados = ['ID', 'Nombre Comercial', 'Rubro', 'Provincia', 'Departamento', 'Localidad', 'Teléfono']
+    ws.append(encabezados)
+
+    for a in Artesano.objects.all().order_by('nombre_comercial'):
+        ws.append([a.id, a.nombre_comercial, a.rubro, a.provincia, a.departamento, a.localidad, a.telefono])
+
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename="reporte_artesanos.xlsx"'
+    wb.save(response)
+    return response
