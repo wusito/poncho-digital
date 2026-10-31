@@ -23,9 +23,9 @@ from .views import index
 urlpatterns = [
     path('admin/', admin.site.urls),
     # Aquí van las URLs de las apps (artesanos, productos, stands)
-    path('', include('apps.artesanos.urls')),
-    path('', include('apps.productos.urls')),
-    path('', include('apps.stands.urls')),
+    path('artesanos/', include('apps.artesanos.urls')),
+    path('productos/', include('apps.productos.urls')),
+    path('stands/', include('apps.stands.urls')),
     path('reportes/', include('apps.reportes.urls')),
     path('', index, name='index'),
 ]
@@ -33,9 +33,3 @@ urlpatterns = [
 # Servir archivos media subidos por usuarios en modo desarrollo (DEBUG=True)
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-from django.urls import path, include
-
-urlpatterns = [
-    path('reportes/', include('apps.reportes.urls', namespace='reportes')),
-]

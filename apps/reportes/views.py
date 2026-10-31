@@ -8,13 +8,17 @@ from apps.artesanos.models import Artesano, RUBROS_CHOICES
 from apps.productos.models import Producto
 from apps.stands.models import Stand
 
+import openpyxl
+from django.http import HttpResponse
+from apps.artesanos.models import Artesano
+
 RUBROS_DICT = dict(RUBROS_CHOICES)
 ESTADOS_STAND_DICT = dict(Stand.EstadoStand.choices)
 CATEGORIAS_DICT = dict(Producto.CATEGORIAS)
 
 
 # CU-18: Reporte de artesanos (general, por localidad y por rubro).
-def reporte_artesanos(request):
+def _contexto_reporte_artesanos(request):
     localidad_filtro = request.GET.get('localidad', '').strip()
     rubro_filtro = request.GET.get('rubro', '').strip()
 
@@ -91,11 +95,11 @@ def reporte_artesanos(request):
         'localidades_disponibles': localidades_disponibles,
         'rubros_disponibles': rubros_disponibles,
     }
-    return render(request, 'reportes/reporte_artesanos.html', context)
+    return context
 
 
 # CU-19: Reporte de ocupación de stands (disponibles vs. ocupados).
-def reporte_stands(request):
+def _contexto_reporte_stands(request):
     estado_filtro = request.GET.get('estado', '').strip()
 
     conteo_estados = {
@@ -160,11 +164,11 @@ def reporte_stands(request):
             {'valor': clave, 'etiqueta': etiqueta} for clave, etiqueta in Stand.EstadoStand.choices
         ],
     }
-    return render(request, 'reportes/reporte_stands.html', context)
+    return context
 
 
 # CU-20: Reporte de productos publicados organizados por artesano.
-def reporte_productos(request):
+def _contexto_reporte_productos(request):
     artesano_filtro = request.GET.get('artesano', '').strip()
     categoria_filtro = request.GET.get('categoria', '').strip()
 
@@ -280,11 +284,29 @@ def reporte_productos(request):
             {'valor': clave, 'etiqueta': etiqueta} for clave, etiqueta in Producto.CATEGORIAS
         ],
     }
-    return render(request, 'reportes/reporte_productos.html', context)
+    return context
 
-import openpyxl
-from django.http import HttpResponse
-from apps.artesanos.models import Artesano
+def generar_reportes(request):
+    context = {}
+    context.update(_contexto_reporte_artesanos(request))
+    context.update(_contexto_reporte_productos(request))
+    context.update(_contexto_reporte_stands(request))
+    return render(request, 'reportes/generar_reportes.html', context)
+
+
+def reporte_artesanos(request):
+    context = _contexto_reporte_artesanos(request)
+    return render(request, 'reportes/reporte_artesanos.html', context)
+
+
+def reporte_stands(request):
+    context = _contexto_reporte_stands(request)
+    return render(request, 'reportes/reporte_stands.html', context)
+
+
+def reporte_productos(request):
+    context = _contexto_reporte_productos(request)
+    return render(request, 'reportes/reporte_productos.html', context)
 
 def exportar_excel_artesanos(request):
     wb = openpyxl.Workbook()

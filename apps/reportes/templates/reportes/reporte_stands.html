@@ -9,88 +9,109 @@
     <link href="{% static 'css/estilos.css' %}" rel="stylesheet">
     <style>@media print { .no-print { display: none !important; } .cabecera { display: none !important; } }</style>
 </head>
+
 <body class="d-flex flex-column min-vh-100">
-    <header class="cabecera no-print" id="cabecera">
-        <div class="franja-tejido"></div>
-        <div class="container-fluid d-flex justify-content-between align-items-center">
-            <a class="navbar-brand" href="#">Poncho <span>Digital</span></a>
-            <h1 class="text-center mt-3 mt-md-0 ms-md-3">Ocupación de Stands</h1>
-            <a href="#" class="btn btn-outline-light">Volver</a>
-        </div>
-    </header>
 
-    <main class="container py-4">
-        <!-- Botón Exportar PDF -->
-        <div class="d-flex justify-content-end mb-4 no-print">
-            <button onclick="window.print()" class="btn btn-danger">Exportar a PDF</button>
-        </div>
+    <main>
+        <!-- Sección Hero Header y Botones de Exportación -->
+        <section class="mb-5">
+            <div class="p-4 p-md-4 hero rounded shadow-lg border-top border-4" style="border-color: var(--color-rojo) !important;">
+                <div class="row align-items-center">
+                    
+                    <!-- Título -->
+                    <div class="col-12 col-lg-7 text-start">
+                        <h2 class="display-5 mb-0" style="color: var(--color-rojo-oscuro);">
+                            Reporte de Ocupación de Stands
+                        </h2>
+                    </div>
 
-        <!-- Tarjetas de Resumen (Porcentajes) -->
-        <div class="row text-center mb-4">
-            <div class="col-md-4">
-                <div class="card bg-light border-success">
-                    <div class="card-body">
-                        <h3 class="text-success">{{ ocupados }} ({{ porcentaje_ocupacion }}%)</h3>
-                        <p class="m-0 fw-bold">Ocupados</p>
+                    <!-- Botones de Exportación Alineados a la derecha -->
+                    <div class="col-12 col-lg-5 d-flex justify-content-lg-end justify-content-start align-items-center no-print gap-2 mt-3 mt-lg-0">
+                        <button onclick="window.print()" class="btn d-inline-flex align-items-center gap-2 shadow-sm px-3 py-2" style="background-color: var(--color-rojo-oscuro); color: var(--color-blanco); border: none; font-weight: 500;">
+                            <i class="bi bi-file-earmark-pdf-fill"></i> Exportar a PDF
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Tarjetas de Resumen -->
+        <section class="mb-5">
+            <div class="p-4 p-md-4 hero rounded shadow-lg border-top border-4" style="border-color: var(--color-rojo) !important;">
+                <h3 class="mb-3 text-poncho">Métricas Generales del Predio Ferial</h3>
+                <div class="row text-center">
+                    <div class="col-md-4">
+                        <div class="card bg-light border-success">
+                            <div class="card-body">
+                                <h3 class="text-success">{{ ocupados }} ({{ porcentaje_ocupacion }}%)</h3>
+                                <p class="m-0 fw-bold">Ocupados</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card bg-light border-primary mt-3 mt-md-0">
+                            <div class="card-body">
+                                <h3 class="text-primary">{{ disponibles }} ({{ porcentaje_disponibles }}%)</h3>
+                                <p class="m-0 fw-bold">Disponibles</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card bg-light border-secondary mt-3 mt-md-0">
+                            <div class="card-body">
+                                <h3 class="text-secondary">{{ total_stands }}</h3>
+                                <p class="m-0 fw-bold">Total Predio Ferial</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card bg-light border-primary mt-3 mt-md-0">
-                    <div class="card-body">
-                        <h3 class="text-primary">{{ disponibles }} ({{ porcentaje_disponibles }}%)</h3>
-                        <p class="m-0 fw-bold">Disponibles</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card bg-light border-secondary mt-3 mt-md-0">
-                    <div class="card-body">
-                        <h3 class="text-secondary">{{ total_stands }}</h3>
-                        <p class="m-0 fw-bold">Total Predio Ferial</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </section>
 
-        <!-- Detalle de la grilla -->
-        <h3 class="mb-3 text-poncho">Grilla Detallada</h3>
-        <div class="table-responsive mb-5">
-            <table class="table table-striped table-hover border">
-                <thead class="table-dark">
-                    <tr>
-                        <th>Nro Stand</th>
-                        <th>Ubicación Mapa</th>
-                        <th>Estado</th>
-                        <th>Artesano Asignado</th>
-                        <th>Rubro</th>
-                        <th>Localidad</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for s in stands %}
-                    <tr>
-                        <td><strong>{{ s.numero_stand }}</strong></td>
-                        <td>{{ s.ubicacion_mapa }}</td>
-                        <td>
-                            {% if s.estado == 'Disponible' %}
-                            <span class="badge bg-primary">{{ s.estado_display }}</span>
-                            {% elif s.estado == 'Asignado' %}
-                            <span class="badge bg-success">{{ s.estado_display }}</span>
-                            {% else %}
-                            <span class="badge bg-warning text-dark">{{ s.estado_display }}</span>
-                            {% endif %}
-                        </td>
-                        <td>{{ s.artesano }}</td>
-                        <td>{{ s.rubro_display }}</td>
-                        <td>{{ s.localidad }}</td>
-                    </tr>
-                    {% empty %}
-                    <tr><td colspan="6" class="text-center text-muted">No hay stands configurados.</td></tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+        <!-- Detalle de la Grilla -->
+        <section class="mb-5">
+            <div class="p-4 p-md-4 hero rounded shadow-lg border-top border-4" style="border-color: var(--color-rojo) !important;">
+                <h3 class="mb-3 text-poncho">Grilla Detallada</h3>
+                <div class="table-responsive mb-5">
+                    <table class="table table-striped table-hover border">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Nro Stand</th>
+                                <th>Ubicación Mapa</th>
+                                <th>Estado</th>
+                                <th>Artesano Asignado</th>
+                                <th>Rubro</th>
+                                <th>Localidad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for s in stands %}
+                            <tr>
+                                <td><strong>{{ s.numero_stand }}</strong></td>
+                                <td>{{ s.ubicacion_mapa }}</td>
+                                <td>
+                                    {% if s.estado == 'Disponible' %}
+                                    <span class="badge bg-primary">{{ s.estado_display }}</span>
+                                    {% elif s.estado == 'Asignado' %}
+                                    <span class="badge bg-success">{{ s.estado_display }}</span>
+                                    {% else %}
+                                    <span class="badge bg-warning text-dark">{{ s.estado_display }}</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ s.artesano }}</td>
+                                <td>{{ s.rubro_display }}</td>
+                                <td>{{ s.localidad }}</td>
+                            </tr>
+                            {% empty %}
+                            <tr><td colspan="6" class="text-center text-muted">No hay stands configurados.</td></tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
     </main>
+
 </body>
 </html>
