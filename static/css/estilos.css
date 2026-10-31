@@ -171,7 +171,8 @@ ul {
 }
 
 /* selector combinado: descendientes dentro de la navegación */
-#cabecera nav ul li a {
+#cabecera nav ul li a,
+#cabecera nav ul li form button {
     display: inline-block;
     padding: 0.5rem 1rem;
     margin-left: 0.25rem;
@@ -181,9 +182,14 @@ ul {
 }
 
 #cabecera nav ul li a:hover,
-#cabecera nav ul li a.active {
+#cabecera nav ul li a.active,
+#cabecera nav ul li form button:hover {
     color: var(--color-rojo);
     border-bottom-color: var(--color-ocre);
+}
+
+#cabecera nav ul li form button {
+    cursor: pointer;
 }
 
 .navbar-toggler {

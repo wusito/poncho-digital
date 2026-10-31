@@ -38,6 +38,16 @@
                         <li class="nav-item"><a class="nav-link" href="{% url 'gestion_productos' %}">Gestión de Productos</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'panel_solicitudes' %}">Panel de Solicitudes</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'reportes:generar_reportes' %}">Generar Reportes</a></li>
+                        {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <form method="post" action="{% url 'logout' %}">
+                                {% csrf_token %}
+                                <button class="nav-link" type="submit">Cerrar sesión</button>
+                            </form>
+                        </li>
+                        {% else %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Iniciar sesión</a></li>
+                        {% endif %}
                     </ul>
                 </div>
 

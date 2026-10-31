@@ -22,6 +22,7 @@ from .views import index
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('usuarios/', include('apps.usuarios.urls')),
     # Aquí van las URLs de las apps (artesanos, productos, stands)
     path('artesanos/', include('apps.artesanos.urls')),
     path('productos/', include('apps.productos.urls')),
