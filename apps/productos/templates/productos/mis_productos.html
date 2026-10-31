@@ -56,13 +56,15 @@
                                                     <button
                                                         class="btn btn-sm btn-outline-warning w-100 mb-2 fw-semibold"
                                                         type="button"
-                                                        onclick="mostrarFormularioEdicion(
-                                                            '{{ producto.id }}', 
-                                                            '{{ producto.nombre|escapejs }}', 
-                                                            '{{ producto.descripcion|escapejs }}', 
-                                                            '{{ producto.stock }}', 
-                                                            '{{ producto.precio_unitario }}'
-                                                        )">
+                                                        data-producto-id="{{ producto.id }}"
+                                                        data-producto-nombre="{{ producto.nombre }}"
+                                                        data-producto-descripcion="{{ producto.descripcion }}"
+                                                        data-producto-stock="{{ producto.stock }}"
+                                                        data-producto-precio="{{ producto.precio_unitario }}"
+                                                        data-producto-categoria="{{ producto.categoria }}"
+                                                        data-producto-subcategoria="{{ producto.subcategoria|default_if_none:'' }}"
+                                                        data-editar-url="{% url 'editar_producto' producto.pk %}"
+                                                        onclick="mostrarFormularioEdicion(this)">
                                                         Modificar
                                                     </button>
 
@@ -141,7 +143,7 @@
 
                                         <!-- Categoría del producto -->
                                         <div class="col-md-12 position-relative form-grupo">
-                                            <label class="fw-semibold mb-2" for="categoria">Selecciona la categoría del producto:</label>
+                                            <label class="fw-semibold mb-2" for="categoria_edit">Selecciona la categoría del producto:</label>
                                             
                                             <div class="col-12 position-relative">
                                                 <select
@@ -159,7 +161,7 @@
 
                                         <!-- Subcategoría del producto: deshabilitada -->
                                         <div class="col-md-12 position-relative form-grupo">
-                                            <label class="fw-semibold mb-2" for="subcategoria">Selecciona la subcategoría del producto:</label>
+                                            <label class="fw-semibold mb-2" for="subcategoria_edit">Selecciona la subcategoría del producto:</label>
 
                                             <div class="col-12 position-relative">
                                                 <select 
