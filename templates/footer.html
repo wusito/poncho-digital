@@ -16,7 +16,9 @@
                     <ul class="pie-lista">
                         <li><a href="{% url 'index' %}">Inicio</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'registro_artesano' %}">Registro de Artesanos</a></li>
+                        {% if user.is_authenticated and user.artesano %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'gestion_productos' %}">Gestión de Productos</a></li>
+                        {% endif %}
                     </ul>
                 </div>
 

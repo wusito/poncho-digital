@@ -1,6 +1,8 @@
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect, render
 
+from apps.usuarios.decorators import administrador_requerido
+
 from .forms import StandForm
 from .models import Stand
 
@@ -25,6 +27,7 @@ def mapa_stands(request):
     return render(request, 'stands/mapa_stands.html', context)
 
 
+@administrador_requerido
 def gestion_stands(request):
     if request.method == 'POST':
         form = StandForm(request.POST)
@@ -41,6 +44,7 @@ def gestion_stands(request):
     })
 
 
+@administrador_requerido
 def editar_stand(request, pk):
     stand = get_object_or_404(Stand, pk=pk)
     if request.method == 'POST':

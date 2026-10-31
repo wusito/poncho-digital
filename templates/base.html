@@ -35,9 +35,13 @@
                         <li class="nav-item"><a class="nav-link" href="#busqueda">Búsqueda</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'mapa_stands' %}">Mapa y Stands</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'registro_artesano' %}">Registro de Artesanos</a></li>
+                        {% if user.is_authenticated and user.artesano %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'gestion_productos' %}">Gestión de Productos</a></li>
+                        {% endif %}
+                        {% if user.is_staff or user.is_superuser %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'panel_solicitudes' %}">Panel de Solicitudes</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'reportes:generar_reportes' %}">Generar Reportes</a></li>
+                        {% endif %}
                         {% if user.is_authenticated %}
                         <li class="nav-item">
                             <form method="post" action="{% url 'logout' %}">
