@@ -3,6 +3,7 @@ from decimal import Decimal
 from django.db.models import Count, DecimalField, ExpressionWrapper, F, Sum, Value
 from django.db.models.functions import Coalesce
 from django.shortcuts import render
+from apps.usuarios.decorators import administrador_requerido
 
 from apps.artesanos.models import Artesano, RUBROS_CHOICES
 from apps.productos.models import Producto
@@ -286,6 +287,7 @@ def _contexto_reporte_productos(request):
     }
     return context
 
+@administrador_requerido
 def generar_reportes(request):
     context = {}
     context.update(_contexto_reporte_artesanos(request))
@@ -294,20 +296,24 @@ def generar_reportes(request):
     return render(request, 'reportes/generar_reportes.html', context)
 
 
+@administrador_requerido
 def reporte_artesanos(request):
     context = _contexto_reporte_artesanos(request)
     return render(request, 'reportes/reporte_artesanos.html', context)
 
 
+@administrador_requerido
 def reporte_stands(request):
     context = _contexto_reporte_stands(request)
     return render(request, 'reportes/reporte_stands.html', context)
 
 
+@administrador_requerido
 def reporte_productos(request):
     context = _contexto_reporte_productos(request)
     return render(request, 'reportes/reporte_productos.html', context)
 
+@administrador_requerido
 def exportar_excel_artesanos(request):
     wb = openpyxl.Workbook()
     ws = wb.active

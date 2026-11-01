@@ -1,9 +1,5 @@
 // --------------------------------------- SECCIÓN: CATEGORÍAS Y SUBCATEGORÍAS ---------------------------------------
 
-// Definición de eventos y datos globales.
-const categoriaSelect = document.getElementById("categoria");
-const subcategoriaSelect = document.getElementById("subcategoria");
-
 const subcategoriasPorCategoria = {
     "textiles-tradicionales": [
         { valor: "prendas-de-vicuna", texto: "Prendas de Vicuña" },
@@ -34,50 +30,44 @@ const subcategoriasPorCategoria = {
 
 
 
-// Evento que detecta el cambio por categoría seleccionada y actualiza las subcategorías.
-if (categoriaSelect) {
-    categoriaSelect.addEventListener("change", function () {
-        const categoriaSeleccionada = this.value;
+function actualizarSubcategorias(categoria, selector, subcategoriaSeleccionada = "") {
+    const subcategorias = subcategoriasPorCategoria[categoria];
+    selector.replaceChildren();
 
-        // Limpiar subcategorías anteriores.
-        if (subcategoriaSelect) {
-            subcategoriaSelect.innerHTML = "";
+    if (!subcategorias) {
+        selector.disabled = true;
+        selector.add(new Option("Selecciona primero una categoría.", ""));
+        return;
+    }
 
-            // Si la categoría existe en el objeto.
-            if (subcategoriasPorCategoria[categoriaSeleccionada]) {
-
-                // Habilitar el selector.
-                subcategoriaSelect.disabled = false;
-
-                // Opción por defecto inicial
-                const opcionDefault = document.createElement("option");
-                opcionDefault.value = "";
-                opcionDefault.textContent = "Selecciona una subcategoría...";
-                subcategoriaSelect.appendChild(opcionDefault);
-
-                // Agregar las nuevas subcategorías con sus valores exactos
-                subcategoriasPorCategoria[categoriaSeleccionada].forEach(sub => {
-                    const opcion = document.createElement("option");
-                    opcion.value = sub.valor;       // Toma el valor exacto (ej: "prendas-de-vicuna" o "accesorios-comercial")
-                    opcion.textContent = sub.texto; // Muestra el texto legible al usuario
-                    subcategoriaSelect.appendChild(opcion);
-                });
-
-            } else {
-                // Si no hay categoría válida, deshabilitar y mostrar mensaje.
-                subcategoriaSelect.disabled = true;
-
-                const opcion = document.createElement("option");
-                opcion.value = "";
-                opcion.textContent = "Selecciona primero una categoría.";
-                subcategoriaSelect.appendChild(opcion);
-            }
-        }
+    selector.disabled = false;
+    selector.add(new Option("Selecciona una subcategoría...", ""));
+    subcategorias.forEach(subcategoria => {
+        selector.add(new Option(subcategoria.texto, subcategoria.valor));
     });
+
+    if (subcategoriaSeleccionada && !subcategorias.some(subcategoria => (
+        subcategoria.valor === subcategoriaSeleccionada
+    ))) {
+        selector.add(new Option(subcategoriaSeleccionada, subcategoriaSeleccionada));
+    }
+
+    selector.value = subcategoriaSeleccionada;
 }
 
+[
+    ["categoria", "subcategoria"],
+    ["categoria_edit", "subcategoria_edit"]
+].forEach(([categoriaId, subcategoriaId]) => {
+    const categoriaSelect = document.getElementById(categoriaId);
+    const subcategoriaSelect = document.getElementById(subcategoriaId);
 
-
+    if (categoriaSelect && subcategoriaSelect) {
+        categoriaSelect.addEventListener("change", function () {
+            actualizarSubcategorias(this.value, subcategoriaSelect);
+        });
+    }
+});
 
 
 // --------------------------------------- SECCIÓN: VALIDAR FORMULARIOS DE PRODUCTOS ---------------------------------------
@@ -160,16 +150,26 @@ function validarFormProductos(formularioActual) {
 // --------------------------------------- SECCIÓN: MODIFICAR PRODUCTOS ---------------------------------------
 
 // Función que muestra el formulario de modificar un producto (botón "Modificar").
-function mostrarFormularioEdicion(id, nombre, descripcion, stock, precio) {
+function mostrarFormularioEdicion(boton) {
     const form = document.getElementById("form-modificar-producto");
 
     if (form) {
-        form.action = `/editar/${id}/`; // Asigna dinámicamente la URL con el ID real de la BD Django.
-        form.querySelector('[name="producto_id"]').value = id;
-        form.querySelector('[name="nombre"]').value = nombre;
-        form.querySelector('[name="descripcion"]').value = descripcion;
-        form.querySelector('[name="stock"]').value = stock;
-        form.querySelector('[name="precio_unitario"]').value = precio;
+        const producto = boton.dataset;
+        form.action = producto.editarUrl;
+        form.querySelector('[name="producto_id"]').value = producto.productoId;
+        form.querySelector('[name="nombre"]').value = producto.productoNombre;
+        form.querySelector('[name="descripcion"]').value = producto.productoDescripcion;
+        form.querySelector('[name="stock"]').value = producto.productoStock;
+        form.querySelector('[name="precio_unitario"]').value = producto.productoPrecio;
+
+        const categoria = form.querySelector('[name="categoria"]');
+        const subcategoria = form.querySelector('[name="subcategoria"]');
+        categoria.value = producto.productoCategoria;
+        actualizarSubcategorias(
+            categoria.value,
+            subcategoria,
+            producto.productoSubcategoria
+        );
 
         const seccionModificar = document.getElementById("seccion-modificar");
         if (seccionModificar) {
@@ -188,23 +188,6 @@ function cancelarFormularioEdicion() {
         seccionModificar.style.display = "none"; 
     }
 }
-
-// Evento para guardar las modificaciones enviando a Django.
-if (formModificar) {
-    formModificar.addEventListener("submit", function(e) {
-        if (!validarFormProductos(this)) {
-            e.preventDefault();
-            return; 
-        }
-
-        const id = this.querySelector('[name="producto_id"]').value;
-        this.action = `/editar/${id}/`;
-    });
-}
-
-
-
-
 
 // --------------------------------------- SECCIÓN: ELIMINAR PRODUCTOS ---------------------------------------
 

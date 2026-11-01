@@ -20,9 +20,11 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'index' %}">Inicio</a>
                         </li>
+                        {% if user.is_staff or user.is_superuser %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'gestion_stands' %}">Gestionar Stands</a>
                         </li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>
@@ -73,7 +75,7 @@
                     <div class="col-12 col-lg-7">
                         <div class="card p-3 shadow-sm">
                             <h4 class="h5 mb-3">Plano Interactivo del Predio Ferial</h4>
-                            {% if user.is_staff %}
+                            {% if user.is_staff or user.is_superuser %}
                             <p><a class="btn btn-outline-primary btn-sm mb-3" href="{% url 'gestion_stands' %}">Administrar stands</a></p>
                             {% endif %}
                             <div class="mapa-contenedor position-relative border rounded overflow-hidden">
