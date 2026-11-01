@@ -69,6 +69,32 @@ function actualizarSubcategorias(categoria, selector, subcategoriaSeleccionada =
     }
 });
 
+const categoriaBusqueda = document.getElementById("buscar-producto-categoria");
+const subcategoriaBusqueda = document.getElementById("buscar-producto-subcategoria");
+
+if (categoriaBusqueda && subcategoriaBusqueda) {
+    const cargarSubcategoriasBusqueda = () => {
+        const categoriaSeleccionada = categoriaBusqueda.value;
+        const subcategorias = subcategoriasPorCategoria[categoriaSeleccionada];
+
+        subcategoriaBusqueda.replaceChildren();
+        if (!subcategorias) {
+            subcategoriaBusqueda.disabled = true;
+            subcategoriaBusqueda.add(new Option("Selecciona primero una categoría.", ""));
+            return;
+        }
+
+        subcategoriaBusqueda.disabled = false;
+        subcategoriaBusqueda.add(new Option("Todas las subcategorías", ""));
+        subcategorias.forEach(subcategoria => {
+            subcategoriaBusqueda.add(new Option(subcategoria.texto, subcategoria.valor));
+        });
+    };
+
+    categoriaBusqueda.addEventListener("change", cargarSubcategoriasBusqueda);
+    cargarSubcategoriasBusqueda();
+}
+
 
 // --------------------------------------- SECCIÓN: VALIDAR FORMULARIOS DE PRODUCTOS ---------------------------------------
 
@@ -207,4 +233,60 @@ if (modalEliminar) {
             }
         }
     });
+}
+
+// --------------------------------------- SECCIÓN: BUSCAR PRODUCTOS PUBLICADOS ---------------------------------------
+
+const filtrosProductos = document.getElementById("filtros-productos");
+
+if (filtrosProductos) {
+    const buscarNombre = document.getElementById("buscar-producto-nombre");
+    const buscarCategoria = document.getElementById("buscar-producto-categoria");
+    const buscarSubcategoria = document.getElementById("buscar-producto-subcategoria");
+    const limpiarFiltros = document.getElementById("limpiar-filtros-productos");
+    const resultadoBusqueda = document.getElementById("resultado-busqueda-productos");
+    const sinResultados = document.getElementById("sin-resultados-busqueda");
+    const productosPublicados = Array.from(
+        document.querySelectorAll("#cuerpo-tabla-productos-publicados .producto-publicado")
+    );
+    const normalizarTexto = texto => texto
+        .toLocaleLowerCase("es")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .trim();
+
+    const filtrarProductos = () => {
+        const nombre = normalizarTexto(buscarNombre.value);
+        const categoria = buscarCategoria.value;
+        const subcategoria = buscarSubcategoria.value;
+        let productosVisibles = 0;
+
+        productosPublicados.forEach(producto => {
+            const coincide = normalizarTexto(producto.dataset.productoNombre).includes(nombre)
+                && (!categoria || producto.dataset.productoCategoria === categoria)
+                && (!subcategoria || producto.dataset.productoSubcategoria === subcategoria);
+
+            producto.classList.toggle("d-none", !coincide);
+            if (coincide) {
+                productosVisibles += 1;
+            }
+        });
+
+        sinResultados.classList.toggle("d-none", productosVisibles > 0);
+        resultadoBusqueda.textContent = `Mostrando ${productosVisibles} de ${productosPublicados.length} productos.`;
+    };
+
+    [buscarNombre, buscarCategoria, buscarSubcategoria].forEach(filtro => {
+        filtro.addEventListener("input", filtrarProductos);
+        filtro.addEventListener("change", filtrarProductos);
+    });
+
+    limpiarFiltros.addEventListener("click", () => {
+        buscarNombre.value = "";
+        buscarCategoria.value = "";
+        buscarCategoria.dispatchEvent(new Event("change"));
+        buscarNombre.focus();
+    });
+
+    filtrarProductos();
 }
