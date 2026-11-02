@@ -156,9 +156,12 @@ function realizarBusqueda() {
     const rubroLimpio = normalizar(rubroSelec);
 
     const filtrados = artesanosYProductosData.filter(item => {
-        const coincidenciaTexto = item.nombre.toLowerCase().includes(query) ||
-                                  (item.localidad && item.localidad.toLowerCase().includes(query)) ||
-                                  (item.detalle && item.detalle.toLowerCase().includes(query));
+        const coincidenciaTexto = [
+            item.nombre,
+            item.artesano_nombre,
+            item.localidad,
+            item.detalle
+        ].some(texto => texto && texto.toLowerCase().includes(query));
         
         const itemCategoria = normalizar(item.categoria);
         const itemSubcategoria = normalizar(item.subcategoria);

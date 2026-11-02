@@ -7,8 +7,10 @@ def index(request):
     busqueda_data = []
     
     # Artesanos
-    for a in Artesano.objects.all():
-        stand = getattr(a, 'stand_asignado', None)
+    for a in Artesano.objects.filter(
+        stand_asignado__isnull=False
+    ).select_related('stand_asignado'):
+        stand = a.stand_asignado
         busqueda_data.append({
             'tipo': 'Artesano',
             'nombre': a.nombre_comercial,
@@ -20,14 +22,17 @@ def index(request):
         })
 
     # Productos
-    for p in Producto.objects.select_related('artesano').all():
-        stand = getattr(p.artesano, 'stand_asignado', None)
+    for p in Producto.objects.filter(
+        artesano__stand_asignado__isnull=False
+    ).select_related('artesano', 'artesano__stand_asignado'):
+        stand = p.artesano.stand_asignado
         busqueda_data.append({
             'tipo': 'Producto',
             'nombre': p.nombre,
             'categoria': p.categoria,
             'subcategoria': p.subcategoria,
             'rubro_artesano': p.artesano.rubro,
+            'artesano_nombre': p.artesano.nombre_comercial,
             'rubro_display': p.get_categoria_display(),
             'localidad': p.artesano.localidad,
             'detalle': p.descripcion,
