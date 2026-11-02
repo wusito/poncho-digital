@@ -129,6 +129,7 @@ if (scriptBusquedaData) {
 
 const formBusqueda = document.getElementById("formBusqueda");
 const inputBusqueda = document.getElementById("inputBusqueda");
+const selectFiltroProducto = document.getElementById("selectFiltroProducto");
 const selectFiltroRubro = document.getElementById("selectFiltroRubro");
 const contenedorResultados = document.getElementById("resultadosBusqueda");
 const mensajeBusqueda = document.getElementById("mensajeBusqueda");
@@ -137,6 +138,7 @@ function realizarBusqueda() {
     if (!inputBusqueda || !contenedorResultados) return;
 
     const query = inputBusqueda.value.toLowerCase().trim();
+    const productoSelec = selectFiltroProducto.value.toLowerCase().trim();
     const rubroSelec = selectFiltroRubro.value.toLowerCase().trim();
 
     // Función radical para limpiar espacios, guiones y mayúsculas
@@ -150,6 +152,7 @@ function realizarBusqueda() {
             .replace(/[-_\s]+/g, "");        // Elimina guiones y espacios
     };
 
+    const productoLimpio = normalizar(productoSelec);
     const rubroLimpio = normalizar(rubroSelec);
 
     const filtrados = artesanosYProductosData.filter(item => {
@@ -157,16 +160,21 @@ function realizarBusqueda() {
                                   (item.localidad && item.localidad.toLowerCase().includes(query)) ||
                                   (item.detalle && item.detalle.toLowerCase().includes(query));
         
-        const itemRubro = normalizar(item.rubro);
         const itemCategoria = normalizar(item.categoria);
         const itemSubcategoria = normalizar(item.subcategoria);
+        const itemRubro = normalizar(item.rubro);
+        const rubroDelArtesano = normalizar(
+            item.tipo === "Producto" ? item.rubro_artesano : item.rubro
+        );
 
-        const coincidenciaRubro = rubroLimpio === "" || 
-            itemRubro === rubroLimpio || 
-            itemCategoria === rubroLimpio || 
-            itemSubcategoria === rubroLimpio;
+        const coincidenciaProducto = productoLimpio === "" ||
+            itemRubro === productoLimpio ||
+            itemCategoria === productoLimpio ||
+            itemSubcategoria === productoLimpio;
+        const coincidenciaRubro = rubroLimpio === "" ||
+            rubroDelArtesano === rubroLimpio;
 
-        return coincidenciaTexto && coincidenciaRubro;
+        return coincidenciaTexto && coincidenciaProducto && coincidenciaRubro;
     });
 
     contenedorResultados.innerHTML = "";
@@ -203,6 +211,7 @@ if (formBusqueda) {
         realizarBusqueda();
     });
     inputBusqueda.addEventListener("input", realizarBusqueda);
+    selectFiltroProducto.addEventListener("change", realizarBusqueda);
     selectFiltroRubro.addEventListener("change", realizarBusqueda);
     realizarBusqueda();
 }

@@ -27,6 +27,7 @@ def index(request):
             'nombre': p.nombre,
             'categoria': p.categoria,
             'subcategoria': p.subcategoria,
+            'rubro_artesano': p.artesano.rubro,
             'rubro_display': p.get_categoria_display(),
             'localidad': p.artesano.localidad,
             'detalle': p.descripcion,
@@ -35,5 +36,6 @@ def index(request):
 
     context = {
         'busqueda_json': busqueda_data,
+        'rubros_artesanos': Artesano._meta.get_field('rubro').choices,
     }
     return render(request, 'index.html', context)

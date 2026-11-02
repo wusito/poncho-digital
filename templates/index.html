@@ -6,7 +6,7 @@
 {% block content %}
     <div class="p-4 p-md-4 rounded shadow-lg border-top border-4" style="border-color: var(--color-rojo) !important;">
         <!-- SECCIÓN HERO -->
-        <section class="hero mb-4" id="inicio">
+        <section class="hero mb-4 p-4" id="inicio">
             <div class="container-fluid">
                 <div class="row align-items-center gy-4">
 
@@ -57,16 +57,32 @@
         </section>
 
         <!-- HU-08: FILTROS Y BÚSQUEDA EN TIEMPO REAL -->
-        <section class="hero" id="busqueda">
-            <div class="container-fluid">
-                <h2 class="titulo-seccion">Buscador de Artesanos y Productos</h2>
-                <form id="formBusqueda" class="row g-3 mb-4" method="get">
-                    <div class="col-12 col-md-6">
-                        <input type="text" id="inputBusqueda" name="q" class="form-control form-campo-claro" placeholder="Buscar por nombre, localidad o descripción...">
+        <section class="hero busqueda-seccion" id="busqueda">
+            <div class="container-fluid p-5">
+                <div class="busqueda-encabezado">
+                    <p class="busqueda-etiqueta">Explorá la feria</p>
+                    <h2 class="titulo-seccion">Buscador de Artesanos y Productos</h2>
+                    <p class="busqueda-descripcion">Encontrá propuestas por nombre, rubro o categoría de producto.</p>
+                </div>
+                <form id="formBusqueda" class="row g-3 mb-4 busqueda-form" method="get">
+                    <div class="col-12 col-lg-5">
+                        <label class="form-label" for="inputBusqueda">Búsqueda general</label>
+                        <input type="text" id="inputBusqueda" name="q" class="form-control form-campo-claro" placeholder="Nombre, localidad o descripción..." aria-describedby="ayudaBusqueda">
+                        <div class="form-text" id="ayudaBusqueda">La búsqueda se actualiza mientras escribís.</div>
                     </div>
-                    <div class="col-12 col-md-4">
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <label class="form-label" for="selectFiltroRubro">Rubro del artesano</label>
                         <select id="selectFiltroRubro" name="rubro" class="form-select form-campo-claro">
-                            <option value="">Todas las categorías y subcategorías</option>
+                            <option value="">Todos los rubros de artesanos</option>
+                            {% for rubro, rubro_display in rubros_artesanos %}
+                            <option value="{{ rubro }}">{{ rubro_display }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <label class="form-label" for="selectFiltroProducto">Categoría o subcategoría</label>
+                        <select id="selectFiltroProducto" name="Producto" class="form-select form-campo-claro">
+                            <option value="">Todas las categorías de productos</option>
                             
                             <!-- Textiles Tradicionales -->
                             <optgroup label="Textiles Tradicionales">
@@ -102,12 +118,12 @@
                             </optgroup>
                         </select>
                     </div>
-                    <div class="col-12 col-md-2">
-                        <button type="submit" class="boton boton-primario w-100">Buscar</button>
-                    </div>
                 </form>
-                <div id="mensajeBusqueda" class="alert alert-info d-none" role="alert"></div>
-                <div id="resultadosBusqueda" class="row gy-3"></div>
+                <div class="busqueda-resultados">
+                    <h3 class="busqueda-titulo-resultados">Resultados</h3>
+                    <div id="mensajeBusqueda" class="alert alert-info d-none" role="alert"></div>
+                    <div id="resultadosBusqueda" class="row gy-3"></div>
+                </div>
             </div>
         </section>
 
@@ -190,12 +206,22 @@
 
                     <div class="col-12 col-md-6 col-lg-4">
                         <article class="tarjeta tarjeta-ocre">
+                            <h3>Buscar Artesanos y Productos</h3>
+                            <p>Explorá artesanos y productos de la feria filtrando por nombre, rubro o categoría.</p>
+                            <a href="#busqueda" class="tarjeta-enlace">Ir al buscador →</a>
+                        </article>
+                    </div>
+
+                    {% if user.is_authenticated and user.artesano %}
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <article class="tarjeta tarjeta-ocre">
                             <h3>Gestión de Productos</h3>
                             <p>Publicación y administración del catálogo de productos regionales y textiles
                                 que se exhiben durante la feria.</p>
                             <a href="{% url 'gestion_productos' %}" class="tarjeta-enlace">Ir al catálogo →</a>
                         </article>
                     </div>
+                    {% endif %}
 
                     <div class="col-12 col-md-6 col-lg-4">
                         <article class="tarjeta tarjeta-azul">
@@ -212,7 +238,7 @@
 
         <!-- PLATAFORMA Y CITA -->
         <section class="plataforma" id="plataforma">
-            <div class="container-fluid">
+            <div class="container-fluid p-4">
                 <div class="row align-items-center gy-4">
                     <div class="col-12 col-lg-8">
                         <h2 class="titulo-seccion">¡Bienvenidos a la Fiesta Nacional e Internacional del Poncho!</h2>
