@@ -20,6 +20,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'index' %}">Inicio</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{% url 'busqueda' %}">Búsqueda</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -79,7 +82,7 @@
                         </select>
                     </div>
                     <div class="col-12 col-md-6 col-lg-4">
-                        <label class="form-label" for="selectFiltroProducto">Categoría o subcategoría</label>
+                        <label class="form-label" for="selectFiltroProducto">Categoría del producto</label>
                         <select id="selectFiltroProducto" name="Producto" class="form-select form-campo-claro">
                             <option value="">Todas las categorías de productos</option>
                             <optgroup label="Textiles Tradicionales">
