@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Búsqueda - Poncho Digital{% endblock %}
+
+{% block header %}
+    <header class="cabecera" id="cabecera">
+        <div class="franja-tejido"></div>
+
+        <nav class="navbar navbar-expand-md">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{% url 'index' %}">Poncho <span>Digital</span></a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuGestionProductos" aria-controls="menuGestionProductos" aria-expanded="false" aria-label="Abrir menú de navegación">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="menuGestionProductos">
+                    <ul class="navbar-nav ms-auto text-center" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'index' %}">Inicio</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+{% endblock header %}
+
+{% block content %}
+    <div class="p-4 p-md-4 rounded shadow-lg border-top border-4" style="border-color: var(--color-rojo) !important;">
+        <!-- TÍTULO DE LA SECCIÓN -->
+        <div class="container-fluid py-4 mb-3 hero position-relative overflow-hidden shadow-sm">
+            <div class="container-fluid p-4">
+                <div class="row align-items-center gy-4">
+                        
+                    <div class="col-12 col-lg-7 text-start">
+                        <p class="hero-eyebrow text-uppercase mb-1" style="color: var(--color-ocre); letter-spacing: 1px; font-weight: 600;">
+                            Panel de Búsqueda · Poncho Digital · Catamarca
+                        </p>
+                        <h1 class="display-5 fw-bold mb-2" style="font-family: var(--fuente-titulos); color: var(--color-rojo-oscuro);">
+                            Buscador de Artesanos y Productos
+                        </h1>
+                           <p class="text-muted" style="max-width: 60ch;">
+                            Encontrá propuestas por nombre, rubro o categoría de producto.
+                        </p>
+
+                        <div class="d-flex justify-content-start mt-3">
+                            <span class="badge px-3 py-2" style="background-color: var(--color-rojo-oscuro); color: var(--color-blanco); font-weight: 500;">
+                                Panel de visualización de Artesanos y Productos
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-5">
+                        <div class="bandas-poncho" role="img" aria-label="Ilustración de bandas de tejido tradicional del poncho"></div>
+                    </div>
+                </div>
+             </div>
+        </div>
+
+
+        <section class="hero busqueda-seccion">
+            <div class="container-fluid p-5">
+                <h2 class="busqueda-titulo-parametros">Parámetros</h2>
+                <form id="formBusqueda" class="row g-3 mb-4 busqueda-form" method="get">
+                    <div class="col-12 col-lg-5">
+                        <label class="form-label" for="inputBusqueda">Búsqueda general</label>
+                        <input type="text" id="inputBusqueda" name="q" class="form-control form-campo-claro" placeholder="Nombre, localidad o descripción..." aria-describedby="ayudaBusqueda">
+                        <div class="form-text" id="ayudaBusqueda">La búsqueda se actualiza mientras escribís.</div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <label class="form-label" for="selectFiltroRubro">Rubro del artesano</label>
+                        <select id="selectFiltroRubro" name="rubro" class="form-select form-campo-claro">
+                            <option value="">Todos los rubros de artesanos</option>
+                            {% for rubro, rubro_display in rubros_artesanos %}
+                            <option value="{{ rubro }}">{{ rubro_display }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <label class="form-label" for="selectFiltroProducto">Categoría o subcategoría</label>
+                        <select id="selectFiltroProducto" name="Producto" class="form-select form-campo-claro">
+                            <option value="">Todas las categorías de productos</option>
+                            <optgroup label="Textiles Tradicionales">
+                                <option value="prendas-de-vicuna">Prendas de Vicuña</option>
+                                <option value="fajas">Fajas</option>
+                                <option value="mantas">Mantas</option>
+                                <option value="chalinas">Chalinas</option>
+                            </optgroup>
+                            <optgroup label="Artesanías y Artículos para el Hogar">
+                                <option value="ceramica">Cerámica</option>
+                                <option value="accesorios">Accesorios</option>
+                                <option value="madera-tallada">Madera tallada</option>
+                                <option value="cesteria">Cestería</option>
+                                <option value="decoracion">Decoración</option>
+                            </optgroup>
+                            <optgroup label="Productos Regionales y Delicatessen">
+                                <option value="dulces">Dulces</option>
+                                <option value="miel">Miel</option>
+                                <option value="frutos-secos">Frutos secos</option>
+                                <option value="vinos-regionales">Vinos regionales</option>
+                            </optgroup>
+                            <optgroup label="Sector Comercial">
+                                <option value="souvenirs">Souvenirs</option>
+                                <option value="accesorios-comercial">Accesorios</option>
+                                <option value="regalos">Regalos</option>
+                                <option value="merchandising">Merchandising</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </form>
+                <div class="busqueda-resultados">
+                    <h2 class="busqueda-titulo-resultados">Resultados</h2>
+                    <div id="mensajeBusqueda" class="alert alert-info d-none" role="alert"></div>
+                    <div id="resultadosBusqueda" class="row gy-3"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}

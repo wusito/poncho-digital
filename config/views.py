@@ -2,10 +2,11 @@ from django.shortcuts import render
 from apps.artesanos.models import Artesano
 from apps.productos.models import Producto
 
-def index(request):
+
+def _obtener_datos_busqueda():
     # Consulta unificada para la búsqueda de Artesanos y Productos
     busqueda_data = []
-    
+
     # Artesanos
     for a in Artesano.objects.filter(
         stand_asignado__isnull=False
@@ -39,8 +40,16 @@ def index(request):
             'stand': stand.numero_stand if stand else 'Sin asignar'
         })
 
+    return busqueda_data
+
+
+def index(request):
+    return render(request, 'index.html')
+
+
+def busqueda(request):
     context = {
-        'busqueda_json': busqueda_data,
+        'busqueda_json': _obtener_datos_busqueda(),
         'rubros_artesanos': Artesano._meta.get_field('rubro').choices,
     }
-    return render(request, 'index.html', context)
+    return render(request, 'busqueda.html', context)
