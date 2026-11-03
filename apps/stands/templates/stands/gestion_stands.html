@@ -34,7 +34,7 @@
 
     <!-- TÍTULO DE LA SECCIÓN -->
     <div class="container-fluid py-4 mb-3 hero position-relative overflow-hidden shadow-sm">
-        <div class="container-fluid">
+        <div class="container-fluid p-4">
             <div class="row align-items-center gy-4">
                 
                 <div class="col-12 col-lg-7 text-start">
@@ -70,6 +70,7 @@
             <section class="card shadow-sm mb-4">
                 <div class="card-body">
                     <h2 class="h5 mb-3">{% if stand_editando %}Editar stand {{ stand_editando.numero_stand }}{% else %}Registrar stand{% endif %}</h2>
+                    {% if stand_editando and perms.stands.change_stand or not stand_editando and perms.stands.add_stand %}
                     <form method="post" novalidate>
                         {% csrf_token %}
                         {% for field in form %}
@@ -88,6 +89,9 @@
                             {% if stand_editando %}<a class="btn btn-outline-secondary" href="{% url 'gestion_stands' %}">Cancelar</a>{% endif %}
                         </div>
                     </form>
+                    {% else %}
+                    <p class="text-muted mb-0">No tenés permisos para modificar stands.</p>
+                    {% endif %}
                 </div>
             </section>
 
@@ -102,7 +106,7 @@
                                     <th>Ubicación X,Y</th>
                                     <th>Estado</th>
                                     <th>Artesano</th>
-                                    <th>Acciones</th>
+                                    {% if perms.stands.change_stand or perms.stands.assign_stand or perms.stands.release_stand %}<th>Acciones</th>{% endif %}
                                 </tr>
                             </thead>
                             <tbody>
@@ -112,7 +116,29 @@
                                     <td>{{ stand.ubicacion_mapa }}</td>
                                     <td>{{ stand.get_estado_display }}</td>
                                     <td>{% if stand.artesano %}{{ stand.artesano.nombre_comercial }}{% else %}—{% endif %}</td>
-                                    <td><a class="btn btn-sm btn-outline-primary" href="{% url 'editar_stand' stand.pk %}">Editar</a></td>
+                                    {% if perms.stands.change_stand or perms.stands.assign_stand or perms.stands.release_stand %}
+                                    <td>
+                                        {% if perms.stands.change_stand %}
+                                        <a class="btn btn-sm btn-outline-primary" href="{% url 'editar_stand' stand.pk %}">Editar</a>
+                                        {% endif %}
+                                        {% if stand.estado == 'Disponible' and perms.stands.assign_stand %}
+                                        <button
+                                            class="btn btn-sm btn-outline-success"
+                                            type="button"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#asignarStandModal"
+                                            data-action="{% url 'asignar_stand' stand.pk %}"
+                                            data-stand="{{ stand.numero_stand }}"
+                                        >Asignar</button>
+                                        {% endif %}
+                                        {% if stand.estado == 'Asignado' and perms.stands.release_stand %}
+                                        <form method="post" action="{% url 'liberar_stand' stand.pk %}" class="d-inline">
+                                            {% csrf_token %}
+                                            <button class="btn btn-sm btn-outline-danger" type="submit">Liberar</button>
+                                        </form>
+                                        {% endif %}
+                                    </td>
+                                    {% endif %}
                                 </tr>
                                 {% empty %}
                                 <tr><td colspan="5" class="text-center text-muted py-4">Todavía no hay stands registrados.</td></tr>
@@ -123,8 +149,131 @@
                 </div>
             </section>
 
+            {% if perms.stands.assign_stand %}
+            <div class="modal fade" id="asignarStandModal" tabindex="-1" aria-labelledby="asignarStandModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <form method="post" id="asignarStandForm">
+                            {% csrf_token %}
+                            <div class="modal-header">
+                                <h2 class="modal-title fs-5" id="asignarStandModalLabel">Asignar artesano</h2>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                            </div>
+                            {% endif %}
+                            <div class="modal-body">
+                                <p>Seleccioná un artesano sin stand asignado para el stand <strong id="asignarStandNumero"></strong>.</p>
+                                {% if artesanos_disponibles %}
+                                <div class="row g-3 mb-3">
+                                    <div class="col-md-8">
+                                        <label class="form-label" for="buscarArtesano">Buscar por nombre, apellido, DNI o CUIT</label>
+                                        <input class="form-control" type="search" id="buscarArtesano" autocomplete="off">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label" for="filtrarRubro">Rubro</label>
+                                        <select class="form-select" id="filtrarRubro">
+                                            <option value="">Todos los rubros</option>
+                                            {% for rubro, rubro_display in rubros_artesanos %}
+                                            <option value="{{ rubro }}">{{ rubro_display }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="artesanosDisponibles" class="list-group">
+                                    {% for artesano in artesanos_disponibles %}
+                                    <label
+                                        class="list-group-item list-group-item-action d-flex gap-3 align-items-start artesano-disponible"
+                                        data-search="{{ artesano.nombre|default:artesano.usuario.first_name }} {{ artesano.apellido|default:artesano.usuario.last_name }} {{ artesano.dni|default:artesano.usuario.username }} {{ artesano.usuario.username }} {{ artesano.cuit|default:'' }} {{ artesano.nombre_comercial }}"
+                                        data-rubro="{{ artesano.rubro }}"
+                                    >
+                                        <input class="form-check-input mt-1" type="radio" name="artesano_id" value="{{ artesano.pk }}" required>
+                                        <span>
+                                            <strong>{{ artesano.nombre|default:artesano.usuario.first_name }} {{ artesano.apellido|default:artesano.usuario.last_name }}</strong>
+                                            <span class="d-block small text-muted">
+                                                DNI: {{ artesano.dni|default:artesano.usuario.username }} · CUIT: {{ artesano.cuit|default:"No informado" }}
+                                            </span>
+                                            <span class="d-block small text-muted">
+                                                {{ artesano.nombre_comercial }} · {{ artesano.get_rubro_display }}
+                                            </span>
+                                        </span>
+                                    </label>
+                                    {% endfor %}
+                                </div>
+                                <p id="sinResultadosArtesanos" class="text-muted text-center mt-3 d-none">No se encontraron artesanos con esos criterios.</p>
+                                {% else %}
+                                <p class="text-muted mb-0">No hay artesanos sin stand asignado.</p>
+                                {% endif %}
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button class="btn btn-success" id="confirmarAsignacion" type="submit" disabled>Confirmar asignación</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
 
 </div>
 {% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script>
+    const asignarStandModal = document.getElementById('asignarStandModal');
+
+    if (asignarStandModal) {
+        const asignarStandForm = document.getElementById('asignarStandForm');
+        const numeroStand = document.getElementById('asignarStandNumero');
+        const buscarArtesano = document.getElementById('buscarArtesano');
+        const filtrarRubro = document.getElementById('filtrarRubro');
+        const filasArtesanos = asignarStandModal.querySelectorAll('.artesano-disponible');
+        const sinResultados = document.getElementById('sinResultadosArtesanos');
+        const confirmarAsignacion = document.getElementById('confirmarAsignacion');
+
+        const filtrarArtesanos = () => {
+            const busqueda = buscarArtesano.value.trim().toLocaleLowerCase();
+            const rubro = filtrarRubro.value;
+            let visibles = 0;
+
+            filasArtesanos.forEach((fila) => {
+                const coincideTexto = fila.dataset.search.toLocaleLowerCase().includes(busqueda);
+                const coincideRubro = !rubro || fila.dataset.rubro === rubro;
+                const visible = coincideTexto && coincideRubro;
+                fila.classList.toggle('d-none', !visible);
+                fila.querySelector('input[name="artesano_id"]').disabled = !visible;
+                visibles += visible ? 1 : 0;
+            });
+
+            sinResultados.classList.toggle('d-none', visibles > 0);
+            confirmarAsignacion.disabled = !asignarStandForm.querySelector(
+                'input[name="artesano_id"]:checked:not(:disabled)'
+            );
+        };
+
+        asignarStandModal.addEventListener('show.bs.modal', (event) => {
+            const boton = event.relatedTarget;
+            asignarStandForm.action = boton.dataset.action;
+            numeroStand.textContent = boton.dataset.stand;
+            asignarStandForm.querySelectorAll('input[name="artesano_id"]').forEach((input) => {
+                input.checked = false;
+            });
+            confirmarAsignacion.disabled = true;
+            if (buscarArtesano) {
+                buscarArtesano.value = '';
+                filtrarRubro.value = '';
+                filtrarArtesanos();
+            }
+        });
+
+        if (buscarArtesano) {
+            buscarArtesano.addEventListener('input', filtrarArtesanos);
+            filtrarRubro.addEventListener('change', filtrarArtesanos);
+            asignarStandModal.querySelectorAll('input[name="artesano_id"]').forEach((input) => {
+                input.addEventListener('change', filtrarArtesanos);
+            });
+        }
+    }
+</script>
+{% endblock extra_js %}

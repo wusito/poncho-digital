@@ -15,6 +15,35 @@
                                     </p>
                                 </div>
 
+                                {% if productos %}
+                                <div class="row g-3 align-items-end mb-4" id="filtros-productos">
+                                    <div class="col-12 col-md-4">
+                                        <label class="form-label fw-semibold" for="buscar-producto-nombre">Buscar por nombre</label>
+                                        <input class="form-control" type="search" id="buscar-producto-nombre" placeholder="Nombre del producto">
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <label class="form-label fw-semibold" for="buscar-producto-categoria">Categoría</label>
+                                        <select class="form-select" id="buscar-producto-categoria">
+                                            <option value="">Todas las categorías</option>
+                                            <option value="textiles-tradicionales">Textiles Tradicionales</option>
+                                            <option value="artesanias-articulos-hogar">Artesanías y Artículos para el Hogar</option>
+                                            <option value="productos-regionales-delicatessen">Productos Regionales y Delicatessen</option>
+                                            <option value="sector-comercial">Sector Comercial</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <label class="form-label fw-semibold" for="buscar-producto-subcategoria">Buscar por subcategoría</label>
+                                        <select class="form-select" id="buscar-producto-subcategoria">
+                                            <option value="">Todas las subcategorías</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12 d-flex flex-wrap justify-content-between align-items-center gap-2">
+                                        <p class="small text-muted mb-0" id="resultado-busqueda-productos" role="status" aria-live="polite"></p>
+                                        <button class="btn btn-outline-secondary" type="button" id="limpiar-filtros-productos">Limpiar filtros</button>
+                                    </div>
+                                </div>
+                                {% endif %}
+
                                 <div class="table-responsive">
                                     <table class="table table-hover align-middle border" id="tabla-productos-publicados">
                                         <!--- Encabezado -->
@@ -36,7 +65,10 @@
                                         <!-- Contenido - Tabla Dinámica desde Django -->
                                         <tbody id="cuerpo-tabla-productos-publicados">
                                             {% for producto in productos %}
-                                            <tr>
+                                            <tr class="producto-publicado"
+                                                data-producto-nombre="{{ producto.nombre }}"
+                                                data-producto-categoria="{{ producto.categoria }}"
+                                                data-producto-subcategoria="{{ producto.subcategoria|default_if_none:'' }}">
                                                 <td class="fw-bold" style="color: var(--color-rojo);">{{ producto.id }}</td>
                                                 <td>
                                                     {% if producto.imagen %}
@@ -53,6 +85,7 @@
                                                 <td><span class="badge bg-light text-dark border">{{ producto.subcategoria|default:"-" }}</span></td>
                                                 <td><span class="badge bg-success">Activo</span></td>
                                                 <td>
+                                                    {% if perms.productos.change_producto %}
                                                     <button
                                                         class="btn btn-sm btn-outline-warning w-100 mb-2 fw-semibold"
                                                         type="button"
@@ -67,7 +100,9 @@
                                                         onclick="mostrarFormularioEdicion(this)">
                                                         Modificar
                                                     </button>
+                                                    {% endif %}
 
+                                                    {% if perms.productos.delete_producto %}
                                                     <button
                                                         class="btn btn-sm btn-outline-danger w-100 mb-2 fw-semibold"
                                                         type="button"
@@ -76,6 +111,7 @@
                                                         data-producto-id="{{ producto.id }}">
                                                         Eliminar
                                                     </button>
+                                                    {% endif %}
                                                 </td>
                                             </tr>
                                             {% empty %}
@@ -83,6 +119,11 @@
                                                 <td colspan="10" class="text-center py-4 text-muted fs-6">No hay productos registrados en el sistema.</td>
                                             </tr>
                                             {% endfor %}
+                                            {% if productos %}
+                                            <tr id="sin-resultados-busqueda" class="d-none">
+                                                <td colspan="10" class="text-center py-4 text-muted fs-6">No se encontraron productos con esos criterios.</td>
+                                            </tr>
+                                            {% endif %}
                                         </tbody>
                                     </table>
                                 </div>

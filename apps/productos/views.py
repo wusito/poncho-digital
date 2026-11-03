@@ -1,11 +1,16 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from apps.usuarios.decorators import artesano_requerido
+from apps.usuarios.decorators import (
+    artesano_requerido,
+    permisos_requeridos,
+    verificar_permisos,
+)
 from .models import Producto
 from .forms import ProductoForm
 
 # Create your views here.
 @artesano_requerido
+@permisos_requeridos('productos.view_producto')
 def gestion_productos(view_context_request):
     """
     Vista principal que centraliza la administración del catálogo (HU-04 y HU-05):
@@ -18,6 +23,7 @@ def gestion_productos(view_context_request):
 
     # 2. Instancia del formulario para alta de nuevo producto.
     if view_context_request.method == 'POST':
+        verificar_permisos(view_context_request, 'productos.add_producto')
         form_alta = ProductoForm(view_context_request.POST, view_context_request.FILES)
         if form_alta.is_valid():
             nuevo_producto = form_alta.save(commit=False)
@@ -40,6 +46,7 @@ def gestion_productos(view_context_request):
 
 
 @artesano_requerido
+@permisos_requeridos('productos.change_producto')
 def editar_producto(request, pk):
     """
     Procesa la edición/modificación de un producto existente.
@@ -66,6 +73,7 @@ def editar_producto(request, pk):
 
 
 @artesano_requerido
+@permisos_requeridos('productos.delete_producto')
 def eliminar_producto(request, pk):
     """
     Elimina físicamente el producto seleccionado confirmando desde el modal de Bootstrap (HU-05).

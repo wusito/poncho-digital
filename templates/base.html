@@ -32,25 +32,27 @@
                 <div class="collapse navbar-collapse" id="menuPrincipal">
                     <ul class="navbar-nav ms-auto text-center">
                         <li class="nav-item"><a class="nav-link active" href="{% url 'index' %}">Inicio</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#busqueda">Búsqueda</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'busqueda' %}">Búsqueda</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'mapa_stands' %}">Mapa y Stands</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'registro_artesano' %}">Registro de Artesanos</a></li>
-                        {% if user.is_authenticated and user.artesano %}
+                        {% if user.is_authenticated and user.artesano and perms.productos.view_producto %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'gestion_productos' %}">Gestión de Productos</a></li>
                         {% endif %}
-                        {% if user.is_staff or user.is_superuser %}
+                        {% if perms.artesanos.view_postulanteartesano %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'panel_solicitudes' %}">Panel de Solicitudes</a></li>
+                        {% endif %}
+                        {% if perms.artesanos.view_reports %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'reportes:generar_reportes' %}">Generar Reportes</a></li>
                         {% endif %}
                         {% if user.is_authenticated %}
                         <li class="nav-item">
                             <form method="post" action="{% url 'logout' %}">
                                 {% csrf_token %}
-                                <button class="nav-link" type="submit">Cerrar sesión</button>
+                                <button class="nav-link" type="submit">Cerrar Sesión</button>
                             </form>
                         </li>
                         {% else %}
-                        <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Iniciar sesión</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Iniciar Sesión</a></li>
                         {% endif %}
                     </ul>
                 </div>

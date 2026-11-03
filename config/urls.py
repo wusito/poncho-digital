@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import index
+from .views import busqueda, index
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,6 +28,7 @@ urlpatterns = [
     path('productos/', include('apps.productos.urls')),
     path('stands/', include('apps.stands.urls')),
     path('reportes/', include('apps.reportes.urls')),
+    path('busqueda/', busqueda, name='busqueda'),
     path('', index, name='index'),
 ]
 

@@ -20,7 +20,10 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'index' %}">Inicio</a>
                         </li>
-                        {% if user.is_staff or user.is_superuser %}
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{% url 'mapa_stands' %}">Mapa y Stands</a>
+                        </li>
+                        {% if perms.stands.view_stand %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'gestion_stands' %}">Gestionar Stands</a>
                         </li>
@@ -37,7 +40,7 @@
 
         <!-- TÍTULO DE LA SECCIÓN -->
         <div class="container-fluid py-4 mb-3 hero position-relative overflow-hidden shadow-sm">
-            <div class="container-fluid">
+            <div class="container-fluid p-4">
                 <div class="row align-items-center gy-4">
                     
                     <div class="col-12 col-lg-7 text-start">
@@ -75,9 +78,6 @@
                     <div class="col-12 col-lg-7">
                         <div class="card p-3 shadow-sm">
                             <h4 class="h5 mb-3">Plano Interactivo del Predio Ferial</h4>
-                            {% if user.is_staff or user.is_superuser %}
-                            <p><a class="btn btn-outline-primary btn-sm mb-3" href="{% url 'gestion_stands' %}">Administrar stands</a></p>
-                            {% endif %}
                             <div class="mapa-contenedor position-relative border rounded overflow-hidden">
                                 <img src="{% static 'img/mapa.jpg' %}" alt="Mapa del Predio Ferial Catamarca" class="img-fluid w-100 id-imagen-mapa">
                                 <!-- Capa de marcadores interactivos asignados a coordenadas sobre el mapa -->

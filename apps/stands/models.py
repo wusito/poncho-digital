@@ -42,6 +42,10 @@ class Stand(models.Model):
         verbose_name = "Stand"
         verbose_name_plural = "Stands"
         ordering = ["numero_stand"]
+        permissions = [
+            ('assign_stand', 'Puede asignar stands a artesanos'),
+            ('release_stand', 'Puede liberar stands asignados'),
+        ]
 
     def __str__(self):
         artesano_str = f" - {self.artesano.nombre_comercial}" if self.artesano else ""

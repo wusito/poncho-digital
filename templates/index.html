@@ -6,7 +6,7 @@
 {% block content %}
     <div class="p-4 p-md-4 rounded shadow-lg border-top border-4" style="border-color: var(--color-rojo) !important;">
         <!-- SECCIÓN HERO -->
-        <section class="hero mb-4" id="inicio">
+        <section class="hero mb-4 p-4" id="inicio">
             <div class="container-fluid">
                 <div class="row align-items-center gy-4">
 
@@ -55,62 +55,6 @@
                 </div>
             </div>
         </section>
-
-        <!-- HU-08: FILTROS Y BÚSQUEDA EN TIEMPO REAL -->
-        <section class="hero" id="busqueda">
-            <div class="container-fluid">
-                <h2 class="titulo-seccion">Buscador de Artesanos y Productos</h2>
-                <form id="formBusqueda" class="row g-3 mb-4" method="get">
-                    <div class="col-12 col-md-6">
-                        <input type="text" id="inputBusqueda" name="q" class="form-control form-campo-claro" placeholder="Buscar por nombre, localidad o descripción...">
-                    </div>
-                    <div class="col-12 col-md-4">
-                        <select id="selectFiltroRubro" name="rubro" class="form-select form-campo-claro">
-                            <option value="">Todas las categorías y subcategorías</option>
-                            
-                            <!-- Textiles Tradicionales -->
-                            <optgroup label="Textiles Tradicionales">
-                                <option value="prendas-de-vicuna">Prendas de Vicuña</option>
-                                <option value="fajas">Fajas</option>
-                                <option value="mantas">Mantas</option>
-                                <option value="chalinas">Chalinas</option>
-                            </optgroup>
-
-                            <!-- Artesanías y Artículos para el Hogar -->
-                            <optgroup label="Artesanías y Artículos para el Hogar">
-                                <option value="ceramica">Cerámica</option>
-                                <option value="accesorios">Accesorios</option>
-                                <option value="madera-tallada">Madera tallada</option>
-                                <option value="cesteria">Cestería</option>
-                                <option value="decoracion">Decoración</option>
-                            </optgroup>
-
-                            <!-- Productos Regionales y Delicatessen -->
-                            <optgroup label="Productos Regionales y Delicatessen">
-                                <option value="dulces">Dulces</option>
-                                <option value="miel">Miel</option>
-                                <option value="frutos-secos">Frutos secos</option>
-                                <option value="vinos-regionales">Vinos regionales</option>
-                            </optgroup>
-
-                            <!-- Sector Comercial -->
-                            <optgroup label="Sector Comercial">
-                                <option value="souvenirs">Souvenirs</option>
-                                <option value="accesorios-comercial">Accesorios</option>
-                                <option value="regalos">Regalos</option>
-                                <option value="merchandising">Merchandising</option>
-                            </optgroup>
-                        </select>
-                    </div>
-                    <div class="col-12 col-md-2">
-                        <button type="submit" class="boton boton-primario w-100">Buscar</button>
-                    </div>
-                </form>
-                <div id="mensajeBusqueda" class="alert alert-info d-none" role="alert"></div>
-                <div id="resultadosBusqueda" class="row gy-3"></div>
-            </div>
-        </section>
-
 
         <!-- SECCIÓN DE IFRAMES ACTUALIZADA -->
         <section class="secciones" id="iframes">
@@ -190,12 +134,22 @@
 
                     <div class="col-12 col-md-6 col-lg-4">
                         <article class="tarjeta tarjeta-ocre">
+                            <h3>Buscar Artesanos y Productos</h3>
+                            <p>Explorá artesanos y productos de la feria filtrando por nombre, rubro o categoría.</p>
+                            <a href="{% url 'busqueda' %}" class="tarjeta-enlace">Ir al buscador →</a>
+                        </article>
+                    </div>
+
+                    {% if user.is_authenticated and user.artesano %}
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <article class="tarjeta tarjeta-ocre">
                             <h3>Gestión de Productos</h3>
                             <p>Publicación y administración del catálogo de productos regionales y textiles
                                 que se exhiben durante la feria.</p>
                             <a href="{% url 'gestion_productos' %}" class="tarjeta-enlace">Ir al catálogo →</a>
                         </article>
                     </div>
+                    {% endif %}
 
                     <div class="col-12 col-md-6 col-lg-4">
                         <article class="tarjeta tarjeta-azul">
@@ -212,7 +166,7 @@
 
         <!-- PLATAFORMA Y CITA -->
         <section class="plataforma" id="plataforma">
-            <div class="container-fluid">
+            <div class="container-fluid p-4">
                 <div class="row align-items-center gy-4">
                     <div class="col-12 col-lg-8">
                         <h2 class="titulo-seccion">¡Bienvenidos a la Fiesta Nacional e Internacional del Poncho!</h2>

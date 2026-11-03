@@ -18,7 +18,6 @@
                 <div class="collapse navbar-collapse" id="menuSolicitudes">
                     <ul class="navbar-nav ms-auto text-center">
                         <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Inicio</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'registro_artesano' %}">Registro de Artesanos</a></li>
                         <li class="nav-item"><a class="nav-link active" href="{% url 'panel_solicitudes' %}">Evaluación de Solicitudes</a></li>
                     </ul>
                 </div>
@@ -31,7 +30,7 @@
     <div class="p-4 p-md-4 rounded shadow-lg border-top border-4" style="border-color: var(--color-rojo) !important;">
         <!-- TÍTULO DE LA SECCIÓN / HERO -->
         <div class="container-fluid py-4 mb-3 hero position-relative overflow-hidden shadow-sm">
-            <div class="container-fluid">
+            <div class="container-fluid p-4">
                 <div class="row align-items-center gy-4">
                     
                     <div class="col-12 col-lg-7 text-start">
@@ -170,7 +169,7 @@
                                         <div class="text-muted">{{ s.telefono }}</div>
                                     </td>
                                     <td class="text-center">
-                                        {% if s.estado_solicitud == 'PENDIENTE' %}
+                                        {% if s.estado_solicitud == 'PENDIENTE' and perms.artesanos.add_artesano and perms.artesanos.change_postulanteartesano and perms.stands.assign_stand %}
                                             <span class="badge bg-warning text-dark">Pendiente</span>
                                         {% elif s.estado_solicitud == 'APROBADO' %}
                                             <span class="badge bg-success">Aprobado</span>
@@ -209,7 +208,7 @@
                                                 Ver ficha
                                             </button>
 
-                                            {% if s.estado_solicitud == 'PENDIENTE' %}
+                                            {% if s.estado_solicitud == 'PENDIENTE' and perms.artesanos.add_artesano and perms.artesanos.change_postulanteartesano and perms.stands.assign_stand %}
                                             <button
                                                 type="button"
                                                 class="btn btn-sm btn-success"
@@ -222,7 +221,9 @@
                                                 data-dni="{{ s.dni }}">
                                                 Aprobar
                                             </button>
+                                            {% endif %}
 
+                                            {% if s.estado_solicitud == 'PENDIENTE' and perms.artesanos.change_postulanteartesano %}
                                             <button
                                                 type="button"
                                                 class="btn btn-sm btn-danger"
