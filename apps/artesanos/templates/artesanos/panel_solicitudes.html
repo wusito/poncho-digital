@@ -169,7 +169,7 @@
                                         <div class="text-muted">{{ s.telefono }}</div>
                                     </td>
                                     <td class="text-center">
-                                        {% if s.estado_solicitud == 'PENDIENTE' %}
+                                        {% if s.estado_solicitud == 'PENDIENTE' and perms.artesanos.add_artesano and perms.artesanos.change_postulanteartesano and perms.stands.assign_stand %}
                                             <span class="badge bg-warning text-dark">Pendiente</span>
                                         {% elif s.estado_solicitud == 'APROBADO' %}
                                             <span class="badge bg-success">Aprobado</span>
@@ -208,7 +208,7 @@
                                                 Ver ficha
                                             </button>
 
-                                            {% if s.estado_solicitud == 'PENDIENTE' %}
+                                            {% if s.estado_solicitud == 'PENDIENTE' and perms.artesanos.add_artesano and perms.artesanos.change_postulanteartesano and perms.stands.assign_stand %}
                                             <button
                                                 type="button"
                                                 class="btn btn-sm btn-success"
@@ -221,7 +221,9 @@
                                                 data-dni="{{ s.dni }}">
                                                 Aprobar
                                             </button>
+                                            {% endif %}
 
+                                            {% if s.estado_solicitud == 'PENDIENTE' and perms.artesanos.change_postulanteartesano %}
                                             <button
                                                 type="button"
                                                 class="btn btn-sm btn-danger"

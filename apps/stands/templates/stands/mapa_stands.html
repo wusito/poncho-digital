@@ -23,7 +23,7 @@
                         <li class="nav-item">
                             <a class="nav-link active" href="{% url 'mapa_stands' %}">Mapa y Stands</a>
                         </li>
-                        {% if user.is_staff or user.is_superuser %}
+                        {% if perms.stands.view_stand %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'gestion_stands' %}">Gestionar Stands</a>
                         </li>

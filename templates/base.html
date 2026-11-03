@@ -35,11 +35,13 @@
                         <li class="nav-item"><a class="nav-link" href="{% url 'busqueda' %}">Búsqueda</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'mapa_stands' %}">Mapa y Stands</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'registro_artesano' %}">Registro de Artesanos</a></li>
-                        {% if user.is_authenticated and user.artesano %}
+                        {% if user.is_authenticated and user.artesano and perms.productos.view_producto %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'gestion_productos' %}">Gestión de Productos</a></li>
                         {% endif %}
-                        {% if user.is_staff or user.is_superuser %}
+                        {% if perms.artesanos.view_postulanteartesano %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'panel_solicitudes' %}">Panel de Solicitudes</a></li>
+                        {% endif %}
+                        {% if perms.artesanos.view_reports %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'reportes:generar_reportes' %}">Generar Reportes</a></li>
                         {% endif %}
                         {% if user.is_authenticated %}

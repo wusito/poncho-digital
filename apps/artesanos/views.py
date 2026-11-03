@@ -5,7 +5,7 @@ from django.db.models import Case, IntegerField, Q, Value, When
 from django.shortcuts import get_object_or_404, redirect, render
 
 from apps.stands.models import Stand
-from apps.usuarios.decorators import administrador_requerido
+from apps.usuarios.decorators import permisos_requeridos
 
 from .forms import PostulanteArtesanoForm
 from .models import Artesano, PostulanteArtesano
@@ -61,7 +61,7 @@ def registro_artesano(request):
     return render(request, 'artesanos/registro_artesano.html', context)
 
 
-@administrador_requerido
+@permisos_requeridos('artesanos.view_postulanteartesano')
 def panel_solicitudes(request):
     """
     Vista/panel de evaluación de solicitudes de artesanos (HU-02).
@@ -132,7 +132,11 @@ def panel_solicitudes(request):
     return render(request, 'artesanos/panel_solicitudes.html', context)
 
 
-@administrador_requerido
+@permisos_requeridos(
+    'artesanos.add_artesano',
+    'artesanos.change_postulanteartesano',
+    'stands.assign_stand',
+)
 def aprobar_solicitud(request, pk):
     """
     Aprueba una solicitud pendiente de forma atómica (HU-02):
@@ -242,7 +246,7 @@ def aprobar_solicitud(request, pk):
     return redirect('panel_solicitudes')
 
 
-@administrador_requerido
+@permisos_requeridos('artesanos.change_postulanteartesano')
 def rechazar_solicitud(request, pk):
     """
     Rechaza una solicitud pendiente actualizando su estado a RECHAZADO (HU-02).

@@ -26,10 +26,14 @@
                                 <a class="nav-link active" id="nav-inicio-tab" data-bs-toggle="tab" data-bs-target="#nav-inicio" href="#nav-inicio" role="tab" aria-controls="nav-inicio" aria-selected="true">Información</a>
                             </li>
                             <li class="nav-item" role="presentation">
+                                {% if perms.productos.view_producto %}
                                 <a class="nav-link" id="nav-mis-productos-tab" data-bs-toggle="tab" data-bs-target="#nav-mis-productos" href="#nav-mis-productos" role="tab" aria-controls="nav-mis-productos" aria-selected="false">Mis Productos</a>
+                                {% endif %}
                             </li>
                             <li class="nav-item" role="presentation">
+                                {% if perms.productos.add_producto %}
                                 <a class="nav-link" id="nav-agregar-producto-tab" data-bs-toggle="tab" data-bs-target="#nav-agregar-producto" href="#nav-agregar-producto" role="tab" aria-controls="nav-agregar-producto" aria-selected="false">Agregar un Producto</a>
+                                {% endif %}
                             </li>
                         </ul>
                     </div>
@@ -164,13 +168,17 @@
             <!-- Contenido de Mis Productos -->
             <div class="tab-pane fade" id="nav-mis-productos"
                 role="tabpanel" aria-labelledby="nav-mis-productos-tab" tabindex="0">
+                {% if perms.productos.view_producto %}
                 {% include 'productos/mis_productos.html' %}
+                {% endif %}
             </div>
 
             <!-- Contenido de Agregar Producto -->
             <div class="tab-pane fade" id="nav-agregar-producto"
                 role="tabpanel" aria-labelledby="nav-agregar-producto-tab" tabindex="0">
+                {% if perms.productos.add_producto %}
                 {% include 'productos/agregar_productos.html' %}
+                {% endif %}
             </div>
         </div>
     </div>

@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 
 from apps.artesanos.models import Artesano, PostulanteArtesano
-from apps.usuarios.decorators import administrador_requerido
+from apps.usuarios.decorators import permisos_requeridos, verificar_permisos
 
 from .forms import StandForm
 from .models import Stand
@@ -55,9 +55,10 @@ def mapa_stands(request):
     return render(request, 'stands/mapa_stands.html', context)
 
 
-@administrador_requerido
+@permisos_requeridos('stands.view_stand')
 def gestion_stands(request):
     if request.method == 'POST':
+        verificar_permisos(request, 'stands.add_stand')
         form = StandForm(request.POST)
         if form.is_valid():
             stand = form.save()
@@ -73,7 +74,7 @@ def gestion_stands(request):
     )
 
 
-@administrador_requerido
+@permisos_requeridos('stands.change_stand')
 def editar_stand(request, pk):
     stand = get_object_or_404(Stand, pk=pk)
     if request.method == 'POST':
@@ -92,7 +93,7 @@ def editar_stand(request, pk):
     )
 
 
-@administrador_requerido
+@permisos_requeridos('stands.release_stand')
 @require_POST
 def liberar_stand(request, pk):
     with transaction.atomic():
@@ -112,7 +113,7 @@ def liberar_stand(request, pk):
     return redirect('gestion_stands')
 
 
-@administrador_requerido
+@permisos_requeridos('stands.assign_stand')
 @require_POST
 def asignar_stand(request, pk):
     artesano_id = request.POST.get('artesano_id', '').strip()

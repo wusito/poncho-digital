@@ -77,6 +77,9 @@ class Artesano(models.Model):
         verbose_name = "Artesano"
         verbose_name_plural = "Artesanos"
         ordering = ["nombre_comercial"]
+        permissions = [
+            ('view_reports', 'Puede consultar los reportes del sistema'),
+        ]
 
     def __str__(self):
         return f"{self.nombre_comercial} ({self.get_rubro_display()}) - {self.localidad}"

@@ -70,6 +70,7 @@
             <section class="card shadow-sm mb-4">
                 <div class="card-body">
                     <h2 class="h5 mb-3">{% if stand_editando %}Editar stand {{ stand_editando.numero_stand }}{% else %}Registrar stand{% endif %}</h2>
+                    {% if stand_editando and perms.stands.change_stand or not stand_editando and perms.stands.add_stand %}
                     <form method="post" novalidate>
                         {% csrf_token %}
                         {% for field in form %}
@@ -88,6 +89,9 @@
                             {% if stand_editando %}<a class="btn btn-outline-secondary" href="{% url 'gestion_stands' %}">Cancelar</a>{% endif %}
                         </div>
                     </form>
+                    {% else %}
+                    <p class="text-muted mb-0">No tenés permisos para modificar stands.</p>
+                    {% endif %}
                 </div>
             </section>
 
@@ -102,7 +106,7 @@
                                     <th>Ubicación X,Y</th>
                                     <th>Estado</th>
                                     <th>Artesano</th>
-                                    <th>Acciones</th>
+                                    {% if perms.stands.change_stand or perms.stands.assign_stand or perms.stands.release_stand %}<th>Acciones</th>{% endif %}
                                 </tr>
                             </thead>
                             <tbody>
@@ -112,9 +116,12 @@
                                     <td>{{ stand.ubicacion_mapa }}</td>
                                     <td>{{ stand.get_estado_display }}</td>
                                     <td>{% if stand.artesano %}{{ stand.artesano.nombre_comercial }}{% else %}—{% endif %}</td>
+                                    {% if perms.stands.change_stand or perms.stands.assign_stand or perms.stands.release_stand %}
                                     <td>
+                                        {% if perms.stands.change_stand %}
                                         <a class="btn btn-sm btn-outline-primary" href="{% url 'editar_stand' stand.pk %}">Editar</a>
-                                        {% if stand.estado == 'Disponible' %}
+                                        {% endif %}
+                                        {% if stand.estado == 'Disponible' and perms.stands.assign_stand %}
                                         <button
                                             class="btn btn-sm btn-outline-success"
                                             type="button"
@@ -124,13 +131,14 @@
                                             data-stand="{{ stand.numero_stand }}"
                                         >Asignar</button>
                                         {% endif %}
-                                        {% if stand.estado == 'Asignado' %}
+                                        {% if stand.estado == 'Asignado' and perms.stands.release_stand %}
                                         <form method="post" action="{% url 'liberar_stand' stand.pk %}" class="d-inline">
                                             {% csrf_token %}
                                             <button class="btn btn-sm btn-outline-danger" type="submit">Liberar</button>
                                         </form>
                                         {% endif %}
                                     </td>
+                                    {% endif %}
                                 </tr>
                                 {% empty %}
                                 <tr><td colspan="5" class="text-center text-muted py-4">Todavía no hay stands registrados.</td></tr>
@@ -141,6 +149,7 @@
                 </div>
             </section>
 
+            {% if perms.stands.assign_stand %}
             <div class="modal fade" id="asignarStandModal" tabindex="-1" aria-labelledby="asignarStandModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg modal-dialog-scrollable">
                     <div class="modal-content">
@@ -150,6 +159,7 @@
                                 <h2 class="modal-title fs-5" id="asignarStandModalLabel">Asignar artesano</h2>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                             </div>
+                            {% endif %}
                             <div class="modal-body">
                                 <p>Seleccioná un artesano sin stand asignado para el stand <strong id="asignarStandNumero"></strong>.</p>
                                 {% if artesanos_disponibles %}
