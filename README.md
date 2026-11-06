@@ -15,14 +15,13 @@ De acuerdo con las pautas establecidas para la conformación de equipos, los int
 
 ## Tecnologías y Librerías (Stack Tecnológico)
 
-- **Backend:** Framework Django (Versión X.X).
-- **Base de Datos:** PostgreSQL (Versión X.X).
+- **Backend:** Framework Django (Versión 6.1).
+- **Base de Datos:** PostgreSQL (Versión 18.6).
 - **Frontend:** HTML5, CSS3, JavaScript y Bootstrap.
-- _Para ver el listado completo de dependencias y versiones, consultar el archivo `requirements.txt`._
 
 ## Requisitos Previos
 
-- Python 3.x instalado.
+- Python 3.14.0 instalado.
 - PostgreSQL instalado y en ejecución.
 - Git.
 
@@ -35,27 +34,60 @@ git clone https://github.com/wusito/poncho-digital.git
 cd poncho-digital
 ```
 
-### Roles y permisos
+### 2. Crear y activar el entorno virtual
 
-Las operaciones del sistema se autorizan con permisos de Django. Después de ejecutar
-`python manage.py migrate`, un usuario administrador puede crear grupos, asignarles los
-permisos correspondientes y asociar usuarios a esos grupos desde `/admin/` (secciones
-**Groups** y **Users**). Ser `is_staff` por sí solo no habilita las funciones de negocio;
-los superusuarios conservan el acceso completo propio de Django.
+```bash
+python -m venv poncho-digital
+```
 
-Permisos sugeridos para configurar los roles del proyecto:
+Actívalo según la terminal que uses:
 
-- **Gestión de stands:** `stands.view_stand`, `stands.add_stand`, `stands.change_stand`,
-  `stands.assign_stand` y `stands.release_stand`.
-- **Evaluación de solicitudes:** `artesanos.view_postulanteartesano`,
-  `artesanos.change_postulanteartesano`, `artesanos.add_artesano` y
-  `stands.assign_stand` para aprobar; el permiso `change_postulanteartesano` habilita
-  el rechazo.
-- **Artesano:** `productos.view_producto`, `productos.add_producto`,
-  `productos.change_producto` y `productos.delete_producto`. El usuario también debe
-  tener un perfil de artesano.
-- **Reportes:** `artesanos.view_reports`.
+```powershell
+# Windows (PowerShell)
+poncho-digital\Scripts\activate
+```
 
-Las cuentas de artesano creadas al aprobar una solicitud requieren que un administrador
-les asigne el grupo/rol correspondiente desde **Users** para habilitar la gestión del
-catálogo.
+```bash
+# macOS/Linux
+source poncho-digital/bin/activate
+```
+
+### 3. Instalar Django y las dependencias
+
+Con el entorno virtual activado, ejecuta:
+
+```bash
+pip install django psycopg2-binary
+pip install python-dotenv
+pip install Pillow
+pip install openpyxl
+```
+
+### 4. Configurar el archivo `.env`
+
+Crea un archivo `.env` en la raíz del proyecto y configura los datos de conexión
+a PostgreSQL:
+
+```env
+DB_NAME=nombre_de_la_base
+DB_USER=usuario_de_postgres
+DB_PASSWORD=contraseña
+DB_HOST=localhost
+DB_PORT=5432
+```
+
+Reemplaza los valores de ejemplo por los de tu instalación. Para configurar y preparar PostgreSQL, consulta el [README de `db/`](./db/README.md), que también describe las migraciones y la carga de datos.
+
+### 5. Aplicar las migraciones
+
+```bash
+python manage.py migrate
+```
+
+### 6. Iniciar el servidor de desarrollo
+
+```bash
+python manage.py runserver
+```
+
+Para crear un usuario administrador o cargar los datos de ejemplo, sigue también las instrucciones del [README de `db/`](./db/README.md).
