@@ -40,7 +40,7 @@ cd poncho-digital
 python -m venv poncho-digital
 ```
 
-Actívalo según la terminal que uses:
+Actívalo según la terminal usada:
 
 ```powershell
 # Windows (PowerShell)
@@ -54,7 +54,7 @@ source poncho-digital/bin/activate
 
 ### 3. Instalar Django y las dependencias
 
-Con el entorno virtual activado, ejecuta:
+Con el entorno virtual activado, ejecutar:
 
 ```bash
 pip install django psycopg2-binary
@@ -65,8 +65,8 @@ pip install openpyxl
 
 ### 4. Configurar el archivo `.env`
 
-Crea un archivo `.env` en la raíz del proyecto y configura los datos de conexión
-a PostgreSQL:
+Crear un archivo `.env` en la raíz del proyecto con los datos de conexión a
+PostgreSQL:
 
 ```env
 DB_NAME=nombre_de_la_base
@@ -76,18 +76,15 @@ DB_HOST=localhost
 DB_PORT=5432
 ```
 
-Reemplaza los valores de ejemplo por los de tu instalación. Para configurar y preparar PostgreSQL, consulta el [README de `db/`](./db/README.md), que también describe las migraciones y la carga de datos.
+Reemplazar los valores de ejemplo por los de tu instalación.
 
-### 5. Aplicar las migraciones
+### 5. Preparar la base de datos
 
-```bash
-python manage.py migrate
-```
+Para crear la base de datos, aplicar las migraciones, crear un usuario administrador
+y configurar roles y permisos, sigue la [guía de PostgreSQL](./db/README.md).
 
 ### 6. Iniciar el servidor de desarrollo
 
 ```bash
 python manage.py runserver
 ```
-
-Para crear un usuario administrador o cargar los datos de ejemplo, sigue también las instrucciones del [README de `db/`](./db/README.md).
